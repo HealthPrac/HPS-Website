@@ -1022,6 +1022,66 @@
     font-family: "Geist Mono", monospace; font-size: 11px;
     color: rgba(239,230,210,0.5); letter-spacing: 0.06em;
   }
+  .footer-legal-link {
+    background: none; border: none; padding: 0; margin: 0;
+    font-family: inherit; font-size: inherit; letter-spacing: inherit;
+    color: rgba(239,230,210,0.5); cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .footer-legal-link:hover { color: var(--champagne-2); }
+
+  /* ===== LEGAL MODALS ===== */
+  .legal-overlay {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(10,20,40,0.72); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+  }
+  .legal-modal {
+    background: var(--linen); color: var(--ink);
+    border-radius: 4px; box-shadow: 0 24px 72px rgba(0,0,0,0.35);
+    width: 100%; max-width: 680px; max-height: 82vh;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .legal-modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 32px 20px; border-bottom: 1px solid var(--rule);
+    flex-shrink: 0;
+  }
+  .legal-modal-header h3 {
+    font-family: "Cormorant Garamond", serif; font-size: 22px; font-weight: 600;
+    color: var(--forest); margin: 0;
+  }
+  .legal-modal-header .legal-tag {
+    font-family: "Geist Mono", monospace; font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--champagne); margin-top: 4px;
+  }
+  .legal-modal-close {
+    background: none; border: none; cursor: pointer; padding: 8px;
+    color: var(--ink-2); font-size: 20px; line-height: 1;
+    border-radius: 2px; transition: background 0.15s;
+  }
+  .legal-modal-close:hover { background: var(--rule); }
+  .legal-modal-body {
+    padding: 28px 32px 32px; overflow-y: auto; flex: 1;
+    font-size: 13.5px; line-height: 1.75; color: var(--ink);
+  }
+  .legal-modal-body h4 {
+    font-family: "Geist", sans-serif; font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--forest);
+    margin: 24px 0 8px;
+  }
+  .legal-modal-body h4:first-child { margin-top: 0; }
+  .legal-modal-body p { margin: 0 0 10px; }
+  .legal-modal-body ul { margin: 0 0 10px; padding-left: 20px; }
+  .legal-modal-body ul li { margin-bottom: 6px; }
+  .legal-modal-footer {
+    padding: 16px 32px; border-top: 1px solid var(--rule);
+    font-family: "Geist Mono", monospace; font-size: 11px;
+    color: var(--ink-2); background: var(--parchment); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .legal-modal-footer a { color: var(--champagne); text-decoration: underline; }
 
   /* ===== MODULE DEEP-DIVE PAGE ===== */
   .module-hero { padding: 80px 0 56px; display: grid; grid-template-columns: 0.85fr 1fr; gap: 64px; align-items: end; }

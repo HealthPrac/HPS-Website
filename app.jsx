@@ -917,62 +917,193 @@ function ProductMock({ initialVillage = 0, facilityName = "Jolly Oaks Senior Liv
 // ===========================================================
 // FOOTER
 // ===========================================================
+function LegalModal({ title, tag, onClose, children, footerNote }) {
+  React.useEffect(() => {
+    const esc = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", esc);
+    return () => document.removeEventListener("keydown", esc);
+  }, [onClose]);
+  return (
+    <div className="legal-overlay" onClick={onClose}>
+      <div className="legal-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="legal-modal-header">
+          <div>
+            <h3>{title}</h3>
+            <div className="legal-tag">{tag}</div>
+          </div>
+          <button className="legal-modal-close" onClick={onClose} aria-label="Close">✕</button>
+        </div>
+        <div className="legal-modal-body">{children}</div>
+        {footerNote && <div className="legal-modal-footer">{footerNote}</div>}
+      </div>
+    </div>
+  );
+}
+
+function TermsModal({ onClose }) {
+  return (
+    <LegalModal
+      title="Terms of Service — SaaS Provider Liability"
+      tag="HealthPrac Solutions · Effective 1 January 2026"
+      onClose={onClose}
+      footerNote={
+        <span>Questions? <a href="mailto:liezl@healthpracsolutions.com">liezl@healthpracsolutions.com</a> · Governed by the laws of the Republic of South Africa.</span>
+      }
+    >
+      <h4>1. Nature of the Service</h4>
+      <p>HealthPrac Solutions (Pty) Ltd ("HPS", "we", "us") provides a cloud-based healthcare business-management platform ("Platform") on a software-as-a-service basis. Access is granted under a separate written service agreement or order form.</p>
+
+      <h4>2. Limitation of Liability</h4>
+      <p>To the maximum extent permitted by applicable law:</p>
+      <ul>
+        <li>HPS shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of revenue, data, goodwill, or business interruption, arising from use of or inability to use the Platform.</li>
+        <li>HPS's total aggregate liability to any client in any twelve-month period shall not exceed the fees paid by that client to HPS in the same period.</li>
+        <li>HPS is not liable for outcomes resulting from decisions made by clinical or administrative staff using data displayed on the Platform.</li>
+      </ul>
+
+      <h4>3. Data Accuracy &amp; Completeness</h4>
+      <p>The Platform operates on data entered by authorised users. HPS does not warrant the accuracy, completeness, or fitness for purpose of any data generated, imported, or displayed. Clients remain solely responsible for validating clinical, financial, and operational outputs before acting on them.</p>
+
+      <h4>4. Service Availability</h4>
+      <p>HPS targets high availability but does not guarantee uninterrupted access. Scheduled maintenance windows, infrastructure incidents, and upstream provider outages are excluded from uptime calculations. Specific SLA commitments are set out in the applicable service agreement.</p>
+
+      <h4>5. Third-Party Integrations</h4>
+      <p>The Platform may connect to third-party services (payment processors, EHR systems, communication APIs). HPS is not responsible for the availability, accuracy, or security of those services, or for any loss arising from their failure.</p>
+
+      <h4>6. Healthcare Regulatory Compliance</h4>
+      <p>HPS provides tools to support compliance with POPIA, GDPR, and applicable healthcare regulations. The ultimate responsibility for regulatory compliance rests with the client as the Responsible Party (POPIA) or Controller (GDPR). HPS acts as Operator/Processor for personal information processed on behalf of clients.</p>
+
+      <h4>7. Indemnity</h4>
+      <p>Clients agree to indemnify and hold HPS harmless from any claims, losses, or expenses arising from misuse of the Platform, unauthorised data entry, or breach of these Terms by the client or its users.</p>
+
+      <h4>8. Governing Law</h4>
+      <p>These Terms are governed by the laws of the Republic of South Africa. Disputes shall be subject to the exclusive jurisdiction of the courts of the Western Cape.</p>
+    </LegalModal>
+  );
+}
+
+function PopiaModal({ onClose }) {
+  return (
+    <LegalModal
+      title="POPIA Website Disclaimer"
+      tag="Protection of Personal Information Act 4 of 2013 · HealthPrac Solutions"
+      onClose={onClose}
+      footerNote={
+        <span>Information Officer: Liezl Joubert · <a href="mailto:liezl@healthpracsolutions.com">liezl@healthpracsolutions.com</a> · Reg No. 2026/147357/07</span>
+      }
+    >
+      <h4>Who We Are</h4>
+      <p>HealthPrac Solutions (Pty) Ltd ("HPS") is a Responsible Party as defined by the Protection of Personal Information Act 4 of 2013 ("POPIA"). This disclaimer applies to personal information collected through this public website (healthpracsolutions.com).</p>
+
+      <h4>What We Collect on This Website</h4>
+      <ul>
+        <li><strong>Enquiry &amp; contact forms</strong> — name, email address, phone number, and message content submitted voluntarily.</li>
+        <li><strong>Book-a-Call requests</strong> — name, email, organisation name, and any notes you provide.</li>
+        <li><strong>Usage analytics</strong> — aggregated, anonymised page-view data (no cross-site tracking; no advertising cookies).</li>
+      </ul>
+      <p>We do not collect special-category personal information (health data, biometrics, financial records) through this website.</p>
+
+      <h4>Why We Collect It</h4>
+      <ul>
+        <li>To respond to your enquiry or schedule a discovery call.</li>
+        <li>To send relevant product updates if you have opted in.</li>
+        <li>To improve the website experience through anonymised analytics.</li>
+      </ul>
+      <p>We process your information on the lawful basis of legitimate interest (responding to inbound enquiries) and consent (marketing communications).</p>
+
+      <h4>How We Store &amp; Protect It</h4>
+      <p>Enquiry data is stored in HPS-operated systems hosted within the European Economic Area (EEA) and subject to GDPR-equivalent safeguards, meeting the POPIA adequacy standard. Data is retained for 24 months from last interaction and then securely deleted.</p>
+
+      <h4>Who We Share It With</h4>
+      <p>We do not sell or rent your personal information. We may share it with service providers who assist us under written data-processing agreements (e.g. email delivery, CRM). We do not share it with third parties for marketing purposes.</p>
+
+      <h4>Your Rights Under POPIA</h4>
+      <ul>
+        <li>Request access to personal information we hold about you.</li>
+        <li>Request correction of inaccurate information.</li>
+        <li>Request deletion of your information (subject to legal retention obligations).</li>
+        <li>Object to processing for direct marketing purposes.</li>
+        <li>Lodge a complaint with the Information Regulator (South Africa).</li>
+      </ul>
+      <p>To exercise any right, email our Information Officer at <a href="mailto:liezl@healthpracsolutions.com" style={{color:"var(--champagne)"}}>liezl@healthpracsolutions.com</a>. We will respond within 30 days.</p>
+
+      <h4>Cookies</h4>
+      <p>This website uses no third-party advertising or tracking cookies. Functional session data may be stored in browser localStorage for interactive demo state only; it is never transmitted to our servers.</p>
+
+      <h4>Changes to This Disclaimer</h4>
+      <p>We may update this disclaimer as our practices evolve. Material changes will be reflected in the effective date at the top of this page.</p>
+    </LegalModal>
+  );
+}
+
 function Footer({ navigate }) {
   const yr = new Date().getFullYear();
+  const [showTerms, setShowTerms] = React.useState(false);
+  const [showPopia, setShowPopia] = React.useState(false);
   return (
-    <footer className="footer">
-      <div className="wrap">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <div className="mark">
-              <HPSEmblem height={32} style={{ filter: "brightness(0) invert(1) opacity(0.85)" }} />
-              HealthPrac<span style={{marginLeft:"0.18em",color:"var(--champagne-2)"}}>Solutions</span>
+    <>
+      {showTerms && <TermsModal onClose={() => setShowTerms(false)} />}
+      {showPopia && <PopiaModal onClose={() => setShowPopia(false)} />}
+      <footer className="footer">
+        <div className="wrap">
+          <div className="footer-grid">
+            <div className="footer-brand">
+              <div className="mark">
+                <HPSEmblem height={32} style={{ filter: "brightness(0) invert(1) opacity(0.85)" }} />
+                HealthPrac<span style={{marginLeft:"0.18em",color:"var(--champagne-2)"}}>Solutions</span>
+              </div>
+              <p>The operating system for senior living and care. Built by operators, for operators. Software-first; partnership where it matters.</p>
+              <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
             </div>
-            <p>The operating system for senior living and care. Built by operators, for operators. Software-first; partnership where it matters.</p>
-            <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
+            <div className="footer-col">
+              <h5>Platform</h5>
+              <ul>
+                <li><a onClick={() => navigate("platform")}>Overview</a></li>
+                <li><a onClick={() => navigate("platform")}>Partnership</a></li>
+                <li><a onClick={() => navigate("platform")}>Security</a></li>
+                <li><a onClick={() => navigate("platform")}>Integrations</a></li>
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h5>Platform Map</h5>
+              <ul>
+                {CATEGORIES.map((c) => (
+                  <li key={c.id}><a onClick={() => navigate("module", { id: c.moduleIds[0] })}>{c.name}</a></li>
+                ))}
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h5>Who We Serve</h5>
+              <ul>
+                {SEGMENTS.map((s) => (
+                  <li key={s.id}><a onClick={() => navigate("serve", { id: s.id })}>{s.name}</a></li>
+                ))}
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h5>Company</h5>
+              <ul>
+                <li><a onClick={() => navigate("why")}>Why HPS</a></li>
+                <li><a onClick={() => navigate("about")}>About</a></li>
+                <li><a>Careers</a></li>
+                <li><a>Press</a></li>
+                <li><a>Contact</a></li>
+              </ul>
+            </div>
           </div>
-          <div className="footer-col">
-            <h5>Platform</h5>
-            <ul>
-              <li><a onClick={() => navigate("platform")}>Overview</a></li>
-              <li><a onClick={() => navigate("platform")}>Partnership</a></li>
-              <li><a onClick={() => navigate("platform")}>Security</a></li>
-              <li><a onClick={() => navigate("platform")}>Integrations</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Platform Map</h5>
-            <ul>
-              {CATEGORIES.map((c) => (
-                <li key={c.id}><a onClick={() => navigate("module", { id: c.moduleIds[0] })}>{c.name}</a></li>
-              ))}
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Who We Serve</h5>
-            <ul>
-              {SEGMENTS.map((s) => (
-                <li key={s.id}><a onClick={() => navigate("serve", { id: s.id })}>{s.name}</a></li>
-              ))}
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Company</h5>
-            <ul>
-              <li><a onClick={() => navigate("why")}>Why HPS</a></li>
-              <li><a onClick={() => navigate("about")}>About</a></li>
-              <li><a>Careers</a></li>
-              <li><a>Press</a></li>
-              <li><a>Contact</a></li>
-            </ul>
+          <div className="footer-legal">
+            <div>© {yr} HealthPrac Solutions. All Rights Reserved. · Reg No. 2026/147357/07</div>
+            <div>
+              Powered by HPS ·{" "}
+              <button className="footer-legal-link" onClick={() => setShowPopia(true)}>POPIA</button>
+              {" · "}
+              <button className="footer-legal-link" onClick={() => setShowTerms(true)}>Terms</button>
+              {" · DPA · Sub-processors"}
+            </div>
           </div>
         </div>
-        <div className="footer-legal">
-          <div>© {yr} HealthPrac Solutions. All Rights Reserved. · Reg No. 2026/147357/07</div>
-          <div>Powered by HPS · POPIA · Terms · DPA · Sub-processors</div>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }
 
