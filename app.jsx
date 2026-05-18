@@ -1,5 +1,7 @@
 const { useState, useEffect, useRef, useMemo } = React;
 
+// Build: 2026-05-18 — book-a-call wired to platform API + pipeline
+
 // ===========================================================
 // DATA
 // ===========================================================
