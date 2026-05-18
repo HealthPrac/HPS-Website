@@ -130,7 +130,7 @@ function ExploreAppSidebar({ active, setActive }) {
       ))}
       <div className="esb-usr">
         <div className="esb-av">LJ</div>
-        <div><div className="esb-uname">Liezl Joubert</div><div className="esb-urole">Admin</div></div>
+        <div><div className="esb-uname">Lisa Jordan</div><div className="esb-urole">Admin</div></div>
       </div>
     </aside>
   );
@@ -834,7 +834,7 @@ function ProductMock({ initialVillage = 0, facilityName = "Jolly Oaks Senior Liv
             <div className="user-chip">
               <div className="avatar">LJ</div>
               <div>
-                <div className="user-name">Liezl Joubert</div>
+                <div className="user-name">Lisa Jordan</div>
                 <div className="user-role">Admin</div>
               </div>
             </div>
