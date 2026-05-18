@@ -1058,7 +1058,7 @@ function MomentsCarousel() {
 }
 
 // ===========================================================
-// PROBLEM ACCORDION — twelve-systems pain points, expandable
+// PROBLEM ACCORDION — eight pain-point categories, expandable
 // ===========================================================
 const PROBLEM_ROWS = [
   {
@@ -1257,12 +1257,15 @@ function HomePage({ navigate }) {
               <div className="eyebrow">The Problem</div>
               <div className="problem-grid">
                 <div>
-                  <h2 className="problem-h">Twelve systems.<br/><em>No single source of truth.</em></h2>
+                  <h2 className="problem-h">Eight systems.<br/><em>No single source of truth.</em></h2>
                   <p className="body-l" style={{ marginTop: 20, maxWidth: "44ch" }}>
                     It works on the days nothing goes wrong. Then a resident has an event, a regulator arrives, or quality drifts in a way nobody saw coming — and the board has to be reassured from memory.
                   </p>
                   <p className="body-l" style={{ marginTop: 14, color: "var(--forest)", fontWeight: 500 }}>
-                    HealthPrac replaces all of it — with an interface your executives actually want to use.
+                    HealthPrac consolidates all of it — twenty modules across six categories — into the one platform your executives have always needed but never had.
+                  </p>
+                  <p style={{ marginTop: 12, fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--champagne)" }}>
+                    The command centre executives actually open. →
                   </p>
                 </div>
                 <ProblemAccordion navigate={navigate} />
