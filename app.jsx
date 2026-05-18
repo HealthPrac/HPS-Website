@@ -1310,41 +1310,33 @@ function HomePage({ navigate }) {
       {/* HERO */}
       <section className="hero">
         <div className="wrap">
-          <div className="hero-grid">
-            <div>
-              <Reveal>
-                <div className="eyebrow">Senior Living &amp; Care Operating System</div>
-              </Reveal>
-              <Reveal delay={80}>
-                <h1 className="display hero-h1">
-                  The <em>operating system</em> for senior living &amp; care.
-                </h1>
-              </Reveal>
-              <Reveal delay={180}>
-                <p className="lede hero-sub">
-                  One elegant platform for governance, medication, workforce, training, incidents, assets, facilities, and executive oversight — embedded by people who understand the challenges of multi-site operations in a healthcare environment.
-                </p>
-              </Reveal>
-              <Reveal delay={260}>
-                <div className="hero-ctas">
-                  <button className="btn primary" onClick={() => navigate("call")}>
-                    Book a call to explore <span className="arrow">→</span>
-                  </button>
-                  <button className="btn secondary" onClick={() => navigate("demo")}>
-                    Explore the Platform
-                  </button>
-                </div>
-              </Reveal>
-              <Reveal delay={340}>
-                <div className="hero-meta">
-                  <div className="item">Modules<strong>Twenty across six categories</strong></div>
-                  <div className="item">Implementation<strong>4–6 weeks</strong></div>
-                  <div className="item">Combined Leadership<strong>72 years</strong></div>
-                </div>
-              </Reveal>
-            </div>
-            <Reveal delay={120}>
-              <ProductMock />
+          <div style={{ maxWidth: "780px", margin: "0 auto", textAlign: "center" }}>
+            <Reveal>
+              <div className="eyebrow" style={{ justifyContent: "center" }}>Senior Living &amp; Care Operating System</div>
+            </Reveal>
+            <Reveal delay={80}>
+              <h1 className="display hero-h1">
+                The <em>operating system</em> for senior living &amp; care.
+              </h1>
+            </Reveal>
+            <Reveal delay={180}>
+              <p className="lede hero-sub" style={{ maxWidth: "540px", margin: "32px auto 36px" }}>
+                One elegant platform for governance, medication, workforce, training, incidents, assets, facilities, and executive oversight — embedded by people who understand the challenges of multi-site operations in a healthcare environment.
+              </p>
+            </Reveal>
+            <Reveal delay={260}>
+              <div className="hero-ctas" style={{ justifyContent: "center" }}>
+                <button className="btn primary" onClick={() => navigate("call")}>
+                  Book a call to explore <span className="arrow">→</span>
+                </button>
+              </div>
+            </Reveal>
+            <Reveal delay={340}>
+              <div className="hero-meta" style={{ justifyContent: "center" }}>
+                <div className="item">Modules<strong>Twenty across six categories</strong></div>
+                <div className="item">Implementation<strong>4–6 weeks</strong></div>
+                <div className="item">Combined Leadership<strong>72 years</strong></div>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -1427,33 +1419,29 @@ function HomePage({ navigate }) {
                 <h2>Twenty modules.<br/><em>Six categories.</em><br/>One system of record.</h2>
               </div>
               <p className="body-l" style={{ maxWidth: "48ch" }}>
-                Every layer of a care environment — from the gate to the boardroom — modelled, configured and connected on one platform. Click any module to read its deep-dive.
+                Every layer of a care environment — from the gate to the boardroom — modelled, configured and connected on one platform.
               </p>
             </div>
           </Reveal>
           <Reveal>
             <div className="cat-grid">
               {CATEGORIES.map((c) => (
-                <div key={c.id} className="cat-card">
+                <div key={c.id} className="cat-card" style={{ minHeight: "auto" }}>
                   <div className="cat-head">
                     <span className="n">{c.num} · {c.em}</span>
                     <span className="c">{c.moduleIds.length} {c.moduleIds.length === 1 ? "module" : "modules"}</span>
                   </div>
                   <h3>{c.name}<em>.</em></h3>
                   <p className="blurb">{c.blurb}</p>
-                  <ul className="cat-list">
-                    {c.moduleIds.map((mid) => {
-                      const m = MODULE_BY_ID[mid];
-                      return (
-                        <li key={mid} onClick={() => navigate("module", { id: mid })}>
-                          <span className="name">{m.name}</span>
-                          <span className="num">{m.num}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
                 </div>
               ))}
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            <div style={{ textAlign: "center", marginTop: 40 }}>
+              <button className="btn primary" onClick={() => navigate("call")}>
+                Book a call to explore <span className="arrow">→</span>
+              </button>
             </div>
           </Reveal>
         </div>
@@ -1475,8 +1463,8 @@ function HomePage({ navigate }) {
                 <p className="body-l" style={{ maxWidth: "44ch", marginBottom: 32 }}>
                   Seven calm screens: home, resident status, billing, events &amp; menu, request centre, surveys &amp; feedback, important contacts. The whole stakeholder layer of the platform, held to the standard your residents see at the front door.
                 </p>
-                <button className="btn primary" onClick={() => navigate("module", { id: "family-portal" })}>
-                  Explore the Family Portal <span className="arrow">→</span>
+                <button className="btn primary" onClick={() => navigate("call")}>
+                  Book a call to explore <span className="arrow">→</span>
                 </button>
               </div>
               <FamilyPortalPreview />
@@ -2337,8 +2325,7 @@ function FamilyPortalShowcase() {
 
 // Standalone phone with internal screen state — for home-page preview
 function FamilyPortalPreview() {
-  const [screen, setScreen] = useState("home");
-  return <Phone screenId={screen} setScreen={setScreen} />;
+  return <Phone screenId="home" setScreen={() => {}} />;
 }
 
 function FamilyPortalPage({ navigate }) {
