@@ -1580,7 +1580,7 @@ function PlatformPage({ navigate }) {
               <h2 style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(28px,4vw,44px)",fontWeight:400,color:"var(--forest)",margin:"8px 0 16px"}}>
                 Click through the platform<em style={{fontStyle:"italic",color:"var(--champagne)"}}> live.</em>
               </h2>
-              <p className="body-l" style={{maxWidth:"48ch",margin:"0 auto 24px"}}>Explore every module in the Jolly Oaks demo — desktop, tablet, or mobile. Real interface, fictitious data.</p>
+              <p className="body-l" style={{maxWidth:"48ch",margin:"0 auto 24px"}}>*Disclaimer. All information loaded is fictitious and for demonstration purposes only.</p>
               <button className="btn primary" onClick={() => navigate("explore")}>Explore the Platform Interactive <span className="arrow">→</span></button>
             </div>
             <ProductMock initialVillage={0} />
