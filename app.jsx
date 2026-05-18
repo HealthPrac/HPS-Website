@@ -55,13 +55,14 @@ const VILLAGES = [
 // ===========================================================
 // LOGO + EMBLEM SVG
 // ===========================================================
-function LogoGlyph({ size = 26 }) {
-  // Simple geometric stand-in for the emblem (interlocked cross)
+function HPSLogo({ height = 36 }) {
   return (
-    <svg className="logo-glyph" width={size} height={size} viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M11 6 h6 v5 h5 v6 h-5 v5 h-6 v-5 h-5 v-6 h5 z" stroke="#0F2547" />
-      <path d="M15 10 h6 v5 h5 v6 h-5 v5 h-6 v-5 h-5 v-6 h5 z" stroke="#C99A4E" opacity="0.95" />
-    </svg>
+    <img
+      src="images/hps-logo.svg"
+      alt="HealthPrac Solutions"
+      height={height}
+      style={{ display: "block" }}
+    />
   );
 }
 
@@ -113,8 +114,7 @@ function Nav({ route, navigate }) {
     <header className="nav" onMouseLeave={leave}>
       <div className="nav-inner">
         <button className="logo" onClick={() => go("home")} aria-label="HealthPrac home">
-          <LogoGlyph />
-          <span>HealthPrac</span>
+          <HPSLogo height={36} />
         </button>
 
         <nav className="nav-items">
@@ -388,7 +388,7 @@ function Footer({ navigate }) {
       <div className="wrap">
         <div className="footer-grid">
           <div className="footer-brand">
-            <div className="mark"><LogoGlyph size={28} /> HealthPrac</div>
+            <div className="mark"><HPSLogo height={40} /></div>
             <p>The operating system for senior living and care. Built by operators, for operators. Software-first; partnership where it matters.</p>
             <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
           </div>
