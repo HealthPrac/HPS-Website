@@ -441,11 +441,11 @@ function Footer({ navigate }) {
 // MOMENTS CAROUSEL — slow auto-rotating imagery band
 // ===========================================================
 const MOMENTS = [
-  { id: "view",      caption: "Resident's view at golden hour",         hint: "Upmarket retirement residence · garden / ocean / mountain view at golden hour" },
-  { id: "lounge",    caption: "Quiet lounge, mid-morning sun",          hint: "Elegant lounge interior · warm natural light · two happy residents reading / chatting" },
-  { id: "care",      caption: "A nurse, a hand, the time it deserves",  hint: "Nurse seated beside elderly resident · holding hand · warm, compassionate, candid" },
-  { id: "garden",    caption: "Afternoon in the garden",                hint: "Couple of residents walking with carer in landscaped garden · sunshine · greenery" },
-  { id: "family",    caption: "Visiting day, calm reception",           hint: "Family visiting elderly resident · multi-generational · smiling · sunny lounge" },
+  { id: "view",      caption: "Resident's view at golden hour",         hint: "Upmarket retirement residence · garden / ocean / mountain view at golden hour", src: "images/view-golden-hour.jpg" },
+  { id: "lounge",    caption: "Quiet lounge, mid-morning sun",          hint: "Elegant lounge interior · warm natural light · two happy residents reading / chatting", src: "images/lounge-morning.jpg" },
+  { id: "care",      caption: "A nurse, a hand, the time it deserves",  hint: "Nurse seated beside elderly resident · holding hand · warm, compassionate, candid", src: "images/care-garden-walk.jpg" },
+  { id: "garden",    caption: "Afternoon in the garden",                hint: "Couple of residents walking with carer in landscaped garden · sunshine · greenery", src: "images/garden-afternoon.jpg" },
+  { id: "family",    caption: "Visiting day, calm reception",           hint: "Family visiting elderly resident · multi-generational · smiling · sunny lounge", src: "images/family-day.jpg" },
 ];
 
 function MomentsCarousel() {
@@ -472,6 +472,7 @@ function MomentsCarousel() {
               id={`moment-${m.id}`}
               shape="rect"
               placeholder={m.hint}
+              src={m.src}
               style={{ width: "100%", height: "100%", display: "block" }}
             ></image-slot>
           </div>
