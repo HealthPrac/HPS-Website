@@ -1262,7 +1262,7 @@ function HomePage({ navigate }) {
                     It works on the days nothing goes wrong. Then a resident has an event, a regulator arrives, or quality drifts in a way nobody saw coming — and the CEO has to reassure the board from memory, with a spreadsheet assembled the night before.
                   </p>
                   <p className="body-l" style={{ marginTop: 14, color: "var(--forest)", fontWeight: 500 }}>
-                    HealthPrac consolidates all of it into <strong>Executive Command</strong> and <strong>Executive KPIs</strong> — the CEO view across every site, every flag, every trend. Board-ready by default. Not assembled Sunday night. Already there.
+                    HealthPrac consolidates all of it into <strong>Executive Command</strong> and <strong>Executive KPIs</strong> — The C-Suite is Board-ready by default due to the detailed oversight of each facility.
                   </p>
                   <button
                     type="button"
