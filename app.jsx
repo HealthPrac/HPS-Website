@@ -115,7 +115,7 @@ function Nav({ route, navigate }) {
       <div className="nav-inner">
         <button className="logo" onClick={() => go("home")} aria-label="HealthPrac home">
           <HPSEmblem height={28} />
-          <span>HealthPrac Solutions</span>
+          <span>HealthPrac<span style={{marginLeft:"0.18em",color:"var(--champagne)"}}>Solutions</span></span>
         </button>
 
         <nav className="nav-items">
@@ -391,7 +391,7 @@ function Footer({ navigate }) {
           <div className="footer-brand">
             <div className="mark">
               <HPSEmblem height={32} style={{ filter: "brightness(0) invert(1) opacity(0.85)" }} />
-              HealthPrac Solutions
+              HealthPrac<span style={{marginLeft:"0.18em",color:"var(--champagne-2)"}}>Solutions</span>
             </div>
             <p>The operating system for senior living and care. Built by operators, for operators. Software-first; partnership where it matters.</p>
             <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
