@@ -1330,7 +1330,7 @@ function HomePage({ navigate }) {
                   <button className="btn primary" onClick={() => navigate("call")}>
                     Book a call to explore <span className="arrow">→</span>
                   </button>
-                  <button className="btn secondary" onClick={() => navigate("explore")}>
+                  <button className="btn secondary" onClick={() => navigate("demo")}>
                     Explore the Platform
                   </button>
                 </div>
@@ -1668,7 +1668,6 @@ function HomePage({ navigate }) {
             </p>
             <div className="ctas">
               <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
-              <button className="btn ghost-light">Download the Executive Brief</button>
             </div>
           </Reveal>
         </div>
@@ -1706,7 +1705,7 @@ function PlatformPage({ navigate }) {
                 Click through the platform<em style={{fontStyle:"italic",color:"var(--champagne)"}}> live.</em>
               </h2>
               <p className="body-l" style={{maxWidth:"48ch",margin:"0 auto 24px"}}>*Disclaimer. All information loaded is fictitious and for demonstration purposes only.</p>
-              <button className="btn primary" onClick={() => navigate("explore")}>Explore the Platform Interactive <span className="arrow">→</span></button>
+              <button className="btn primary" onClick={() => navigate("demo")}>Explore the Platform Interactive <span className="arrow">→</span></button>
             </div>
             <ProductMock initialVillage={0} />
           </Reveal>
@@ -2985,6 +2984,11 @@ function App() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 20);
   };
+
+  // Demo gets full-screen treatment — no website nav/footer
+  if (route.name === "demo") {
+    return <DemoPage navigate={navigate} />;
+  }
 
   let page;
   switch (route.name) {
