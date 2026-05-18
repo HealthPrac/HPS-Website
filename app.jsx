@@ -182,7 +182,7 @@ function Reveal({ children, delay = 0, as: As = "div", className = "" }) {
 // NAV
 // ===========================================================
 function Nav({ route, navigate }) {
-  const [open, setOpen] = useState(null); // "platform" | "solutions" | "serve" | null
+  const [open, setOpen] = useState(null); // "serve" | null
   const closeTimer = useRef(null);
 
   const enter = (key) => {
@@ -206,18 +206,6 @@ function Nav({ route, navigate }) {
 
         <nav className="nav-items">
           <button
-            className={`nav-item ${route === "platform" ? "active" : ""}`}
-            onMouseEnter={() => enter("platform")}
-            onClick={() => go("platform")}
-          >Platform <span className="caret">▾</span></button>
-
-          <button
-            className={`nav-item ${route === "module" ? "active" : ""}`}
-            onMouseEnter={() => enter("solutions")}
-            onClick={() => go("module", { id: "mar" })}
-          >Solutions <span className="caret">▾</span></button>
-
-          <button
             className={`nav-item ${route === "serve" ? "active" : ""}`}
             onMouseEnter={() => enter("serve")}
             onClick={() => go("serve")}
@@ -227,7 +215,7 @@ function Nav({ route, navigate }) {
             className={`nav-item ${route === "why" ? "active" : ""}`}
             onMouseEnter={() => enter(null)}
             onClick={() => go("why")}
-          >Why HPS</button>
+          >Why HPS?</button>
 
           <button
             className={`nav-item ${route === "about" ? "active" : ""}`}
@@ -237,84 +225,9 @@ function Nav({ route, navigate }) {
         </nav>
 
         <div className="nav-cta">
-          <button className="nav-signin">Sign in</button>
           <button className="btn primary" onClick={() => go("call")}>
             Book a call to explore <span className="arrow">→</span>
           </button>
-        </div>
-      </div>
-
-      {/* Platform dropdown */}
-      <div
-        className={`dropdown ${open === "platform" ? "open" : ""}`}
-        onMouseEnter={() => enter("platform")}
-        onMouseLeave={leave}
-      >
-        <div className="dropdown-inner">
-          <div>
-            <div className="dropdown-eyebrow">The Platform</div>
-            <h3 className="dropdown-title">One platform.<br /><em>Designed together.</em></h3>
-            <p className="dropdown-desc">A single, calm interface for everything that matters in a care environment — built for executives and operations leads, not just specialists.</p>
-          </div>
-          <div className="dropdown-grid">
-            <button className="dd-item" onClick={() => go("platform")}>
-              <span className="num">01</span>
-              <span>
-                <span className="name">Platform overview</span>
-                <span className="blurb">Philosophy, architecture, and how the modules sit together.</span>
-              </span>
-            </button>
-            <button className="dd-item" onClick={() => go("platform", { anchor: "partnership" })}>
-              <span className="num">02</span>
-              <span>
-                <span className="name">Human partnership</span>
-                <span className="blurb">Implementation, operational improvement, executive sounding-board.</span>
-              </span>
-            </button>
-            <button className="dd-item" onClick={() => go("platform", { anchor: "security" })}>
-              <span className="num">03</span>
-              <span>
-                <span className="name">Security</span>
-                <span className="blurb">POPIA, data residency, encryption, RBAC, audit log.</span>
-              </span>
-            </button>
-            <button className="dd-item" onClick={() => go("explore")}>
-              <span className="num">04</span>
-              <span>
-                <span className="name">Interactive demo</span>
-                <span className="blurb">Click through the platform live — all modules, fictitious data.</span>
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Solutions mega-menu */}
-      <div
-        className={`dropdown mega ${open === "solutions" ? "open" : ""}`}
-        onMouseEnter={() => enter("solutions")}
-        onMouseLeave={leave}
-      >
-        <div className="dropdown-inner">
-          <div className="mega-head">
-            <h3 className="title">Twenty modules.<br/><em>Six categories. One record.</em></h3>
-            <p className="desc">Each module works on its own. They were designed together — one data model, one identity layer, one audit log. Click any module to read its deep-dive.</p>
-          </div>
-          <div className="mega-cats">
-            {CATEGORIES.map((c) => (
-              <div className="mega-cat" key={c.id}>
-                <div className="cat-label">{c.name}</div>
-                <ul>
-                  {c.moduleIds.map((mid) => {
-                    const m = MODULE_BY_ID[mid];
-                    return (
-                      <li key={mid} onClick={() => go("module", { id: mid })}>{m.name}</li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
