@@ -1320,7 +1320,7 @@ function HomePage({ navigate }) {
               </Reveal>
               <Reveal delay={180}>
                 <p className="lede hero-sub">
-                  One elegant platform for governance, medication, workforce, training, incidents, assets, facilities, and executive oversight — embedded by people who have run care environments themselves.
+                  One elegant platform for governance, medication, workforce, training, incidents, assets, facilities, and executive oversight — embedded by people who understand the challenges of multi-site operations in a healthcare environment.
                 </p>
               </Reveal>
               <Reveal delay={260}>
