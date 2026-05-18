@@ -183,6 +183,7 @@ function Reveal({ children, delay = 0, as: As = "div", className = "" }) {
 // ===========================================================
 function Nav({ route, navigate }) {
   const [open, setOpen] = useState(null); // "serve" | null
+  const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef(null);
 
   const enter = (key) => {
@@ -194,7 +195,7 @@ function Nav({ route, navigate }) {
     closeTimer.current = setTimeout(() => setOpen(null), 160);
   };
 
-  const go = (r, payload) => { setOpen(null); navigate(r, payload); };
+  const go = (r, payload) => { setOpen(null); setMobileOpen(false); navigate(r, payload); };
 
   return (
     <header className="nav" onMouseLeave={leave}>
@@ -225,11 +226,32 @@ function Nav({ route, navigate }) {
         </nav>
 
         <div className="nav-cta">
-          <button className="btn primary" onClick={() => go("call")}>
+          <button className="btn primary nav-cta-btn" onClick={() => go("call")}>
             Book a call to explore <span className="arrow">→</span>
+          </button>
+          <button
+            className={`mob-btn ${mobileOpen ? "open" : ""}`}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileOpen(o => !o)}
+          >
+            <span /><span /><span />
           </button>
         </div>
       </div>
+
+      {/* Mobile drawer */}
+      {mobileOpen && (
+        <div className="mobile-drawer">
+          <button className="mob-nav-item" onClick={() => go("serve")}>Who We Serve</button>
+          <button className="mob-nav-item" onClick={() => go("why")}>Why HPS?</button>
+          <button className="mob-nav-item" onClick={() => go("about")}>About</button>
+          <div className="mob-cta-wrap">
+            <button className="btn primary" style={{ width: "100%", justifyContent: "center" }} onClick={() => go("call")}>
+              Book a call to explore <span className="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Who We Serve dropdown */}
       <div
