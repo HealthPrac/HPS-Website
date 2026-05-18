@@ -2700,6 +2700,8 @@ function StrategyCallPage({ navigate }) {
     focus: "", notes: "",
   });
   const [errs, setErrs] = useState({});
+  const [sending, setSending] = useState(false);
+  const [sendErr, setSendErr] = useState("");
 
   const set = (k) => (e) => {
     const val = e && e.target ? e.target.value : e;
@@ -2733,10 +2735,34 @@ function StrategyCallPage({ navigate }) {
   function back() {
     setStep((s) => Math.max(s - 1, 0));
   }
-  function submit() {
-    if (validate(2)) {
+  async function submit() {
+    if (!validate(2)) return;
+    setSending(true);
+    setSendErr("");
+    try {
+      const res = await fetch("https://main.d2rogr2lbyrjz1.amplifyapp.com/api/book-call", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name:           data.name.trim(),
+          email:          data.email.trim().toLowerCase(),
+          role:           data.role.trim(),
+          org:            data.org.trim(),
+          segment:        data.segment,
+          sites:          data.sites,
+          focus:          data.focus,
+          currentSystems: data.currentSystems.trim() || undefined,
+          notes:          data.notes.trim() || undefined,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Something went wrong. Please try again.");
       setSubmitted(true);
       setStep(3);
+    } catch (err) {
+      setSendErr(err.message || "Failed to send. Please try again.");
+    } finally {
+      setSending(false);
     }
   }
 
@@ -2876,9 +2902,16 @@ function StrategyCallPage({ navigate }) {
                 </div>
 
                 <div className="form-actions">
-                  <button className="form-back" onClick={back}>← Back</button>
-                  <button className="btn primary" onClick={submit}>Review &amp; send <span className="arrow">→</span></button>
+                  <button className="form-back" onClick={back} disabled={sending}>← Back</button>
+                  <button className="btn primary" onClick={submit} disabled={sending}>
+                    {sending ? "Sending…" : <><span>Send request</span><span className="arrow">→</span></>}
+                  </button>
                 </div>
+                {sendErr && (
+                  <p style={{ marginTop: 12, color: "#c0392b", fontSize: 13, lineHeight: 1.5 }}>
+                    {sendErr}
+                  </p>
+                )}
               </>
             )}
 
