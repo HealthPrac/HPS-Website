@@ -41,10 +41,10 @@ const MODULES = [
 const MODULE_BY_ID = Object.fromEntries(MODULES.map((m) => [m.id, m]));
 
 const SEGMENTS = [
-  { id: "villages", name: "Retirement Villages", blurb: "Governance, facilities, resident services, and the executive view across all of them.", label: "ESTATE / RESIDENCES" },
-  { id: "groups",   name: "Senior Living Groups", blurb: "Multi-village roll-up, brand-consistent resident experience at scale.", label: "GROUP / MULTI-VILLAGE" },
-  { id: "care",     name: "Residential Care",    blurb: "Medication, incidents, clinical handover, regulator-ready governance.", label: "CLINICAL / CARE" },
-  { id: "multisite",name: "Multi-Site Operators",blurb: "Group-wide visibility, federated reporting, board-ready KPIs.", label: "FEDERATED / OPS" },
+  { id: "villages", name: "Retirement Villages", blurb: "Governance, facilities, resident services, and the executive view across all of them.", label: "ESTATE / RESIDENCES",  img: "images/Retirement Villiagespeg.jpeg" },
+  { id: "groups",   name: "Senior Living Groups", blurb: "Multi-village roll-up, brand-consistent resident experience at scale.", label: "GROUP / MULTI-VILLAGE",              img: "images/Senior Living Groups.jpeg" },
+  { id: "care",     name: "Residential Care",    blurb: "Medication, incidents, clinical handover, regulator-ready governance.", label: "CLINICAL / CARE",                    img: "images/Residential Care.jpeg" },
+  { id: "multisite",name: "Multi-Site Operators",blurb: "Group-wide visibility, federated reporting, board-ready KPIs.", label: "FEDERATED / OPS",                          img: "images/Multi-site Operations.jpeg" },
 ];
 
 const VILLAGES = [
@@ -1280,19 +1280,6 @@ function ProblemAccordion({ navigate }) {
             </button>
             <div className="acc-body" hidden={!isOpen}>
               <p className="acc-now">{r.body}</p>
-              <p className="acc-fix">{r.fix}</p>
-              <div className="acc-modules">
-                {r.modules.map((m) => (
-                  <button
-                    key={m.id}
-                    type="button"
-                    className="acc-module"
-                    onClick={() => navigate && navigate("module", { id: m.id })}
-                  >
-                    {m.name} <span className="arrow">→</span>
-                  </button>
-                ))}
-              </div>
             </div>
           </div>
         );
@@ -1371,15 +1358,15 @@ function HomePage({ navigate }) {
                     It works on the days nothing goes wrong. Then a resident has an event, a regulator arrives, or quality drifts in a way nobody saw coming — and the CEO has to reassure the board from memory, with a spreadsheet assembled the night before.
                   </p>
                   <p className="body-l" style={{ marginTop: 14, color: "var(--forest)", fontWeight: 500 }}>
-                    HealthPrac consolidates all of it into <strong>Executive Command</strong> and <strong>Executive KPIs</strong> — The C-Suite is Board-ready by default due to the detailed oversight of each facility.
+                    The HealthPrac Solution ensures the C-Suite is board- and audit-ready by default due to the detailed oversight of each facility.
                   </p>
                   <button
                     type="button"
                     className="btn ghost-light"
                     style={{ marginTop: 16, fontSize: 13, padding: "8px 18px" }}
-                    onClick={() => navigate("module", { id: "exec-command" })}
+                    onClick={() => navigate("call")}
                   >
-                    See Executive Command Centre <span className="arrow">→</span>
+                    Book a call to explore
                   </button>
                 </div>
                 <ProblemAccordion navigate={navigate} />
@@ -1572,7 +1559,9 @@ function HomePage({ navigate }) {
             <div className="serve-grid">
               {SEGMENTS.map((s) => (
                 <div key={s.id} className="serve-card" onClick={() => navigate("serve", { id: s.id })}>
-                  <div className="img">{s.label}</div>
+                  <div className="img">
+                    <img src={s.img} alt={s.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
                   <h4>{s.name}</h4>
                   <p>{s.blurb}</p>
                 </div>
@@ -2529,7 +2518,9 @@ function ServePage({ segmentId, navigate }) {
             <div className="serve-grid">
               {SEGMENTS.filter((x) => x.id !== s.id).map((other) => (
                 <div key={other.id} className="serve-card" onClick={() => navigate("serve", { id: other.id })}>
-                  <div className="img">{other.label}</div>
+                  <div className="img">
+                    <img src={other.img} alt={other.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
                   <h4>{other.name}</h4>
                   <p>{other.blurb}</p>
                 </div>
