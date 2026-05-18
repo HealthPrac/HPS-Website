@@ -55,13 +55,13 @@ const VILLAGES = [
 // ===========================================================
 // LOGO + EMBLEM SVG
 // ===========================================================
-function HPSLogo({ height = 36 }) {
+function HPSEmblem({ height = 28, style = {} }) {
   return (
     <img
-      src="images/hps-logo.svg"
-      alt="HealthPrac Solutions"
+      src="images/hps-emblem.svg"
+      alt=""
       height={height}
-      style={{ display: "block" }}
+      style={{ display: "block", ...style }}
     />
   );
 }
@@ -114,7 +114,8 @@ function Nav({ route, navigate }) {
     <header className="nav" onMouseLeave={leave}>
       <div className="nav-inner">
         <button className="logo" onClick={() => go("home")} aria-label="HealthPrac home">
-          <HPSLogo height={36} />
+          <HPSEmblem height={28} />
+          <span>HealthPrac Solutions</span>
         </button>
 
         <nav className="nav-items">
@@ -388,7 +389,10 @@ function Footer({ navigate }) {
       <div className="wrap">
         <div className="footer-grid">
           <div className="footer-brand">
-            <div className="mark"><HPSLogo height={40} /></div>
+            <div className="mark">
+              <HPSEmblem height={32} style={{ filter: "brightness(0) invert(1) opacity(0.85)" }} />
+              HealthPrac Solutions
+            </div>
             <p>The operating system for senior living and care. Built by operators, for operators. Software-first; partnership where it matters.</p>
             <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
           </div>
