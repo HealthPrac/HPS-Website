@@ -943,41 +943,40 @@ function LegalModal({ title, tag, onClose, children, footerNote }) {
 function TermsModal({ onClose }) {
   return (
     <LegalModal
-      title="Terms of Service — SaaS Provider Liability"
-      tag="HealthPrac Solutions · Effective 1 January 2026"
+      title="SaaS Provider &amp; Client Conduct Disclaimer"
+      tag="HealthPrac Solutions · Platform Terms"
       onClose={onClose}
       footerNote={
-        <span>Questions? <a href="mailto:liezl@healthpracsolutions.com">liezl@healthpracsolutions.com</a> · Governed by the laws of the Republic of South Africa.</span>
+        <span>Read together with the platform terms of use, customer agreement, and data processing/operator agreement. · <a href="mailto:admin@healthprac.com">admin@healthprac.com</a></span>
       }
     >
-      <h4>1. Nature of the Service</h4>
-      <p>HealthPrac Solutions (Pty) Ltd ("HPS", "we", "us") provides a cloud-based healthcare business-management platform ("Platform") on a software-as-a-service basis. Access is granted under a separate written service agreement or order form.</p>
+      <h4>Platform Status</h4>
+      <p>HealthPrac Solutions ("HPS") is a software-as-a-service provider. HPS supplies hosted software, system functionality, related technical services, and may from time to time provide limited consultation services requested by a client, including assistance with matters such as incident investigations, workflow reviews, platform configuration guidance, and related operational support. Such consultation is advisory in nature only and does not make HPS the employer, practice owner, healthcare provider, records custodian, compliance officer, information officer, operator of the client's business, or decision-maker in respect of the client's operational, legal, regulatory, clinical, HR, financial, or data-processing activities, unless expressly agreed otherwise in writing.</p>
 
-      <h4>2. Limitation of Liability</h4>
-      <p>To the maximum extent permitted by applicable law:</p>
+      <h4>Consultation Scope</h4>
+      <p>Any consultation, guidance, support, recommendation, review, comment, participation, or assistance provided by HPS is provided strictly in an advisory and support capacity. Final responsibility for investigating, assessing, escalating, reporting, documenting, deciding, implementing, and responding to any incident, complaint, dispute, breach, governance issue, disciplinary matter, legal matter, operational issue, or compliance issue remains solely with the client at all times.</p>
+
+      <h4>Client Responsibility</h4>
+      <p>Each client is solely responsible for how it configures, administers, accesses, uses, and relies on the platform, including all data entered into the platform and all actions taken or omitted by its authorised users, administrators, employees, contractors, agents, and representatives. The client is also solely responsible for how it interprets, adopts, rejects, or acts on any consultation or support provided by HPS. The client's use of the platform, and any conduct carried out through or in connection with the platform, is undertaken entirely at the client's own risk and for the client's own account.</p>
+
+      <h4>No Endorsement or Attribution</h4>
+      <p>Any act, omission, misconduct, non-compliance, misrepresentation, unlawful processing, unauthorised disclosure, employment dispute, regulatory breach, content upload, instruction, communication, or business practice of a client or user is solely that client's or user's responsibility and shall not be interpreted as reflecting the views, conduct, standards, endorsement, approval, or responsibility of HPS. The fact that HPS may have provided consultation or support to the client on a related matter does not create responsibility, control, assumption of duty, or legal attribution to HPS for the client's decisions, failures, or outcomes.</p>
+
+      <h4>Exclusion of Liability</h4>
+      <p>To the maximum extent permitted by applicable law, HPS shall not be liable for any direct, indirect, incidental, consequential, special, punitive, or exemplary loss, damage, penalty, fine, claim, demand, cost, expense, business interruption, reputational harm, or legal exposure arising from or related to:</p>
       <ul>
-        <li>HPS shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of revenue, data, goodwill, or business interruption, arising from use of or inability to use the Platform.</li>
-        <li>HPS's total aggregate liability to any client in any twelve-month period shall not exceed the fees paid by that client to HPS in the same period.</li>
-        <li>HPS is not liable for outcomes resulting from decisions made by clinical or administrative staff using data displayed on the Platform.</li>
+        <li>any client's or user's acts or omissions;</li>
+        <li>any client's non-compliance with applicable laws, regulations, professional obligations, or contractual duties;</li>
+        <li>any instructions given by a client to its staff, patients, customers, contractors, or third parties;</li>
+        <li>any data, content, records, messages, files, documents, or information uploaded, transmitted, stored, generated, or shared by a client or user; or</li>
+        <li>any reliance placed by a client or third party on outputs, workflows, reminders, automations, records, consultations, suggestions, or support generated through or in connection with the platform, where the client remains responsible for independent review, verification, lawful use, and final decision-making.</li>
       </ul>
 
-      <h4>3. Data Accuracy &amp; Completeness</h4>
-      <p>The Platform operates on data entered by authorised users. HPS does not warrant the accuracy, completeness, or fitness for purpose of any data generated, imported, or displayed. Clients remain solely responsible for validating clinical, financial, and operational outputs before acting on them.</p>
+      <h4>Indemnity</h4>
+      <p>Each client indemnifies, defends, and holds harmless HPS, its affiliates, officers, employees, contractors, and agents from and against any and all claims, complaints, investigations, proceedings, damages, losses, liabilities, penalties, fines, costs, and expenses, including reasonable legal costs, arising from or connected with that client's use of the platform, reliance on consultation, breach of law, breach of contract, infringement of rights, or misuse of personal or confidential information.</p>
 
-      <h4>4. Service Availability</h4>
-      <p>HPS targets high availability but does not guarantee uninterrupted access. Scheduled maintenance windows, infrastructure incidents, and upstream provider outages are excluded from uptime calculations. Specific SLA commitments are set out in the applicable service agreement.</p>
-
-      <h4>5. Third-Party Integrations</h4>
-      <p>The Platform may connect to third-party services (payment processors, EHR systems, communication APIs). HPS is not responsible for the availability, accuracy, or security of those services, or for any loss arising from their failure.</p>
-
-      <h4>6. Healthcare Regulatory Compliance</h4>
-      <p>HPS provides tools to support compliance with POPIA, GDPR, and applicable healthcare regulations. The ultimate responsibility for regulatory compliance rests with the client as the Responsible Party (POPIA) or Controller (GDPR). HPS acts as Operator/Processor for personal information processed on behalf of clients.</p>
-
-      <h4>7. Indemnity</h4>
-      <p>Clients agree to indemnify and hold HPS harmless from any claims, losses, or expenses arising from misuse of the Platform, unauthorised data entry, or breach of these Terms by the client or its users.</p>
-
-      <h4>8. Governing Law</h4>
-      <p>These Terms are governed by the laws of the Republic of South Africa. Disputes shall be subject to the exclusive jurisdiction of the courts of the Western Cape.</p>
+      <h4>Enforceability</h4>
+      <p>If any part of this disclaimer is found to be unenforceable, the remaining provisions shall continue in full force to the maximum extent permitted by law.</p>
     </LegalModal>
   );
 }
@@ -985,53 +984,38 @@ function TermsModal({ onClose }) {
 function PopiaModal({ onClose }) {
   return (
     <LegalModal
-      title="POPIA Website Disclaimer"
+      title="POPIA &amp; Website Data Disclaimer"
       tag="Protection of Personal Information Act 4 of 2013 · HealthPrac Solutions"
       onClose={onClose}
       footerNote={
-        <span>Information Officer: Liezl Joubert · <a href="mailto:liezl@healthpracsolutions.com">liezl@healthpracsolutions.com</a> · Reg No. 2026/147357/07</span>
+        <span>Read together with the website privacy notice, platform terms of use, customer agreement, and data processing/operator agreement. · <a href="mailto:admin@healthprac.com">admin@healthprac.com</a></span>
       }
     >
-      <h4>Who We Are</h4>
-      <p>HealthPrac Solutions (Pty) Ltd ("HPS") is a Responsible Party as defined by the Protection of Personal Information Act 4 of 2013 ("POPIA"). This disclaimer applies to personal information collected through this public website (healthpracsolutions.com).</p>
+      <h4>Important Notice</h4>
+      <p>This website and the software services made available through it may involve the collection, storage, use, transmission, and other processing of personal information. Any such processing must be conducted in accordance with the Protection of Personal Information Act, 4 of 2013 ("POPIA"), and any other applicable South African data protection, privacy, confidentiality, employment, health, consumer, or sector-specific laws and regulations.</p>
 
-      <h4>What We Collect on This Website</h4>
+      <h4>Role of HealthPrac Solutions</h4>
+      <p>HealthPrac Solutions ("HPS") provides a software-as-a-service platform and related digital infrastructure to its clients. Unless expressly stated otherwise in a written agreement, HPS does not determine the lawful basis, purpose, scope, retention period, disclosure practices, or accuracy of personal information captured, uploaded, stored, or processed by any client, user, practice, business, administrator, employee, contractor, or third party using the platform.</p>
+      <p>Each client remains solely and fully responsible for ensuring that:</p>
       <ul>
-        <li><strong>Enquiry &amp; contact forms</strong> — name, email address, phone number, and message content submitted voluntarily.</li>
-        <li><strong>Book-a-Call requests</strong> — name, email, organisation name, and any notes you provide.</li>
-        <li><strong>Usage analytics</strong> — aggregated, anonymised page-view data (no cross-site tracking; no advertising cookies).</li>
+        <li>it has a lawful basis and any required permissions, notices, authorisations, or consents for the collection and processing of personal information;</li>
+        <li>all data entered into or processed through the platform is collected, used, stored, shared, and retained lawfully;</li>
+        <li>appropriate internal policies, access controls, safeguards, operator agreements, training, and governance measures are in place;</li>
+        <li>data subjects are provided with all notices and information required by POPIA and any other applicable laws; and</li>
+        <li>any cross-border transfers, special personal information processing, direct marketing, security incident handling, and records management activities are compliant with applicable law.</li>
       </ul>
-      <p>We do not collect special-category personal information (health data, biometrics, financial records) through this website.</p>
 
-      <h4>Why We Collect It</h4>
-      <ul>
-        <li>To respond to your enquiry or schedule a discovery call.</li>
-        <li>To send relevant product updates if you have opted in.</li>
-        <li>To improve the website experience through anonymised analytics.</li>
-      </ul>
-      <p>We process your information on the lawful basis of legitimate interest (responding to inbound enquiries) and consent (marketing communications).</p>
+      <h4>No Legal Advice</h4>
+      <p>Nothing on this website or within the platform constitutes legal advice, regulatory advice, compliance certification, or a representation that any client's use of the platform is automatically POPIA-compliant. Clients must obtain their own independent legal, compliance, and regulatory advice appropriate to their operations and industry.</p>
 
-      <h4>How We Store &amp; Protect It</h4>
-      <p>Enquiry data is stored in HPS-operated systems hosted within the European Economic Area (EEA) and subject to GDPR-equivalent safeguards, meeting the POPIA adequacy standard. Data is retained for 24 months from last interaction and then securely deleted.</p>
+      <h4>Limitation of Responsibility</h4>
+      <p>HPS does not accept responsibility for, and shall not be liable for, any unlawful, negligent, unauthorised, excessive, inaccurate, misleading, or non-compliant collection, capture, storage, use, disclosure, transfer, retention, deletion, or other processing of personal information by any client or user of the platform. HPS shall not be responsible for any fines, penalties, enforcement action, complaints, damages, losses, claims, costs, or liabilities arising from or relating to a client's or user's failure to comply with POPIA or any other applicable law.</p>
 
-      <h4>Who We Share It With</h4>
-      <p>We do not sell or rent your personal information. We may share it with service providers who assist us under written data-processing agreements (e.g. email delivery, CRM). We do not share it with third parties for marketing purposes.</p>
+      <h4>Reservation of Rights</h4>
+      <p>HPS reserves the right to suspend, restrict, investigate, or terminate access where it reasonably believes that the platform is being used in a manner that may be unlawful, abusive, insecure, or inconsistent with applicable law, contractual terms, or platform policies.</p>
 
-      <h4>Your Rights Under POPIA</h4>
-      <ul>
-        <li>Request access to personal information we hold about you.</li>
-        <li>Request correction of inaccurate information.</li>
-        <li>Request deletion of your information (subject to legal retention obligations).</li>
-        <li>Object to processing for direct marketing purposes.</li>
-        <li>Lodge a complaint with the Information Regulator (South Africa).</li>
-      </ul>
-      <p>To exercise any right, email our Information Officer at <a href="mailto:liezl@healthpracsolutions.com" style={{color:"var(--champagne)"}}>liezl@healthpracsolutions.com</a>. We will respond within 30 days.</p>
-
-      <h4>Cookies</h4>
-      <p>This website uses no third-party advertising or tracking cookies. Functional session data may be stored in browser localStorage for interactive demo state only; it is never transmitted to our servers.</p>
-
-      <h4>Changes to This Disclaimer</h4>
-      <p>We may update this disclaimer as our practices evolve. Material changes will be reflected in the effective date at the top of this page.</p>
+      <h4>Recommended Use</h4>
+      <p>This disclaimer should be read together with the website privacy notice, platform terms of use, customer agreement, data processing/operator agreement, and any information security documentation made available by HPS.</p>
     </LegalModal>
   );
 }
