@@ -1062,6 +1062,18 @@ function MomentsCarousel() {
 // ===========================================================
 const PROBLEM_ROWS = [
   {
+    id: "kpis",
+    what: "Board KPIs",
+    where: "Reconciled Sunday night",
+    bad: true,
+    body: "Finance, care and operations each export their own numbers, somebody reconciles them in a workbook on Sunday, and the board pack lands on Monday morning describing a reality that is already three days old. Decisions are made on stale data.",
+    fix: "Replaced by Executive Command + Executive KPIs — every site, every flag, every trend in one calm screen. Board-ready KPIs across operations, governance, finance and resident experience, live and reconciled by the platform itself.",
+    modules: [
+      { id: "exec-command", name: "Executive Command" },
+      { id: "exec-kpis", name: "Executive KPIs" },
+    ],
+  },
+  {
     id: "governance",
     what: "Governance binder",
     where: "Shared drive",
@@ -1128,18 +1140,6 @@ const PROBLEM_ROWS = [
     modules: [
       { id: "service-desk", name: "Service Desk" },
       { id: "assets", name: "Asset Management" },
-    ],
-  },
-  {
-    id: "kpis",
-    what: "Board KPIs",
-    where: "Reconciled Sunday night",
-    bad: true,
-    body: "Finance, care and operations each export their own numbers, somebody reconciles them in a workbook on Sunday, and the board pack lands on Monday morning describing a reality that is already three days old. Decisions are made on stale data.",
-    fix: "Replaced by Executive Command + Executive KPIs — every site, every flag, every trend in one calm screen. Board-ready KPIs across operations, governance, finance and resident experience, live and reconciled by the platform itself.",
-    modules: [
-      { id: "exec-command", name: "Executive Command" },
-      { id: "exec-kpis", name: "Executive KPIs" },
     ],
   },
 ];
@@ -1259,14 +1259,19 @@ function HomePage({ navigate }) {
                 <div>
                   <h2 className="problem-h">Eight systems.<br/><em>No single source of truth.</em></h2>
                   <p className="body-l" style={{ marginTop: 20, maxWidth: "44ch" }}>
-                    It works on the days nothing goes wrong. Then a resident has an event, a regulator arrives, or quality drifts in a way nobody saw coming — and the board has to be reassured from memory.
+                    It works on the days nothing goes wrong. Then a resident has an event, a regulator arrives, or quality drifts in a way nobody saw coming — and the CEO has to reassure the board from memory, with a spreadsheet assembled the night before.
                   </p>
                   <p className="body-l" style={{ marginTop: 14, color: "var(--forest)", fontWeight: 500 }}>
-                    HealthPrac consolidates all of it — twenty modules across six categories — into the one platform your executives have always needed but never had.
+                    HealthPrac consolidates all of it into <strong>Executive Command</strong> and <strong>Executive KPIs</strong> — the CEO view across every site, every flag, every trend. Board-ready by default. Not assembled Sunday night. Already there.
                   </p>
-                  <p style={{ marginTop: 12, fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--champagne)" }}>
-                    The command centre executives actually open. →
-                  </p>
+                  <button
+                    type="button"
+                    className="btn ghost-light"
+                    style={{ marginTop: 16, fontSize: 13, padding: "8px 18px" }}
+                    onClick={() => navigate("module", { id: "exec-command" })}
+                  >
+                    See Executive Command Centre <span className="arrow">→</span>
+                  </button>
                 </div>
                 <ProblemAccordion navigate={navigate} />
               </div>
