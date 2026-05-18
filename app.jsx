@@ -53,6 +53,90 @@ const VILLAGES = [
 ];
 
 // ===========================================================
+// JOLLY OAKS DEMO DATA (fictitious)
+// ===========================================================
+const JO_RESIDENTS = [
+  { id:"r1", name:"Henry Carter",          ii:"HC", room:"12B", age:82, care:"Standard", status:"settled", family:"James Carter",       lastRound:"08:42" },
+  { id:"r2", name:"Margaret van der Berg", ii:"MV", room:"8A",  age:78, care:"Standard", status:"settled", family:"Susan van der Berg",  lastRound:"08:55" },
+  { id:"r3", name:"James Nkosi",           ii:"JN", room:"15C", age:74, care:"Complex",  status:"review",  family:"Nomvula Nkosi",       lastRound:"08:30" },
+  { id:"r4", name:"Dorothy Pillay",        ii:"DP", room:"3A",  age:85, care:"High",     status:"settled", family:"Rajan Pillay",        lastRound:"09:01" },
+  { id:"r5", name:"Elizabeth Fourie",      ii:"EF", room:"11A", age:71, care:"Standard", status:"settled", family:"Anne Fourie",         lastRound:"08:48" },
+  { id:"r6", name:"Robert Smit",           ii:"RS", room:"7B",  age:80, care:"Standard", status:"monitor", family:"Claire Smit",         lastRound:"08:39" },
+];
+const JO_INCIDENTS = [
+  { ref:"INC-0048", date:"17 May", type:"Medication", desc:"Evening dose recorded 45 min late",           sev:"low",    st:"open",   owner:"Sr Joubert" },
+  { ref:"INC-0047", date:"16 May", type:"Fall",       desc:"Near-fall in corridor — no injury",            sev:"medium", st:"open",   owner:"K. Dlamini"  },
+  { ref:"INC-0046", date:"14 May", type:"Facility",   desc:"Lift out of service 4h",                       sev:"low",    st:"closed", owner:"M. Pillay"   },
+  { ref:"INC-0045", date:"12 May", type:"Medication", desc:"PRN given outside protocol window",            sev:"medium", st:"review", owner:"Sr Joubert"  },
+  { ref:"INC-0044", date:"10 May", type:"Safeguard",  desc:"Family dispute — visit concern logged",         sev:"low",    st:"closed", owner:"M. Pillay"   },
+];
+const JO_STAFF = [
+  { name:"Sr A. Joubert", role:"Clinical Lead",     dept:"Care", st:"on-shift", note:null },
+  { name:"K. Dlamini",    role:"Registered Nurse",  dept:"Care", st:"on-shift", note:null },
+  { name:"P. Swart",      role:"Care Worker",       dept:"Care", st:"on-shift", note:null },
+  { name:"M. Pillay",     role:"Site Manager",      dept:"Ops",  st:"on-shift", note:null },
+  { name:"T. Mokoena",    role:"Housekeeping Sup.", dept:"Ops",  st:"on-shift", note:null },
+  { name:"D. Hendricks",  role:"Kitchen Supervisor",dept:"Ops",  st:"leave",    note:"Annual leave to 23 May" },
+  { name:"R. September",  role:"Care Worker",       dept:"Care", st:"on-shift", note:null },
+];
+const JO_TRAINING = [
+  { course:"POPIA Data Handling",       cat:"Compliance", due:"30 Jun", pct:85,  exp:2 },
+  { course:"Manual Handling",           cat:"Clinical",   due:"15 Jun", pct:100, exp:0 },
+  { course:"Fire Safety",               cat:"Safety",     due:"01 Jul", pct:91,  exp:1 },
+  { course:"Dementia Care Awareness",   cat:"Clinical",   due:"30 Jun", pct:78,  exp:3 },
+  { course:"Medication Administration", cat:"Clinical",   due:"31 May", pct:100, exp:0 },
+];
+
+// ===========================================================
+// DEVICE PICKER (shared by Explore + Family Portal)
+// ===========================================================
+function DevicePicker({ mode, setMode, options = ["desktop","tablet","mobile"] }) {
+  const labels = { desktop:"Desktop", tablet:"Tablet", mobile:"Mobile" };
+  const icons  = { desktop:"⊡", tablet:"▭", mobile:"▯" };
+  return (
+    <div className="device-picker">
+      {options.map(o => (
+        <button key={o} className={`device-btn ${mode===o?"active":""}`} onClick={() => setMode(o)}>
+          <span style={{fontSize:13}}>{icons[o]}</span>{labels[o]}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ===========================================================
+// EXPLORE SIDEBAR (desktop + tablet modes)
+// ===========================================================
+function ExploreAppSidebar({ active, setActive }) {
+  const nav = [
+    { grp:"Operate",    items:[["exec","Executive View","4"],["residents","Residents","48"],["facility","Facility Home",""]] },
+    { grp:"Care",       items:[["plans","Care Plans",""],["mar","Medication MAR","3"],["obs","Observations",""]] },
+    { grp:"Governance", items:[["incidents","Incidents","5"],["docs","QMS Documents",""]] },
+    { grp:"People",     items:[["hr","HR & Workforce",""],["training","Training","2"]] },
+    { grp:"Operations", items:[["facilities","Facilities",""],["housekeeping","Housekeeping",""]] },
+  ];
+  return (
+    <aside className="explore-sidebar">
+      <div className="esb-brand"><div className="esb-mark">HP</div><div className="esb-name">HealthPrac</div></div>
+      {nav.map(({ grp, items }) => (
+        <React.Fragment key={grp}>
+          <div className="esb-grp">{grp}</div>
+          {items.map(([id, label, cnt]) => (
+            <div key={id} className={`esb-lnk ${active===id?"active":""}`} onClick={() => setActive(id)}>
+              {label}{cnt ? <span className="esb-cnt">{cnt}</span> : null}
+            </div>
+          ))}
+        </React.Fragment>
+      ))}
+      <div className="esb-usr">
+        <div className="esb-av">LJ</div>
+        <div><div className="esb-uname">Liezl Joubert</div><div className="esb-urole">Admin</div></div>
+      </div>
+    </aside>
+  );
+}
+
+// ===========================================================
 // LOGO + EMBLEM SVG
 // ===========================================================
 function HPSEmblem({ height = 28, style = {} }) {
@@ -192,11 +276,11 @@ function Nav({ route, navigate }) {
                 <span className="blurb">POPIA, data residency, encryption, RBAC, audit log.</span>
               </span>
             </button>
-            <button className="dd-item" onClick={() => go("platform", { anchor: "tour" })}>
+            <button className="dd-item" onClick={() => go("explore")}>
               <span className="num">04</span>
               <span>
-                <span className="name">Take the tour</span>
-                <span className="blurb">A 60-second walkthrough of the executive dashboard.</span>
+                <span className="name">Interactive demo</span>
+                <span className="blurb">Click through the platform live — all modules, fictitious data.</span>
               </span>
             </button>
           </div>
@@ -258,6 +342,457 @@ function Nav({ route, navigate }) {
         </div>
       </div>
     </header>
+  );
+}
+
+// ===========================================================
+// EXPLORE MODULE SCREENS
+// ===========================================================
+function ExecScreen({ sm }) {
+  return (
+    <div className={`aci ${sm?"sm":""}`}>
+      <div className="mod-hd">
+        <div><div className="mod-ey">Executive · Q3 2026</div><div className="mod-ti">Jolly Oaks Senior Living<em>.</em></div></div>
+        {!sm && <button className="mod-act">Board pack ↗</button>}
+      </div>
+      <div className={`kpi-row ${sm?"k2":"k4"}`}>
+        <div className="kpi-card"><div className="kv good">48</div><div className="kl">Residents</div><div className="kd">All rooms occupied</div></div>
+        <div className="kpi-card"><div className="kv warn">5</div><div className="kl">Open Incidents</div><div className="kd">2 require action</div></div>
+        <div className="kpi-card"><div className="kv good">99.1%</div><div className="kl">Medication acc.</div><div className="kd">Last 30 days</div></div>
+        <div className="kpi-card"><div className="kv">91%</div><div className="kl">Training current</div><div className="kd">6 expiring soon</div></div>
+      </div>
+      <div className={sm?"one-col":"two-col"}>
+        <div className="cc">
+          <div className="cc-hd"><div className="cc-lbl">Open Items</div><span className="cc-badge">TODAY</span></div>
+          <div className="cr"><span className="ll">POPIA training expiries (30d)</span><span className="vv warn">6</span></div>
+          <div className="cr"><span className="ll">Open incidents</span><span className="vv warn">5</span></div>
+          <div className="cr"><span className="ll">Medication variance</span><span className="vv good">0</span></div>
+          <div className="cr"><span className="ll">Maintenance &gt; SLA</span><span className="vv warn">2</span></div>
+          <div className="cr"><span className="ll">Family enquiries (24h)</span><span className="vv">7</span></div>
+        </div>
+        <div className="cc">
+          <div className="cc-hd"><div className="cc-lbl">Governance · Last 7 days</div><span className="cc-badge">LIVE</span></div>
+          <div className="cr"><span className="ll">Policies acknowledged</span><span className="vv good">43 / 46</span></div>
+          <div className="cr"><span className="ll">Audit binder freshness</span><span className="vv good">Live</span></div>
+          <div className="cr"><span className="ll">Risk register</span><span className="vv">On schedule</span></div>
+          <div className="cr"><span className="ll">Sub-processor disclosures</span><span className="vv good">Current</span></div>
+          <div className="cr"><span className="ll">Board pack (Q3)</span><span className="vv warn">Draft</span></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ResidentsScreen({ sm, onSelect }) {
+  return (
+    <div className={`aci ${sm?"sm":""}`}>
+      <div className="mod-hd">
+        <div><div className="mod-ey">Residents</div><div className="mod-ti">Active Residents<em> · 48</em></div></div>
+        {!sm && <button className="mod-act">+ Admit resident</button>}
+      </div>
+      <div className="cc">
+        <table className="dt">
+          <thead><tr>
+            <th>Name</th><th>Room</th>
+            {!sm && <th>Care level</th>}
+            <th>Status</th><th>Last round</th>
+          </tr></thead>
+          <tbody>
+            {JO_RESIDENTS.map(r => (
+              <tr key={r.id} className="clk" onClick={() => onSelect(r)}>
+                <td><span className="nm">{r.name}</span></td>
+                <td>{r.room}</td>
+                {!sm && <td>{r.care}</td>}
+                <td>
+                  {r.status==="settled" && <span className="tg green">Settled</span>}
+                  {r.status==="review"  && <span className="tg warn">Review</span>}
+                  {r.status==="monitor" && <span className="tg gold">Monitor</span>}
+                </td>
+                <td><span className="vv dim">{r.lastRound}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div style={{fontSize:9,color:"var(--ink-3)",fontFamily:"Geist Mono,monospace",letterSpacing:"0.08em"}}>SHOWING 6 OF 48 · CLICK ANY ROW TO OPEN FILE</div>
+    </div>
+  );
+}
+
+function ResidentFileScreen({ sm, resident, onBack }) {
+  const [tab, setTab] = useState("profile");
+  const r = resident;
+  return (
+    <div className={`aci ${sm?"sm":""}`}>
+      <div className="rf-back" onClick={onBack}>← Residents</div>
+      <div className="rf-banner">
+        <div className="rf-av">{r.ii}</div>
+        <div style={{flex:1}}>
+          <div className="rf-name">{r.name}</div>
+          <div className="rf-meta">Room {r.room} · Age {r.age} · {r.care} care</div>
+          <div className="rf-tags">
+            {r.status==="settled" && <span className="tg green">Settled</span>}
+            {r.status==="review"  && <span className="tg warn">Under review</span>}
+            {r.status==="monitor" && <span className="tg gold">Monitored</span>}
+            <span className="tg gray">Admitted Aug 2024</span>
+          </div>
+        </div>
+      </div>
+      <div className="rf-tabs">
+        {["profile","care","medication"].map(t => (
+          <div key={t} className={`rf-tab ${tab===t?"active":""}`} onClick={() => setTab(t)}>
+            {t.charAt(0).toUpperCase()+t.slice(1)}
+          </div>
+        ))}
+      </div>
+      {tab==="profile" && (
+        <div className="cc">
+          <div className="cc-hd"><div className="cc-lbl">Personal Details</div></div>
+          <div className="cr"><span className="ll">Date of birth</span><span className="vv">14 March 1944</span></div>
+          <div className="cr"><span className="ll">Room</span><span className="vv">{r.room} — Wing B</span></div>
+          <div className="cr"><span className="ll">Admission date</span><span className="vv">15 August 2024</span></div>
+          <div className="cr"><span className="ll">Emergency contact</span><span className="vv">{r.family}</span></div>
+          <div className="cr"><span className="ll">Contact number</span><span className="vv">083 555 0144</span></div>
+          <div className="cr"><span className="ll">Relationship</span><span className="vv">Son</span></div>
+        </div>
+      )}
+      {tab==="care" && (
+        <div className="cc">
+          <div className="cc-hd"><div className="cc-lbl">Care Plan · Active</div><span className="cc-badge">REVIEWED 12 MAY</span></div>
+          <div className="cr"><span className="ll">Mobility</span><span className="vv">Level 2 — supervised walking</span></div>
+          <div className="cr"><span className="ll">Falls risk</span><span className="vv warn">Moderate — rail in place</span></div>
+          <div className="cr"><span className="ll">Diet</span><span className="vv">Texture C · soft foods</span></div>
+          <div className="cr"><span className="ll">Skin integrity</span><span className="vv good">Intact — weekly review</span></div>
+          <div className="cr"><span className="ll">Cognitive status</span><span className="vv">Oriented × 3</span></div>
+          <div className="cr"><span className="ll">Care note</span><span className="vv dim">"Settled night. Pleased to see the gardens." — Sr Joubert 08:42</span></div>
+        </div>
+      )}
+      {tab==="medication" && (
+        <div className="cc">
+          <div className="cc-hd"><div className="cc-lbl">Medication Plan</div><span className="cc-badge">CURRENT</span></div>
+          <div className="cr"><span className="ll">Atorvastatin 20mg</span><span className="vv">OD · Nocte</span></div>
+          <div className="cr"><span className="ll">Ramipril 5mg</span><span className="vv">OD · Morning</span></div>
+          <div className="cr"><span className="ll">Aspirin 100mg</span><span className="vv">OD · Morning</span></div>
+          <div className="cr"><span className="ll">Paracetamol 1g</span><span className="vv">PRN · max 4×/day</span></div>
+          <div className="cr"><span className="ll">Last administered</span><span className="vv good">All current · 08:42</span></div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MARScreen({ sm }) {
+  return (
+    <div className={`aci ${sm?"sm":""}`}>
+      <div className="mod-hd">
+        <div><div className="mod-ey">Medication · MAR</div><div className="mod-ti">Today's Rounds<em> · 18 May 2026</em></div></div>
+        {!sm && <button className="mod-act">PRN log</button>}
+      </div>
+      <div className={`kpi-row ${sm?"k2":"k3"}`}>
+        <div className="kpi-card"><div className="kv good">38/38</div><div className="kl">Morning round</div><div className="kd">Complete · 06:00–08:00</div></div>
+        <div className="kpi-card"><div className="kv good">36/36</div><div className="kl">Afternoon round</div><div className="kd">Complete · 12:00–14:00</div></div>
+        <div className="kpi-card"><div className="kv warn">28/40</div><div className="kl">Evening round</div><div className="kd">In progress · 18:00–20:00</div></div>
+      </div>
+      <div className="cc">
+        <div className="cc-hd"><div className="cc-lbl">Evening Round · In Progress</div><span className="cc-badge">LIVE</span></div>
+        <div className="cr"><span className="ll">H. Carter · Atorvastatin 20mg</span><span className="tg green">Administered</span></div>
+        <div className="cr"><span className="ll">M. van der Berg · Ramipril 5mg</span><span className="tg green">Administered</span></div>
+        <div className="cr"><span className="ll">J. Nkosi · Metformin 500mg</span><span className="tg gold">Pending</span></div>
+        <div className="cr"><span className="ll">D. Pillay · Amlodipine 5mg</span><span className="tg gold">Pending</span></div>
+        <div className="cr"><span className="ll">E. Fourie · Furosemide 40mg</span><span className="tg gold">Pending</span></div>
+        <div className="cr"><span className="ll">R. Smit · Bisoprolol 2.5mg</span><span className="tg gold">Pending</span></div>
+      </div>
+      <div className="cc">
+        <div className="cc-hd"><div className="cc-lbl">PRN Today</div></div>
+        <div className="cr"><span className="ll">Paracetamol 1g · H. Carter</span><span className="vv dim">14:22 · Sr Joubert</span></div>
+        <div className="cr"><span className="ll">Buscopan 10mg · D. Pillay</span><span className="vv dim">11:05 · K. Dlamini</span></div>
+      </div>
+    </div>
+  );
+}
+
+function IncidentsScreen({ sm }) {
+  return (
+    <div className={`aci ${sm?"sm":""}`}>
+      <div className="mod-hd">
+        <div><div className="mod-ey">QMS · Incidents</div><div className="mod-ti">Incident Register<em> · 5 open</em></div></div>
+        {!sm && <button className="mod-act">+ Raise IR</button>}
+      </div>
+      <div className="cc">
+        <div className="cc-hd"><div className="cc-lbl">All Incidents</div><span className="cc-badge">LIVE</span></div>
+        <table className="dt">
+          <thead><tr>
+            <th>Reference</th><th>Date</th>
+            {!sm && <th>Type</th>}
+            <th>Status</th>
+            {!sm && <th>Owner</th>}
+          </tr></thead>
+          <tbody>
+            {JO_INCIDENTS.map(inc => (
+              <tr key={inc.ref} className="clk">
+                <td><span className="nm">{inc.ref}</span></td>
+                <td>{inc.date}</td>
+                {!sm && <td>{inc.type}</td>}
+                <td>
+                  {inc.st==="open"   && <span className="tg warn">Open</span>}
+                  {inc.st==="review" && <span className="tg gold">Review</span>}
+                  {inc.st==="closed" && <span className="tg gray">Closed</span>}
+                </td>
+                {!sm && <td><span className="vv dim">{inc.owner}</span></td>}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function HRScreen({ sm }) {
+  return (
+    <div className={`aci ${sm?"sm":""}`}>
+      <div className="mod-hd">
+        <div><div className="mod-ey">HR & Workforce</div><div className="mod-ti">Staff on Shift<em> · Today</em></div></div>
+        {!sm && <button className="mod-act">Roster</button>}
+      </div>
+      <div className={`kpi-row ${sm?"k2":"k3"}`}>
+        <div className="kpi-card"><div className="kv">7</div><div className="kl">Staff on site</div></div>
+        <div className="kpi-card"><div className="kv warn">1</div><div className="kl">On leave</div></div>
+        <div className="kpi-card"><div className="kv good">0</div><div className="kl">Credentialing expiries</div></div>
+      </div>
+      <div className="cc">
+        <div className="cc-hd"><div className="cc-lbl">Today's Roster</div><span className="cc-badge">18 MAY</span></div>
+        <table className="dt">
+          <thead><tr>
+            <th>Name</th>{!sm && <th>Role</th>}<th>Status</th>
+          </tr></thead>
+          <tbody>
+            {JO_STAFF.map(s => (
+              <tr key={s.name}>
+                <td>
+                  <span className="nm">{s.name}</span>
+                  {s.note && <div style={{fontSize:10,color:"var(--ink-3)",marginTop:2}}>{s.note}</div>}
+                </td>
+                {!sm && <td>{s.role}</td>}
+                <td>{s.st==="on-shift" ? <span className="tg green">On shift</span> : <span className="tg gold">Leave</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function TrainingScreen({ sm }) {
+  return (
+    <div className={`aci ${sm?"sm":""}`}>
+      <div className="mod-hd">
+        <div><div className="mod-ey">Training</div><div className="mod-ti">Course Status<em> · Q2 2026</em></div></div>
+        {!sm && <button className="mod-act">Certificates</button>}
+      </div>
+      <div className="cc">
+        <div className="cc-hd"><div className="cc-lbl">Compliance Training</div><span className="cc-badge">6 EXPIRING</span></div>
+        {JO_TRAINING.map(t => (
+          <div key={t.course} className="cr">
+            <div style={{flex:1}}>
+              <div className="ll">{t.course}</div>
+              {!sm && <div style={{fontSize:9,color:"var(--ink-3)",fontFamily:"Geist Mono,monospace",letterSpacing:"0.08em",marginTop:1}}>DUE {t.due} · {t.cat.toUpperCase()}</div>}
+            </div>
+            <div style={{display:"flex",alignItems:"center",gap:7}}>
+              {t.exp>0 && <span className="tg warn">{t.exp} expiring</span>}
+              <span className={t.pct===100?"tg green":t.pct>=85?"tg gold":"tg warn"}>{t.pct}%</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FacilitiesScreen({ sm }) {
+  return (
+    <div className={`aci ${sm?"sm":""}`}>
+      <div className="mod-hd">
+        <div><div className="mod-ey">Facilities · OHS</div><div className="mod-ti">Inspections<em> · May 2026</em></div></div>
+        {!sm && <button className="mod-act">Run inspection</button>}
+      </div>
+      <div className={`kpi-row ${sm?"k2":"k3"}`}>
+        <div className="kpi-card"><div className="kv good">93%</div><div className="kl">Overall score</div><div className="kd">Avg — last 5</div></div>
+        <div className="kpi-card"><div className="kv warn">4</div><div className="kl">Open tickets</div><div className="kd">2 near SLA</div></div>
+        <div className="kpi-card"><div className="kv blue">5</div><div className="kl">Inspections this month</div></div>
+      </div>
+      <div className={sm?"one-col":"two-col"}>
+        <div className="cc">
+          <div className="cc-hd"><div className="cc-lbl">Inspection Scores</div></div>
+          {[["Fire Safety",96,"10 May"],["IPC / Hygiene",92,"15 May"],["Kitchen & Food",88,"12 May"],["OHS",94,"08 May"],["Grounds",97,"14 May"]].map(([n,s,d]) => (
+            <div key={n} className="cr">
+              <span className="ll">{n}</span>
+              {!sm && <span className="vv dim">{d}</span>}
+              <span className={s>=95?"tg green":s>=90?"tg gold":"tg warn"}>{s}%</span>
+            </div>
+          ))}
+        </div>
+        <div className="cc">
+          <div className="cc-hd"><div className="cc-lbl">Open Maintenance</div></div>
+          {[["Handrail · Corridor C","Assigned","gold"],["Window seal · Rm 15C","Scheduled","gold"],["Extractor · Laundry","Open","warn"],["Light fitting · Dining","Completed","green"]].map(([d,s,c]) => (
+            <div key={d} className="cr"><span className="ll">{d}</span><span className={`tg ${c}`}>{s}</span></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ===========================================================
+// EXPLORE APP SHELL — sidebar + module switcher
+// ===========================================================
+function ExploreAppShell({ device, activeModule, setActiveModule, selectedResident, setSelectedResident }) {
+  const sm = device === "mobile";
+
+  const mobileNav = [
+    { id:"exec",      label:"Overview" },
+    { id:"residents", label:"Residents" },
+    { id:"mar",       label:"Care" },
+    { id:"incidents", label:"Incidents" },
+    { id:"hr",        label:"People" },
+  ];
+
+  const handleModule = (id) => { setActiveModule(id); setSelectedResident(null); };
+
+  const renderContent = () => {
+    if (activeModule==="residents" && selectedResident) {
+      return <ResidentFileScreen sm={sm} resident={selectedResident} onBack={() => setSelectedResident(null)} />;
+    }
+    switch(activeModule) {
+      case "exec":        return <ExecScreen sm={sm} />;
+      case "residents":   return <ResidentsScreen sm={sm} onSelect={setSelectedResident} />;
+      case "mar":
+      case "plans":
+      case "obs":         return <MARScreen sm={sm} />;
+      case "incidents":   return <IncidentsScreen sm={sm} />;
+      case "hr":          return <HRScreen sm={sm} />;
+      case "training":    return <TrainingScreen sm={sm} />;
+      case "facilities":
+      case "housekeeping":
+      case "docs":
+      case "facility":    return <FacilitiesScreen sm={sm} />;
+      default:            return <ExecScreen sm={sm} />;
+    }
+  };
+
+  return (
+    <div className={`app-shell ${device}`}>
+      {sm && (
+        <div className="mobile-topbar">
+          <div className="mtb-brand"><div className="mtb-mark">HP</div><div className="mtb-name">HealthPrac</div></div>
+          <div className="hamburger"><span/><span/><span/></div>
+        </div>
+      )}
+      {!sm && <ExploreAppSidebar active={activeModule} setActive={handleModule} />}
+      <div className="app-content">
+        {renderContent()}
+      </div>
+      {sm && (
+        <div className="mobile-bottom-nav">
+          {mobileNav.map(n => (
+            <div key={n.id} className={`mbn-item ${activeModule===n.id?"active":""}`} onClick={() => handleModule(n.id)}>
+              <div className="mbn-glyph"/>
+              {n.label}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ===========================================================
+// EXPLORE PAGE — full interactive platform demo
+// ===========================================================
+function ExplorePage({ navigate }) {
+  const [device, setDevice] = useState("desktop");
+  const [activeModule, setActiveModule] = useState("exec");
+  const [selectedResident, setSelectedResident] = useState(null);
+
+  const shell = (
+    <ExploreAppShell
+      device={device}
+      activeModule={activeModule}
+      setActiveModule={setActiveModule}
+      selectedResident={selectedResident}
+      setSelectedResident={setSelectedResident}
+    />
+  );
+
+  const renderFrame = () => {
+    if (device === "desktop") return (
+      <div className="browser-frame">
+        <div className="browser-titlebar">
+          <div className="browser-dots"><i/><i/><i/></div>
+          <div className="browser-url">app.healthprac.com · jolly-oaks-senior-living</div>
+        </div>
+        <div className="browser-content">{shell}</div>
+      </div>
+    );
+    if (device === "tablet") return (
+      <div style={{display:"flex",justifyContent:"center"}}>
+        <div className="tablet-outer">
+          <div className="tablet-top-bar"><div className="tablet-cam"/></div>
+          <div className="tablet-inner">{shell}</div>
+          <div className="tablet-bottom-bar"><div className="tablet-home"/></div>
+        </div>
+      </div>
+    );
+    return (
+      <div style={{display:"flex",justifyContent:"center"}}>
+        <div className="mobile-outer">
+          <div className="mobile-notch-bar"><div className="mobile-notch"/></div>
+          <div className="mobile-inner">{shell}</div>
+          <div className="mobile-home-bar"><div className="mobile-home-pill"/></div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <main className="page">
+      <section className="block">
+        <div className="wrap">
+          <Reveal>
+            <div className="eyebrow">Interactive Demo · Jolly Oaks Senior Living</div>
+            <h1 className="display" style={{fontSize:"clamp(44px,6vw,88px)",maxWidth:"18ch"}}>
+              The platform,<br/><em>in your hands.</em>
+            </h1>
+            <p className="lede" style={{marginTop:28,maxWidth:"48ch"}}>
+              Click through a live demo of the Jolly Oaks Senior Living facility — fictitious data, real platform. Navigate any module. Switch between desktop, tablet, and mobile to see exactly how your team would use it every day.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="block tight" style={{background:"var(--linen)",borderTop:"1px solid var(--rule)",borderBottom:"1px solid var(--rule)"}}>
+        <div className="wrap" style={{paddingTop:40,paddingBottom:56}}>
+          <Reveal>
+            <DevicePicker mode={device} setMode={(d) => { setDevice(d); setSelectedResident(null); }} />
+            {renderFrame()}
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="block dark close-cta">
+        <div className="wrap">
+          <Reveal>
+            <h2>See this against <em>your operation.</em></h2>
+            <p className="body-l">A 45-minute call — we'll configure the platform around your actual workflows and show you what your executive dashboard looks like from day one.</p>
+            <div className="ctas">
+              <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
+              <button className="btn ghost-light" onClick={() => navigate("platform")}>How the platform works</button>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </main>
   );
 }
 
@@ -678,7 +1213,7 @@ function HomePage({ navigate }) {
                   <button className="btn primary" onClick={() => navigate("call")}>
                     Book a call to explore <span className="arrow">→</span>
                   </button>
-                  <button className="btn secondary" onClick={() => navigate("platform")}>
+                  <button className="btn secondary" onClick={() => navigate("explore")}>
                     Explore the Platform
                   </button>
                 </div>
@@ -1040,6 +1575,14 @@ function PlatformPage({ navigate }) {
       <section className="block tight" style={{ background: "var(--linen)", borderTop: "1px solid var(--rule)" }}>
         <div className="wrap">
           <Reveal>
+            <div style={{textAlign:"center",marginBottom:28}}>
+              <div className="eyebrow">Interactive Demo</div>
+              <h2 style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(28px,4vw,44px)",fontWeight:400,color:"var(--forest)",margin:"8px 0 16px"}}>
+                Click through the platform<em style={{fontStyle:"italic",color:"var(--champagne)"}}> live.</em>
+              </h2>
+              <p className="body-l" style={{maxWidth:"48ch",margin:"0 auto 24px"}}>Explore every module in the Jolly Oaks demo — desktop, tablet, or mobile. Real interface, fictitious data.</p>
+              <button className="btn primary" onClick={() => navigate("explore")}>Explore the Platform Interactive <span className="arrow">→</span></button>
+            </div>
             <ProductMock initialVillage={0} />
           </Reveal>
         </div>
@@ -1456,27 +1999,214 @@ function Phone({ screenId, setScreen }) {
   );
 }
 
+function FPTabletFrame({ tab, setTab }) {
+  const navItems = [
+    { id:"home",     label:"Home"     },
+    { id:"status",   label:"Status"   },
+    { id:"requests", label:"Requests" },
+    { id:"billing",  label:"Billing"  },
+    { id:"more",     label:"More"     },
+  ];
+  const activeBottom = ["events","surveys","contacts"].includes(tab) ? "more" : tab;
+  return (
+    <div className="fp-tablet-outer">
+      <div className="fp-tablet-cam"><div className="fp-tablet-cam-dot"/></div>
+      <div className="fp-tablet-content">
+        <div style={{background:"var(--paper)",display:"flex",flexDirection:"column",height:520}}>
+          <div className="phone-status" style={{padding:"12px 20px"}}>
+            <span>09:14</span>
+            <span style={{display:"flex",gap:10,alignItems:"center"}}><span>5G</span><span style={{fontSize:10}}>●●●●●</span><span>96%</span></span>
+          </div>
+          <div className="phone-header" style={{padding:"12px 20px"}}>
+            <div><div className="where">The Cedar Residence</div><div className="who">Sarah Carter</div></div>
+            <div className="avatar">SC</div>
+          </div>
+          <div className="phone-body" style={{padding:"20px 24px 12px",flex:"1 1 auto"}}>
+            {tab==="home"     && <HomeScreen />}
+            {tab==="status"   && <StatusScreen />}
+            {tab==="billing"  && <BillingScreen />}
+            {tab==="events"   && <EventsScreen />}
+            {tab==="requests" && <RequestsScreen />}
+            {tab==="surveys"  && <SurveysScreen />}
+            {tab==="contacts" && <ContactsScreen />}
+          </div>
+          <div className="phone-nav">
+            {navItems.map(n => (
+              <button key={n.id} className={`phone-nav-item ${activeBottom===n.id?"active":""}`} onClick={() => setTab(n.id==="more"?"events":n.id)}>
+                <span className="glyph"/>{n.label}
+              </button>
+            ))}
+          </div>
+          <div className="phone-footer">© 2026 The Cedar Residence · Powered by <em>HealthPrac</em></div>
+        </div>
+      </div>
+      <div className="fp-tablet-home"><div className="fp-tablet-pill"/></div>
+    </div>
+  );
+}
+
+function FPDesktopFrame({ tab, setTab }) {
+  const current = FP_SCREENS.find(s => s.id === tab);
+  return (
+    <div className="fp-desktop-frame">
+      <div className="browser-titlebar" style={{borderRadius:"3px 3px 0 0",marginBottom:0}}>
+        <div className="browser-dots"><i/><i/><i/></div>
+        <div className="browser-url">family.healthprac.com · the-cedar-residence</div>
+      </div>
+      <div className="fp-desktop-shell">
+        <div className="fp-desktop-nav">
+          <div className="fdn-brand">
+            <div className="fdn-mark">CR</div>
+            <div className="fdn-name">The Cedar Residence</div>
+          </div>
+          <div className="fdn-sect">My Family</div>
+          <div className="fdn-lnk active"><span>Henry Carter</span><span style={{fontFamily:"Geist Mono,monospace",fontSize:9,background:"rgba(184,155,110,0.2)",padding:"2px 6px",borderRadius:2,color:"var(--champagne-2)"}}>Rm 12B</span></div>
+          <div className="fdn-sect">Portal</div>
+          {FP_SCREENS.map(s => (
+            <div key={s.id} className={`fdn-lnk ${tab===s.id?"active":""}`} onClick={() => setTab(s.id)}>{s.name}</div>
+          ))}
+          <div className="fdn-sect">Account</div>
+          <div className="fdn-lnk">Profile settings</div>
+          <div className="fdn-lnk">Help &amp; support</div>
+        </div>
+        <div className="fp-desktop-main">
+          <div>
+            <div className="fp-dey">{current.name}</div>
+            <div className="fp-dh">{current.name}<em>.</em></div>
+            <p style={{color:"var(--ink-2)",fontSize:13,margin:"8px 0 16px",maxWidth:"44ch"}}>{current.desc}</p>
+          </div>
+          {tab==="home" && (
+            <div className="fp-desktop-grid">
+              <div className="cc">
+                <div className="cc-hd"><div className="cc-lbl">Today</div><span className="cc-badge">09:14</span></div>
+                <div className="cr"><span className="ll">Resident</span><span className="vv">Henry Carter</span></div>
+                <div className="cr"><span className="ll">Status</span><span className="tg green">Settled &amp; well</span></div>
+                <div className="cr"><span className="ll">Last care round</span><span className="vv">08:42 · Sr Joubert</span></div>
+                <div className="cr"><span className="ll">Mood</span><span className="vv">Bright</span></div>
+                <div className="cr"><span className="ll">Breakfast</span><span className="tg green">Eaten in full</span></div>
+              </div>
+              <div className="cc">
+                <div className="cc-hd"><div className="cc-lbl">Care team note</div></div>
+                <div style={{padding:"14px 14px"}}>
+                  <p style={{color:"var(--forest)",fontSize:13,fontStyle:"italic",margin:"0 0 8px",lineHeight:1.6}}>"Settled night. Up early and pleased to see the gardens."</p>
+                  <div style={{fontSize:11,color:"var(--ink-3)"}}>Sr Joubert · 08:42</div>
+                </div>
+              </div>
+            </div>
+          )}
+          {tab==="status" && (
+            <div className="cc">
+              <div className="cc-hd"><div className="cc-lbl">Today's Timeline</div></div>
+              {[["Morning round","Complete","green"],["Breakfast","Eaten in full","green"],["Awake & alert","Settled","green"],["Comfort & rest","Stable","green"],["Activity","Walk · gardens","green"],["Evening round","Scheduled","gold"]].map(([k,v,c]) => (
+                <div key={k} className="cr"><span className="ll">{k}</span><span className={`tg ${c}`}>{v}</span></div>
+              ))}
+            </div>
+          )}
+          {tab==="billing" && (
+            <div className="cc">
+              <div className="cc-hd"><div className="cc-lbl">October Statement</div><span className="cc-badge">PAID</span></div>
+              <div className="cr"><span className="ll">Current month</span><span className="vv">R 28,450</span></div>
+              <div className="cr"><span className="ll">Settlement date</span><span className="vv">02 October 2026</span></div>
+              <div className="cr"><span className="ll">Reference</span><span className="vv">HPS-2610-114</span></div>
+              <div className="cr"><span className="ll">Status</span><span className="tg green">Paid</span></div>
+              <div className="cr"><span className="ll">September 2026</span><span className="tg green">Paid</span></div>
+              <div className="cr"><span className="ll">August 2026</span><span className="tg green">Paid</span></div>
+            </div>
+          )}
+          {tab==="events" && (
+            <div className="fp-desktop-grid">
+              {[["Monday","Yoga · 10AM","Roast chicken, herb butter"],["Tuesday","Music recital · 4PM","Bobotie, yellow rice"],["Wednesday","Gardening club","Lamb stew, mash"],["Thursday","Family tea · 3PM","Fish pie, greens"]].map(([day,act,menu]) => (
+                <div key={day} className="cc">
+                  <div className="cc-hd"><div className="cc-lbl">{day}</div></div>
+                  <div className="cr"><span className="ll">Activity</span><span className="vv">{act}</span></div>
+                  <div className="cr"><span className="ll">Menu</span><span className="vv dim">{menu}</span></div>
+                </div>
+              ))}
+            </div>
+          )}
+          {tab==="requests" && (
+            <div className="cc">
+              <div className="cc-hd"><div className="cc-lbl">Your Requests</div></div>
+              {[["Visit · Fri 3PM","Confirmed","green"],["Linen change","Scheduled","gold"],["Hairdresser booking","Pending","gold"],["Handrail repair","Completed","green"],["Wheelchair service","Completed","green"]].map(([k,v,c]) => (
+                <div key={k} className="cr"><span className="ll">{k}</span><span className={`tg ${c}`}>{v}</span></div>
+              ))}
+            </div>
+          )}
+          {tab==="surveys" && (
+            <div className="cc">
+              <div className="cc-hd"><div className="cc-lbl">Recent Feedback</div></div>
+              {[["Family tea · Sep 2026","Shared","green"],["Care quality · Aug 2026","Shared","green"],["Welcome experience · Jun 2026","Shared","green"]].map(([k,v,c]) => (
+                <div key={k} className="cr"><span className="ll">{k}</span><span className={`tg ${c}`}>{v}</span></div>
+              ))}
+            </div>
+          )}
+          {tab==="contacts" && (
+            <div className="cc">
+              <div className="cc-hd"><div className="cc-lbl">Important Contacts</div></div>
+              <div className="cr"><span className="ll">Reception</span><span className="vv">021 555 0184</span></div>
+              <div className="cr"><span className="ll">Care lead · Sr Joubert</span><span className="vv">021 555 0192</span></div>
+              <div className="cr"><span className="ll">Site manager · M. Pillay</span><span className="vv">021 555 0188</span></div>
+              <div className="cr"><span className="ll">After-hours · 24/7</span><span className="vv warn">060 555 0140</span></div>
+              <div className="cr"><span className="ll">Email</span><span className="vv">cedar@residence.healthprac.com</span></div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function FamilyPortalShowcase() {
   const [tab, setTab] = useState("home");
+  const [fpDevice, setFpDevice] = useState("mobile");
   const current = FP_SCREENS.find((s) => s.id === tab);
+
+  const screenPicker = (
+    <>
+      <div className="fp-device-picker">
+        {["mobile","tablet","desktop"].map(m => (
+          <button key={m} className={`fp-device-btn ${fpDevice===m?"active":""}`} onClick={() => setFpDevice(m)}>
+            {m.charAt(0).toUpperCase()+m.slice(1)}
+          </button>
+        ))}
+      </div>
+      <div className="mono-label" style={{marginBottom:12}}>Switch screen</div>
+      <div className="fp-tabs">
+        {FP_SCREENS.map((s) => (
+          <button key={s.id} className={`fp-tab ${tab===s.id?"active":""}`} onClick={() => setTab(s.id)}>
+            {s.name}
+          </button>
+        ))}
+      </div>
+    </>
+  );
+
+  if (fpDevice === "desktop") {
+    return (
+      <div className="fp-stage-desktop">
+        <div>
+          <div className="eyebrow">Showcase · Desktop</div>
+          <h3 className="display">{current.name}<em>.</em></h3>
+          <p className="body-l" style={{marginTop:20,marginBottom:20,maxWidth:"52ch"}}>{current.desc}</p>
+          {screenPicker}
+        </div>
+        <FPDesktopFrame tab={tab} setTab={setTab} />
+      </div>
+    );
+  }
+
   return (
     <div className="fp-stage">
       <div className="fp-side">
         <div className="eyebrow">Showcase</div>
-        <h3 className="display">
-          {current.name}<em>.</em>
-        </h3>
-        <p className="body-l" style={{ marginTop: 24, marginBottom: 28, maxWidth: "40ch" }}>{current.desc}</p>
-        <div className="mono-label" style={{ marginBottom: 12 }}>Switch screen</div>
-        <div className="fp-tabs">
-          {FP_SCREENS.map((s) => (
-            <button key={s.id} className={`fp-tab ${tab === s.id ? "active" : ""}`} onClick={() => setTab(s.id)}>
-              {s.name}
-            </button>
-          ))}
-        </div>
+        <h3 className="display">{current.name}<em>.</em></h3>
+        <p className="body-l" style={{marginTop:24,marginBottom:20,maxWidth:"40ch"}}>{current.desc}</p>
+        {screenPicker}
       </div>
-      <Phone screenId={tab} setScreen={setTab} />
+      <div style={{display:"flex",alignItems:"flex-start",justifyContent:"center",flexShrink:0}}>
+        {fpDevice==="mobile"  && <Phone screenId={tab} setScreen={setTab} />}
+        {fpDevice==="tablet"  && <FPTabletFrame tab={tab} setTab={setTab} />}
+      </div>
     </div>
   );
 }
@@ -2100,6 +2830,7 @@ function App() {
 
   let page;
   switch (route.name) {
+    case "explore":  page = <ExplorePage navigate={navigate} />; break;
     case "platform": page = <PlatformPage navigate={navigate} />; break;
     case "module":   page = route.payload.id === "family-portal"
                        ? <FamilyPortalPage navigate={navigate} />
