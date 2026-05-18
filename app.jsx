@@ -964,14 +964,6 @@ function Footer({ navigate }) {
               </ul>
             </div>
             <div className="footer-col">
-              <h5>Platform Map</h5>
-              <ul>
-                {CATEGORIES.map((c) => (
-                  <li key={c.id}><a onClick={() => navigate("module", { id: c.moduleIds[0] })}>{c.name}</a></li>
-                ))}
-              </ul>
-            </div>
-            <div className="footer-col">
               <h5>Who We Serve</h5>
               <ul>
                 {SEGMENTS.map((s) => (
