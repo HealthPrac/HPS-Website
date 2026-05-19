@@ -1835,21 +1835,6 @@ function PlatformPage({ navigate }) {
         </div>
       </section>
 
-      <section className="block tight" style={{ background: "var(--linen)", borderTop: "1px solid var(--rule)" }}>
-        <div className="wrap">
-          <Reveal>
-            <div style={{textAlign:"center",marginBottom:28}}>
-              <div className="eyebrow">Interactive Demo</div>
-              <h2 style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(28px,4vw,44px)",fontWeight:400,color:"var(--forest)",margin:"8px 0 16px"}}>
-                Click through the platform<em style={{fontStyle:"italic",color:"var(--champagne)"}}> live.</em>
-              </h2>
-              <p className="body-l" style={{maxWidth:"48ch",margin:"0 auto 24px"}}>*Disclaimer. All information loaded is fictitious and for demonstration purposes only.</p>
-              <button className="btn primary" onClick={() => navigate("demo")}>Explore the Platform Interactive <span className="arrow">→</span></button>
-            </div>
-            <ProductMock initialVillage={0} />
-          </Reveal>
-        </div>
-      </section>
 
       <section className="block">
         <div className="wrap">
