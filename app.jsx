@@ -957,6 +957,78 @@ function PopiaModal({ onClose }) {
   );
 }
 
+function SubProcessorsModal({ onClose }) {
+  return (
+    <LegalModal
+      title="Sub-processors, Hosting &amp; Infrastructure"
+      tag="HealthPrac Solutions · Effective 19 May 2026"
+      onClose={onClose}
+      footerNote={
+        <span>Questions about HPS hosting or sub-processors: <a href="mailto:admin@healthprac.com">admin@healthprac.com</a> · Read together with the DPP, platform terms, and customer agreement.</span>
+      }
+    >
+      <p>This policy explains which third-party service providers HealthPrac Solutions ("HPS") uses to support the delivery of the HPS platform, what functions they perform, and how HPS approaches privacy, security, tenant segregation, and compliance in relation to those providers.</p>
+
+      <h4>Purpose</h4>
+      <p>This policy provides transparency regarding:</p>
+      <ul>
+        <li>the third-party providers used to support the HPS platform;</li>
+        <li>the role each provider performs;</li>
+        <li>the types of information each provider may process;</li>
+        <li>the hosting and infrastructure approach used by HPS; and</li>
+        <li>the controls HPS applies when appointing and managing such providers.</li>
+      </ul>
+
+      <h4>HPS Approach to Sub-processors</h4>
+      <p>Where HPS acts as a processor for customer data, HPS may engage carefully selected third-party providers to support hosting, infrastructure, backend operations, or communications necessary to deliver the platform. HPS requires that such providers operate under contractual, confidentiality, security, and data protection obligations appropriate to the services they provide. Providers are selected based on operational need, security posture, service suitability, and their ability to support HPS's privacy and compliance obligations under POPIA and GDPR.</p>
+
+      <h4>Infrastructure Providers</h4>
+
+      <h4>AWS Amplify / Amazon Web Services</h4>
+      <p><strong>Role:</strong> Application hosting and deployment infrastructure.<br/>
+      <strong>Data involved:</strong> Website and application hosting data, infrastructure logs, deployment artefacts, and related service metadata.<br/>
+      <strong>Notes:</strong> AWS customers can choose AWS regions for the services they use, subject to service-specific availability.</p>
+
+      <h4>Supabase</h4>
+      <p><strong>Role:</strong> Backend platform and supporting data services.<br/>
+      <strong>Data involved:</strong> Application data, authentication-related data, database records, backups, and service metadata depending on HPS configuration.<br/>
+      <strong>Notes:</strong> Supabase encrypts customer data in transit and at rest, and customers can select project regions.</p>
+
+      <h4>Resend</h4>
+      <p><strong>Role:</strong> Transactional email and notification delivery.<br/>
+      <strong>Data involved:</strong> Recipient email addresses, email metadata, delivery data, and message content necessary to send platform notifications or service communications.<br/>
+      <strong>Notes:</strong> Resend provides a Data Processing Addendum describing the processing of customer and recipient data for email delivery.</p>
+
+      <h4>Internal AI Processing</h4>
+      <p>HPS may provide internal AI-supported functionality within the HPS platform. This internal AI capability is operated as an HPS-controlled platform function and is not presented as an external third-party sub-processor where it is owned and operated by HPS within the HPS service environment. Tenant data remains logically segregated and may be processed only within the relevant tenant context for authorised platform functionality. Tenant data is not shared across tenants through internal AI capability.</p>
+
+      <h4>Data Handling Principles for Sub-processors</h4>
+      <p>HPS expects its sub-processors and infrastructure providers to support:</p>
+      <ul>
+        <li>access only where necessary for the service being provided;</li>
+        <li>appropriate confidentiality obligations;</li>
+        <li>appropriate technical and organisational security measures;</li>
+        <li>use of data only for authorised service-delivery purposes;</li>
+        <li>support for lawful international transfer safeguards where applicable;</li>
+        <li>assistance with compliance, security, and incident response obligations where relevant; and</li>
+        <li>secure handling of data in line with contractual, legal, and regulatory requirements.</li>
+      </ul>
+
+      <h4>Regional Hosting and Data Location</h4>
+      <p>HPS takes a deliberate approach to data location and regional processing for personal and sensitive data. The platform architecture is designed with a GDPR-first posture and recommends deliberate regional controls for sensitive workloads rather than incidental or unmanaged cross-border deployment. Where HPS uses providers such as AWS or Supabase, data location, regional configuration, and applicable international data transfer safeguards are considered as part of the service design and compliance posture.</p>
+
+      <h4>Security and Compliance Expectations</h4>
+      <p>HPS expects providers to maintain security and data protection programmes appropriate to their service type, including encryption, access controls, monitoring, incident handling, and contractual confidentiality. At the HPS platform level, data remains protected through central identity and access services, role-based and scope-based restrictions, auditability, evidence governance, support-access justification, and strong tenant segregation.</p>
+
+      <h4>Updates and Customer Transparency</h4>
+      <p>HPS may update this policy from time to time to reflect changes to infrastructure, sub-processors, service providers, compliance requirements, or operational design. The current version published on the HPS website is the authoritative version. Where required by contract or applicable law, HPS may provide customer notice of material changes to its sub-processor arrangements.</p>
+
+      <h4>Contact</h4>
+      <p>For questions about HPS hosting, infrastructure, or sub-processors, contact HealthPrac Solutions at <a href="mailto:admin@healthprac.com">admin@healthprac.com</a>.</p>
+    </LegalModal>
+  );
+}
+
 function DppModal({ onClose }) {
   return (
     <LegalModal
@@ -1116,12 +1188,14 @@ function Footer({ navigate }) {
   const [showPopia, setShowPopia] = React.useState(false);
   const [showSecurity, setShowSecurity] = React.useState(false);
   const [showDpp, setShowDpp] = React.useState(false);
+  const [showSubProcessors, setShowSubProcessors] = React.useState(false);
   return (
     <>
-      {showTerms    && <TermsModal    onClose={() => setShowTerms(false)} />}
-      {showPopia    && <PopiaModal    onClose={() => setShowPopia(false)} />}
-      {showSecurity && <SecurityModal onClose={() => setShowSecurity(false)} />}
-      {showDpp      && <DppModal      onClose={() => setShowDpp(false)} />}
+      {showTerms         && <TermsModal         onClose={() => setShowTerms(false)} />}
+      {showPopia         && <PopiaModal         onClose={() => setShowPopia(false)} />}
+      {showSecurity      && <SecurityModal      onClose={() => setShowSecurity(false)} />}
+      {showDpp           && <DppModal           onClose={() => setShowDpp(false)} />}
+      {showSubProcessors && <SubProcessorsModal onClose={() => setShowSubProcessors(false)} />}
       <footer className="footer">
         <div className="wrap">
           <div className="footer-grid">
@@ -1172,7 +1246,8 @@ function Footer({ navigate }) {
               <button className="footer-legal-link" onClick={() => setShowSecurity(true)}>Security</button>
               {" · "}
               <button className="footer-legal-link" onClick={() => setShowDpp(true)}>DPP</button>
-              {" · Sub-processors"}
+              {" · "}
+              <button className="footer-legal-link" onClick={() => setShowSubProcessors(true)}>Sub-processors</button>
             </div>
           </div>
         </div>
