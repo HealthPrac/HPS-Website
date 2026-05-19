@@ -981,7 +981,7 @@ function Footer({ navigate }) {
               <ul>
                 <li><a onClick={() => navigate("platform")}>Overview</a></li>
                 <li><a onClick={() => navigate("partnerships")}>Partnership</a></li>
-                <li><a onClick={() => navigate("platform")}>Security</a></li>
+                <li><a onClick={() => navigate("security")}>Security</a></li>
                 <li><a onClick={() => navigate("platform")}>Integrations</a></li>
               </ul>
             </div>
@@ -2873,6 +2873,116 @@ function Field({ label, k, type = "text", placeholder, data, errs, set, optional
 }
 
 // ===========================================================
+// SECURITY POLICY PAGE
+// ===========================================================
+const SECURITY_SECTIONS = [
+  {
+    h: "Purpose",
+    b: "This Security Policy defines the baseline security principles, controls, and responsibilities that govern the HPS platform and all connected modules. It exists to ensure that sensitive operational, workforce, finance-linked, health-linked, and evidence-based records are protected through consistent platform-level controls rather than ad hoc module-specific security behaviour.",
+  },
+  {
+    h: "Scope",
+    b: "This policy applies to the HPS platform core, all HPS modules, tenant environments, platform administration functions, support access workflows, connected integrations, stored evidence and files, analytics outputs, and user access across platform, organisation, facility, and department levels. It applies to all HPS personnel, authorised client administrators, authorised end users, implementation teams, support personnel, and approved third parties who interact with HPS systems or HPS-managed customer data.",
+  },
+  {
+    h: "Security Principles",
+    b: "HPS applies security as a foundational architectural requirement, not as a later add-on. Core platform services centralise identity, access control, auditability, evidence governance, workflow control, and analytics publication so that security remains consistent across the full product estate. HPS follows least privilege access, strong tenant segregation, scope-based and role-based authorisation, minimum-necessary disclosure, immutable auditability, governed evidence and file handling, controlled support elevation, and metadata-driven configuration.",
+  },
+  {
+    h: "Identity and Access Control",
+    b: "Access to the HPS platform must be authenticated through governed identity controls. The platform separates workforce identity from application authorisation, with authentication, token issuance, MFA posture, and app-level claims managed centrally. Authorisation is governed through functional role, organisational scope, record category, and sensitivity level — not solely by job title or screen visibility. Additional controls for privileged users and sensitive actions include MFA, approval requirements, masking, time-bounded access, and explicit justification logging.",
+  },
+  {
+    h: "Tenant Segregation and Data Isolation",
+    b: "HPS is operated as a true multi-tenant SaaS platform. Tenant boundaries are enforced so that one tenant cannot view another's data, documents, analytics, metadata, users, or identifiers. Records carry scope metadata enabling policy enforcement and secure analytics rollups. Tenant isolation is enforced at both application and database levels. Where pooled data models are used, row-level security and equivalent platform mechanisms ensure isolation does not depend on frontend filtering alone.",
+  },
+  {
+    h: "Data Classification and Sensitive Information",
+    b: "The platform may process confidential operational information, finance-linked information, workforce records, health-linked information, investigation records, legal material, and other restricted data types. Access to sensitive records may be restricted through field masking, explicit grants, record-level controls, workflow restrictions, export governance, and minimum-necessary disclosure rules. Sensitive data must not be exposed to unauthorised users, including internal support personnel without governed elevation.",
+  },
+  {
+    h: "Audit, Monitoring, and Traceability",
+    b: "HPS maintains auditability as a core platform control. Sensitive actions, approvals, access elevation, exports, record changes, support sessions, and other compliance-relevant activities are captured in immutable audit trails at the application level, in addition to infrastructure-level logging. Monitoring controls include system logs, failed access attempts, workflow failures, elevated support sessions, unusual export activity, and connector exceptions.",
+  },
+  {
+    h: "Evidence, Files, and Document Security",
+    b: "Files, evidence attachments, generated documents, certificates, exports, and related records are handled through governed platform services rather than unmanaged file storage. The evidence registry links files to owning records, versions, classifications, retention rules, upload history, and access history. Evidence remains subject to the same security, classification, and access rules that apply to the business records it supports.",
+  },
+  {
+    h: "Support Access and Administrative Control",
+    b: "HPS platform administrators and support personnel do not receive broad default access to customer data. Support access is treated as an exceptional, governed workflow requiring operator identity, business justification, target context, approval where required, time-bounded elevation, and enhanced audit capture. Elevated access sessions are clearly distinguished from normal user activity and subject to automatic expiry and logging.",
+  },
+  {
+    h: "Data Retention, Export, and Deletion",
+    b: "HPS applies governed retention, archival, export, and deletion controls according to record type, sensitivity, and legal or operational basis. Export activity for sensitive data is subject to the same scope, policy, and logging controls that apply inside the application. Data deletion and archival processes are controlled, reviewable, and aligned to retention rules, legal hold requirements, and platform evidence obligations.",
+  },
+  {
+    h: "Incident Response",
+    b: "HPS treats security events, unauthorised access attempts, policy breaches, suspicious platform behaviour, and material control failures as reportable security matters. Such events are investigated through governed incident management and audit processes, with remediation actions, evidence capture, and escalation handled according to severity and business impact. Where an incident affects customer data or platform security, HPS may initiate containment, access restriction, credential resets, forensic review, or additional monitoring as appropriate.",
+  },
+  {
+    h: "User Responsibilities",
+    b: "All users are expected to protect their credentials, use the platform only within their authorised scope, and avoid sharing, exporting, or disclosing information beyond approved business need. Users must not attempt to bypass platform controls, access restricted data, or use HPS services in a manner that compromises security, privacy, or compliance obligations. Client administrators are responsible for assigning access appropriately and promptly notifying HPS of suspected misuse, compromised credentials, or security concerns.",
+  },
+  {
+    h: "Policy Review and Updates",
+    b: "This Security Policy is reviewed and updated periodically to reflect platform evolution, regulatory requirements, architecture changes, threat conditions, and operational improvements. The current published version available through the HPS website or platform policy link is the authoritative version.",
+  },
+  {
+    h: "Contact",
+    b: "Security concerns, suspected vulnerabilities, or policy-related enquiries should be directed through the official HPS support or security contact channel published on the website or platform.",
+  },
+];
+
+function SecurityPolicyPage({ navigate }) {
+  return (
+    <main className="page">
+      <section className="block">
+        <div className="wrap">
+          <Reveal>
+            <div className="eyebrow">Security</div>
+            <h1 className="display" style={{ fontSize: "clamp(40px, 5.6vw, 80px)", maxWidth: "22ch" }}>
+              Built to protect the records <em>that matter most.</em>
+            </h1>
+            <p className="lede" style={{ marginTop: 36, maxWidth: "52ch" }}>
+              HealthPrac Solutions is committed to protecting the confidentiality, integrity, availability, and lawful handling of all information processed through the HPS platform. The following policy defines the security principles and controls that govern the platform and every module on it.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="block tight" style={{ background: "var(--linen)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+        <div className="wrap">
+          {SECURITY_SECTIONS.map((s, i) => (
+            <Reveal key={i}>
+              <div className="feature-block" style={{ borderTopColor: "var(--rule-2)" }}>
+                <div>
+                  <div className="eyebrow">{String(i + 1).padStart(2, "0")}</div>
+                  <h3 className="feature-h">{s.h}</h3>
+                </div>
+                <p className="body-l">{s.b}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="block dark close-cta">
+        <div className="wrap">
+          <Reveal>
+            <h2>Questions about<br/><em>our security posture?</em></h2>
+            <div className="ctas">
+              <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
+              <button className="btn secondary" onClick={() => navigate("home")}>Back to homepage</button>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+// ===========================================================
 // COMING SOON PAGE — shared for Careers + Partnerships
 // ===========================================================
 function ComingSoonPage({ title, subtitle, navigate }) {
@@ -2933,6 +3043,7 @@ function App() {
     case "call":         page = <StrategyCallPage navigate={navigate} />; break;
     case "careers":      page = <ComingSoonPage title="Careers" subtitle="We are growing a team that understands healthcare from the inside. Roles will be listed here when they are open." navigate={navigate} />; break;
     case "partnerships": page = <ComingSoonPage title="Partnerships" subtitle="We work with a small number of aligned partners. If you believe there is a fit, reach out — details will follow here in due course." navigate={navigate} />; break;
+    case "security":     page = <SecurityPolicyPage navigate={navigate} />; break;
     case "home":
     default:         page = <HomePage navigate={navigate} />;
   }
