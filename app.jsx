@@ -1230,8 +1230,7 @@ function Footer({ navigate }) {
                 <li><a onClick={() => navigate("why")}>Why HPS</a></li>
                 <li><a onClick={() => navigate("about")}>About</a></li>
                 <li><a onClick={() => navigate("careers")}>Careers</a></li>
-                <li><a>Press</a></li>
-                <li><a>Contact</a></li>
+                <li><a onClick={() => navigate("call")}>Contact</a></li>
               </ul>
             </div>
           </div>
