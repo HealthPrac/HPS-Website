@@ -980,7 +980,7 @@ function Footer({ navigate }) {
               <h5>Platform</h5>
               <ul>
                 <li><a onClick={() => navigate("platform")}>Overview</a></li>
-                <li><a onClick={() => navigate("platform")}>Partnership</a></li>
+                <li><a onClick={() => navigate("partnerships")}>Partnership</a></li>
                 <li><a onClick={() => navigate("platform")}>Security</a></li>
                 <li><a onClick={() => navigate("platform")}>Integrations</a></li>
               </ul>
@@ -998,7 +998,7 @@ function Footer({ navigate }) {
               <ul>
                 <li><a onClick={() => navigate("why")}>Why HPS</a></li>
                 <li><a onClick={() => navigate("about")}>About</a></li>
-                <li><a>Careers</a></li>
+                <li><a onClick={() => navigate("careers")}>Careers</a></li>
                 <li><a>Press</a></li>
                 <li><a>Contact</a></li>
               </ul>
@@ -2873,6 +2873,31 @@ function Field({ label, k, type = "text", placeholder, data, errs, set, optional
 }
 
 // ===========================================================
+// COMING SOON PAGE — shared for Careers + Partnerships
+// ===========================================================
+function ComingSoonPage({ title, subtitle, navigate }) {
+  return (
+    <main style={{ minHeight: "72vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 28px" }}>
+      <div style={{ textAlign: "center", maxWidth: "52ch" }}>
+        <p style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--champagne)", marginBottom: 28 }}>
+          HealthPrac Solutions
+        </p>
+        <h1 className="serif" style={{ fontSize: "clamp(2.6rem, 6vw, 4rem)", fontWeight: 300, color: "var(--forest)", lineHeight: 1.15, margin: "0 0 24px" }}>
+          {title}
+        </h1>
+        <p className="serif" style={{ fontSize: "clamp(1.15rem, 2.5vw, 1.45rem)", fontWeight: 300, fontStyle: "italic", color: "var(--ink-2)", lineHeight: 1.65, margin: "0 0 48px" }}>
+          {subtitle}
+        </p>
+        <div style={{ width: 48, height: 1, background: "var(--champagne)", margin: "0 auto 48px" }} />
+        <button className="btn secondary" onClick={() => navigate("home")} style={{ fontSize: 14 }}>
+          ← Back to homepage
+        </button>
+      </div>
+    </main>
+  );
+}
+
+// ===========================================================
 // APP ROOT — simple route state
 // ===========================================================
 function App() {
@@ -2903,9 +2928,11 @@ function App() {
                        ? <FamilyPortalPage navigate={navigate} />
                        : <ModulePage moduleId={route.payload.id} navigate={navigate} />; break;
     case "serve":    page = <ServePage segmentId={route.payload.id} navigate={navigate} />; break;
-    case "why":      page = <WhyPage navigate={navigate} />; break;
-    case "about":    page = <AboutPage navigate={navigate} />; break;
-    case "call":     page = <StrategyCallPage navigate={navigate} />; break;
+    case "why":          page = <WhyPage navigate={navigate} />; break;
+    case "about":        page = <AboutPage navigate={navigate} />; break;
+    case "call":         page = <StrategyCallPage navigate={navigate} />; break;
+    case "careers":      page = <ComingSoonPage title="Careers" subtitle="We are growing a team that understands healthcare from the inside. Roles will be listed here when they are open." navigate={navigate} />; break;
+    case "partnerships": page = <ComingSoonPage title="Partnerships" subtitle="We work with a small number of aligned partners. If you believe there is a fit, reach out — details will follow here in due course." navigate={navigate} />; break;
     case "home":
     default:         page = <HomePage navigate={navigate} />;
   }
