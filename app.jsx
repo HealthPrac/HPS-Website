@@ -957,6 +957,139 @@ function PopiaModal({ onClose }) {
   );
 }
 
+function DppModal({ onClose }) {
+  return (
+    <LegalModal
+      title="Data Privacy Policy"
+      tag="HealthPrac Solutions · DPP · Effective 19 May 2026"
+      onClose={onClose}
+      footerNote={
+        <span>Privacy questions or rights requests: <a href="mailto:admin@healthprac.com">admin@healthprac.com</a> · Read together with the platform terms of use, POPIA disclaimer, and customer agreement.</span>
+      }
+    >
+      <p>This Data Privacy Policy explains how HealthPrac Solutions ("HPS") collects, uses, stores, shares, transfers, retains, protects, and otherwise processes personal information. HPS is a healthcare-oriented, multi-tenant SaaS platform that may process workforce, resident, patient, medication-related, finance-linked, quality, governance, and operational data in high-trust environments. HPS adheres to applicable privacy obligations including POPIA (South Africa) and GDPR where applicable.</p>
+
+      <h4>Purpose</h4>
+      <p>This policy describes:</p>
+      <ul>
+        <li>what personal information HPS may process;</li>
+        <li>the privacy roles HPS may perform;</li>
+        <li>the lawful grounds for processing where applicable;</li>
+        <li>the privacy principles HPS applies;</li>
+        <li>how HPS protects personal information;</li>
+        <li>when information may be shared or transferred;</li>
+        <li>how long information may be retained;</li>
+        <li>how deletion and archival requests are handled; and</li>
+        <li>what rights individuals and customer organisations may have.</li>
+      </ul>
+
+      <h4>Scope</h4>
+      <p>This policy applies to:</p>
+      <ul>
+        <li>visitors to the HPS website;</li>
+        <li>prospective customers, customers, and customer representatives;</li>
+        <li>authorised users of the HPS platform;</li>
+        <li>individuals who communicate with HPS regarding demos, contracts, implementation, support, billing, privacy, security, or compliance matters; and</li>
+        <li>personal information processed by HPS for its own business operations or on behalf of customers through the platform.</li>
+      </ul>
+      <p>This policy does not replace a customer's own privacy notice, internal data protection rules, service agreement, or Data Processing Agreement.</p>
+
+      <h4>Privacy Roles</h4>
+      <p>HPS may act as a <strong>data controller</strong> where HPS determines the purposes and means of processing for its own business activities — website management, account administration, service communications, billing, supplier management, recruitment, legal compliance, security logging, and internal governance.</p>
+      <p>HPS may act as a <strong>data processor</strong> where customer organisations use the platform to manage personal information relating to their own residents, patients, staff, contractors, family contacts, medication workflows, incidents, finance operations, governance records, vendors, or similar data sets. In these situations the customer organisation typically acts as controller and HPS processes on that customer's behalf.</p>
+
+      <h4>Data Ownership and Control</h4>
+      <p>HPS recognises that customer organisations remain the owners and primary controllers of the business and personal data they place into the platform. Company data, resident data, and patient data loaded for the customer's operational use remain the customer's data. Where HPS acts as processor, HPS processes customer data on documented instructions and does not acquire independent ownership rights over customer-controlled personal data.</p>
+
+      <h4>Privacy Principles</h4>
+      <p>HPS applies the following principles:</p>
+      <ul>
+        <li>Lawfulness, fairness, and transparency.</li>
+        <li>Purpose limitation.</li>
+        <li>Data minimisation.</li>
+        <li>Accuracy.</li>
+        <li>Storage limitation, subject to lawful retention duties.</li>
+        <li>Integrity and confidentiality.</li>
+        <li>Accountability.</li>
+        <li>Privacy by design and by default.</li>
+        <li>Minimum-necessary access.</li>
+        <li>Governed disclosure, export control, and retention restriction.</li>
+      </ul>
+
+      <h4>Categories of Personal Information</h4>
+      <p>HPS may collect or process:</p>
+      <ul>
+        <li>Identification data — names, usernames, employee identifiers, account identifiers, and organisation affiliations.</li>
+        <li>Contact data — email addresses, telephone numbers, business addresses, and billing contact details.</li>
+        <li>Professional and role data — job title, facility, department, permissions, and reporting relationships.</li>
+        <li>Technical and device data — IP address, browser type, operating system, timestamps, session information, and diagnostic logs.</li>
+        <li>Account and authentication data — login history, password reset events, MFA status, role claims, access scopes, and security events.</li>
+        <li>Service and support data — tickets, communications, onboarding records, implementation notes, training records, and service preferences.</li>
+        <li>Audit and compliance data — record history, approvals, access logs, export logs, support elevation records, and investigation material.</li>
+        <li>Customer platform content processed on behalf of customers, which may include sensitive operational, workforce, health-linked, medication-related, safety, quality, legal, or finance-linked data.</li>
+        <li>Website data, including cookies and similar technology data where used.</li>
+      </ul>
+
+      <h4>How Personal Information is Collected</h4>
+      <p>HPS may collect personal information directly from individuals, from customer organisations, through platform use, through website forms, through contracts and onboarding processes, through support interactions, through integrations approved by customers, and through automated technical logging associated with website and platform security or performance.</p>
+
+      <h4>Purposes of Processing</h4>
+      <p>HPS may process personal information to:</p>
+      <ul>
+        <li>provide, host, secure, maintain, and support the website and platform;</li>
+        <li>authenticate users and manage access control;</li>
+        <li>enforce tenant segregation, scope-based visibility, and security policies;</li>
+        <li>perform onboarding, implementation, training, billing, and customer service functions;</li>
+        <li>communicate regarding service use, contracts, updates, renewals, incidents, invoices, and support matters;</li>
+        <li>monitor system performance, detect misuse, prevent fraud, and investigate suspicious activity;</li>
+        <li>maintain auditability, evidence handling, governance, and compliance operations; and</li>
+        <li>comply with applicable laws, lawful requests, contractual obligations, and regulatory expectations.</li>
+      </ul>
+
+      <h4>Lawful Bases</h4>
+      <p>Where GDPR or similar frameworks apply, HPS may rely on performance of a contract, compliance with legal obligations, legitimate interests, consent where required, or other lawful grounds as applicable. Where HPS acts as processor, the relevant customer as controller is generally responsible for identifying the lawful basis and issuing appropriate notices to data subjects.</p>
+
+      <h4>Special-Category and High-Risk Data</h4>
+      <p>Because HPS serves healthcare and care environments, the platform may be used to process special-category, health-related, or otherwise highly sensitive information where lawful and contractually authorised. Where such information is processed through HPS, enhanced privacy and security expectations apply, including stricter access controls, classification rules, masking, auditability, support restrictions, export controls, and record-level governance.</p>
+
+      <h4>Privacy by Design and Platform Controls</h4>
+      <p>HPS applies privacy by design and by default through platform architecture, configuration guardrails, and operational controls. The platform is designed around shared identity and access services, centralised role and scope enforcement, support-access justification, audit logging, evidence linkage, data classification, retention controls, and multi-tenant segregation — rather than ad hoc local controls.</p>
+
+      <h4>Sharing and Disclosure</h4>
+      <p>HPS may disclose personal information where necessary to authorised employees, service providers, implementation partners, infrastructure providers, advisers, auditors, insurers, regulators, courts, law enforcement, or transaction counterparties, subject to contractual, legal, and security safeguards. HPS does not disclose personal information more broadly than is necessary. Where HPS uses subprocessors or supporting vendors, those parties are bound by confidentiality, data handling, and security obligations appropriate to the services provided.</p>
+
+      <h4>International Transfers</h4>
+      <p>HPS may process personal information in jurisdictions outside the location of the relevant individual or customer where this is necessary for service delivery or support operations and where appropriate safeguards are applied as required by law. The HPS platform architecture is designed with a deliberate regional strategy for personal data processing and recommends GDPR-first regional placement for sensitive workloads.</p>
+
+      <h4>Retention, Soft Deletion, and Archival</h4>
+      <p>HPS applies retention and deletion controls in line with POPIA, GDPR, contractual obligations, and sector-specific record-keeping requirements. Customer, resident, and patient data placed into the platform for operational use remains the customer's data under the customer's control, subject to applicable legal obligations.</p>
+      <p>If a customer requests deletion from the live platform, HPS may perform a soft delete or operational deletion from the active environment so that the data is no longer available in normal platform views. However, where medical, medication, financial, audit, legal, evidentiary, or regulated records are subject to mandatory or defensible retention obligations, HPS may retain a restricted backend archival copy for compliance, audit, legal hold, fraud prevention, incident investigation, or regulatory purposes.</p>
+      <p>For HPS policy purposes, deleted data may be retained in restricted backend archival storage for up to <strong>15 years</strong> where HPS or the relevant customer reasonably determines that long-term retention is necessary to comply with legal, regulatory, contractual, evidentiary, medical, or financial record-keeping obligations. During that period, archived data remains access-restricted, segregated, and unavailable for ordinary operational use except where access is required for lawful compliance, audit, dispute resolution, patient safety, or other legally justified purposes. Where applicable law or a customer contract requires a different period, that rule prevails.</p>
+
+      <h4>Cookies and Similar Technologies</h4>
+      <p>The HPS website may use cookies and similar technologies for essential website functionality, security, service improvement, analytics, and user preferences. Where required by law, HPS will provide notice, consent mechanisms, or controls for non-essential cookies. Users may also limit some cookie use through browser settings, although this may affect website functionality.</p>
+
+      <h4>Security Safeguards</h4>
+      <p>HPS uses technical and organisational measures designed to protect personal information against accidental or unlawful destruction, loss, alteration, unauthorised disclosure, or unauthorised access. Platform controls include role-based and scope-based access management, record-level restrictions, tenant segregation, audit trails, support-access justification, evidence governance, export governance, and central policy enforcement. No internet-based service can guarantee absolute security, but HPS seeks to maintain measures proportionate to the risks and sensitivities associated with the platform.</p>
+
+      <h4>Individual Rights and Requests</h4>
+      <p>Where applicable under GDPR, UK GDPR, POPIA, or similar laws, individuals may have the right to request access, correction, deletion, restriction, objection, portability, withdrawal of consent where consent is relied upon, and the right to complain to a supervisory authority. Where HPS processes personal information as processor on behalf of a customer, requests relating to customer-controlled data should usually be directed first to the relevant customer organisation. Any right to deletion is subject to legal, regulatory, contractual, evidentiary, patient-safety, financial-record, and lawful retention limitations.</p>
+
+      <h4>Data Breach and Incident Handling</h4>
+      <p>HPS treats suspected personal data breaches, unauthorised disclosure, security failures, misuse, and material privacy incidents as serious matters requiring investigation and response. Where HPS acts as processor, HPS will report personal data breaches to the relevant controller without undue delay in accordance with applicable law. The HPS platform supports auditability, incident investigation, evidence capture, escalation, and platform-level response controls.</p>
+
+      <h4>Responsibility and Governance</h4>
+      <p>Privacy accountability within HPS is supported by shared platform controls, controlled support access, auditability, retention discipline, data classification, and governance-led operational practices. Platform-level guardrails are intended to ensure that customer customisation does not weaken core privacy or compliance protections.</p>
+
+      <h4>Changes to this Policy</h4>
+      <p>HPS may update this Data Privacy Policy from time to time to reflect changes in law, regulation, privacy expectations, platform functionality, subprocessors, business operations, or security controls. The current version published on the HPS website is the authoritative version.</p>
+
+      <h4>Contact</h4>
+      <p>For privacy-related questions, rights requests, complaints, or concerns about this Data Privacy Policy, contact HealthPrac Solutions at <a href="mailto:admin@healthprac.com">admin@healthprac.com</a>.</p>
+    </LegalModal>
+  );
+}
+
 function SecurityModal({ onClose }) {
   return (
     <LegalModal
@@ -982,11 +1115,13 @@ function Footer({ navigate }) {
   const [showTerms, setShowTerms] = React.useState(false);
   const [showPopia, setShowPopia] = React.useState(false);
   const [showSecurity, setShowSecurity] = React.useState(false);
+  const [showDpp, setShowDpp] = React.useState(false);
   return (
     <>
       {showTerms    && <TermsModal    onClose={() => setShowTerms(false)} />}
       {showPopia    && <PopiaModal    onClose={() => setShowPopia(false)} />}
       {showSecurity && <SecurityModal onClose={() => setShowSecurity(false)} />}
+      {showDpp      && <DppModal      onClose={() => setShowDpp(false)} />}
       <footer className="footer">
         <div className="wrap">
           <div className="footer-grid">
@@ -1035,7 +1170,9 @@ function Footer({ navigate }) {
               <button className="footer-legal-link" onClick={() => setShowTerms(true)}>Terms</button>
               {" · "}
               <button className="footer-legal-link" onClick={() => setShowSecurity(true)}>Security</button>
-              {" · DPA · Sub-processors"}
+              {" · "}
+              <button className="footer-legal-link" onClick={() => setShowDpp(true)}>DPP</button>
+              {" · Sub-processors"}
             </div>
           </div>
         </div>
