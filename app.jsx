@@ -957,14 +957,36 @@ function PopiaModal({ onClose }) {
   );
 }
 
+function SecurityModal({ onClose }) {
+  return (
+    <LegalModal
+      title="Security Policy"
+      tag="HealthPrac Solutions · Platform Security"
+      onClose={onClose}
+      footerNote={
+        <span>Security concerns or suspected vulnerabilities should be directed to <a href="mailto:admin@healthprac.com">admin@healthprac.com</a></span>
+      }
+    >
+      {SECURITY_SECTIONS.map((s, i) => (
+        <React.Fragment key={i}>
+          <h4>{s.h}</h4>
+          <p>{s.b}</p>
+        </React.Fragment>
+      ))}
+    </LegalModal>
+  );
+}
+
 function Footer({ navigate }) {
   const yr = new Date().getFullYear();
   const [showTerms, setShowTerms] = React.useState(false);
   const [showPopia, setShowPopia] = React.useState(false);
+  const [showSecurity, setShowSecurity] = React.useState(false);
   return (
     <>
-      {showTerms && <TermsModal onClose={() => setShowTerms(false)} />}
-      {showPopia && <PopiaModal onClose={() => setShowPopia(false)} />}
+      {showTerms    && <TermsModal    onClose={() => setShowTerms(false)} />}
+      {showPopia    && <PopiaModal    onClose={() => setShowPopia(false)} />}
+      {showSecurity && <SecurityModal onClose={() => setShowSecurity(false)} />}
       <footer className="footer">
         <div className="wrap">
           <div className="footer-grid">
@@ -981,7 +1003,7 @@ function Footer({ navigate }) {
               <ul>
                 <li><a onClick={() => navigate("platform")}>Overview</a></li>
                 <li><a onClick={() => navigate("partnerships")}>Partnership</a></li>
-                <li><a onClick={() => navigate("security")}>Security</a></li>
+                <li><a onClick={() => navigate("platform")}>Security</a></li>
                 <li><a onClick={() => navigate("platform")}>Integrations</a></li>
               </ul>
             </div>
@@ -1011,6 +1033,8 @@ function Footer({ navigate }) {
               <button className="footer-legal-link" onClick={() => setShowPopia(true)}>POPIA</button>
               {" · "}
               <button className="footer-legal-link" onClick={() => setShowTerms(true)}>Terms</button>
+              {" · "}
+              <button className="footer-legal-link" onClick={() => setShowSecurity(true)}>Security</button>
               {" · DPA · Sub-processors"}
             </div>
           </div>
@@ -2934,54 +2958,6 @@ const SECURITY_SECTIONS = [
   },
 ];
 
-function SecurityPolicyPage({ navigate }) {
-  return (
-    <main className="page">
-      <section className="block">
-        <div className="wrap">
-          <Reveal>
-            <div className="eyebrow">Security</div>
-            <h1 className="display" style={{ fontSize: "clamp(40px, 5.6vw, 80px)", maxWidth: "22ch" }}>
-              Built to protect the records <em>that matter most.</em>
-            </h1>
-            <p className="lede" style={{ marginTop: 36, maxWidth: "52ch" }}>
-              HealthPrac Solutions is committed to protecting the confidentiality, integrity, availability, and lawful handling of all information processed through the HPS platform. The following policy defines the security principles and controls that govern the platform and every module on it.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="block tight" style={{ background: "var(--linen)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
-        <div className="wrap">
-          {SECURITY_SECTIONS.map((s, i) => (
-            <Reveal key={i}>
-              <div className="feature-block" style={{ borderTopColor: "var(--rule-2)" }}>
-                <div>
-                  <div className="eyebrow">{String(i + 1).padStart(2, "0")}</div>
-                  <h3 className="feature-h">{s.h}</h3>
-                </div>
-                <p className="body-l">{s.b}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="block dark close-cta">
-        <div className="wrap">
-          <Reveal>
-            <h2>Questions about<br/><em>our security posture?</em></h2>
-            <div className="ctas">
-              <button className="btn gold" onClick={() => navigate("call")}>Book a call to explore <span className="arrow">→</span></button>
-              <button className="btn secondary" onClick={() => navigate("home")}>Back to homepage</button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-    </main>
-  );
-}
-
 // ===========================================================
 // COMING SOON PAGE — shared for Careers + Partnerships
 // ===========================================================
@@ -3043,7 +3019,6 @@ function App() {
     case "call":         page = <StrategyCallPage navigate={navigate} />; break;
     case "careers":      page = <ComingSoonPage title="Careers" subtitle="We are growing a team that understands healthcare from the inside. Roles will be listed here when they are open." navigate={navigate} />; break;
     case "partnerships": page = <ComingSoonPage title="Partnerships" subtitle="We work with a small number of aligned partners. If you believe there is a fit, reach out — details will follow here in due course." navigate={navigate} />; break;
-    case "security":     page = <SecurityPolicyPage navigate={navigate} />; break;
     case "home":
     default:         page = <HomePage navigate={navigate} />;
   }
