@@ -2823,7 +2823,7 @@ function StrategyCallPage({ navigate }) {
   const [data, setData] = useState({
     name: "", email: "", role: "",
     org: "", segment: "", sites: "", currentSystems: "",
-    focus: "", notes: "",
+    focus: [], notes: "",
   });
   const [errs, setErrs] = useState({});
   const [sending, setSending] = useState(false);
@@ -2834,6 +2834,14 @@ function StrategyCallPage({ navigate }) {
     setData((d) => ({ ...d, [k]: val }));
     if (errs[k]) setErrs((s) => ({ ...s, [k]: null }));
   };
+
+  function toggleFocus(id) {
+    setData((d) => {
+      const next = d.focus.includes(id) ? d.focus.filter((x) => x !== id) : [...d.focus, id];
+      return { ...d, focus: next };
+    });
+    if (errs.focus) setErrs((s) => ({ ...s, focus: null }));
+  }
 
   function validate(s) {
     const e = {};
@@ -2849,7 +2857,7 @@ function StrategyCallPage({ navigate }) {
       if (!data.sites) e.sites = "Required.";
     }
     if (s === 2) {
-      if (!data.focus) e.focus = "Pick one to focus on.";
+      if (!data.focus.length) e.focus = "Select at least one area.";
     }
     setErrs(e);
     return Object.keys(e).length === 0;
@@ -2876,7 +2884,7 @@ function StrategyCallPage({ navigate }) {
           org:            data.org.trim(),
           segment:        data.segment,
           sites:          data.sites,
-          focus:          data.focus,
+          focus:          data.focus.map((id) => ({ front:"Front-of-House", care:"Care", portals:"Stakeholder Portals", hospitality:"Hospitality", operations:"Operations & Governance", executive:"Executive", platform:"The whole platform" }[id] || id)).join(", "),
           currentSystems: data.currentSystems.trim() || undefined,
           notes:          data.notes.trim() || undefined,
         }),
@@ -2952,7 +2960,6 @@ function StrategyCallPage({ navigate }) {
                         onClick={() => set("segment")(s.id)}
                       >
                         <span className="label">{s.name}</span>
-                        <span className="sub">{s.label}</span>
                       </button>
                     ))}
                   </div>
@@ -2990,28 +2997,28 @@ function StrategyCallPage({ navigate }) {
               <>
                 <h2 className="form-step-title">What to focus on.</h2>
                 <p className="body-l" style={{ fontSize: 14, marginBottom: 24 }}>
-                  Pick the one area you would most want us to walk you through. We'll cover the rest in the second half.
+                  Select all that apply.
                 </p>
 
                 <div className="field">
                   <label>Focus area <span className="req">*</span></label>
                   <div className="radio-group">
                     {[
-                      { id: "care",       label: "Care & medication", sub: "MAR · OBSERVATIONS · DEMENTIA" },
-                      { id: "front",      label: "Front-of-house",    sub: "WELCOME · VISITORS · SECURITY" },
-                      { id: "governance", label: "Governance & QMS",  sub: "POPIA · ISO · AUDIT" },
-                      { id: "workforce",  label: "HR & workforce",    sub: "ROSTERS · CREDENTIALING" },
-                      { id: "executive",  label: "Executive view",    sub: "COMMAND · KPIs · BOARD" },
-                      { id: "platform",   label: "The whole platform", sub: "WALK-THROUGH" },
+                      { id: "front",       label: "Front-of-House" },
+                      { id: "care",        label: "Care" },
+                      { id: "portals",     label: "Stakeholder Portals" },
+                      { id: "hospitality", label: "Hospitality" },
+                      { id: "operations",  label: "Operations & Governance" },
+                      { id: "executive",   label: "Executive" },
+                      { id: "platform",    label: "The whole platform" },
                     ].map((opt) => (
                       <button
                         type="button"
                         key={opt.id}
-                        className={`radio-card ${data.focus === opt.id ? "selected" : ""}`}
-                        onClick={() => set("focus")(opt.id)}
+                        className={`radio-card ${data.focus.includes(opt.id) ? "selected" : ""}`}
+                        onClick={() => toggleFocus(opt.id)}
                       >
                         <span className="label">{opt.label}</span>
-                        <span className="sub">{opt.sub}</span>
                       </button>
                     ))}
                   </div>
@@ -3058,7 +3065,7 @@ function StrategyCallPage({ navigate }) {
                     <div className="review-row"><span className="k">Organisation</span><span className="v">{data.org}</span></div>
                     <div className="review-row"><span className="k">Segment</span><span className="v">{SEGMENTS.find((s) => s.id === data.segment)?.name || "—"}</span></div>
                     <div className="review-row"><span className="k">Sites</span><span className="v">{data.sites}</span></div>
-                    <div className="review-row"><span className="k">Focus</span><span className="v">{data.focus}</span></div>
+                    <div className="review-row"><span className="k">Focus</span><span className="v">{data.focus.map((id) => ({ front:"Front-of-House", care:"Care", portals:"Stakeholder Portals", hospitality:"Hospitality", operations:"Operations & Governance", executive:"Executive", platform:"The whole platform" }[id] || id)).join(", ")}</span></div>
                     {data.currentSystems && <div className="review-row"><span className="k">Current systems</span><span className="v">{data.currentSystems}</span></div>}
                     {data.notes && <div className="review-row"><span className="k">Notes</span><span className="v">{data.notes}</span></div>}
                   </div>
