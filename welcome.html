@@ -445,7 +445,7 @@
     }
 
     // ─── 3. SHARE CARD SCREEN ────────────────────────────────────────────────
-    const WELCOME_URL = 'https://www.healthprac.com/Welcome%20Experience.html';
+    const WELCOME_URL = 'https://www.healthprac.com/welcome.html';
 
     function ShareCardScreen({ onBack }) {
       const [shared, setShared] = useState(false);
@@ -455,7 +455,7 @@
         const data = {
           title: 'Liezl Joubert — HealthPrac Solutions',
           text: 'Liezl Joubert · CEO · HealthPrac Solutions',
-          url: 'https://www.healthprac.com/Welcome Experience.html',
+          url: 'https://www.healthprac.com/welcome.html',
         };
         try {
           if (navigator.share) {
@@ -481,7 +481,7 @@
           'ORG:HealthPrac Solutions',
           'TITLE:Chief Executive Officer',
           'EMAIL;type=WORK:liezl@healthprac.com',
-          'URL:https://www.healthprac.com/Welcome Experience.html',
+          'URL:https://www.healthprac.com/welcome.html',
           'NOTE:HealthPrac Solutions — Operational Excellence for Healthcare Practices',
           'END:VCARD',
         ].join('\r\n');
@@ -497,7 +497,7 @@
         setTimeout(() => setVcardDone(false), 2500);
       };
 
-      const qr = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent('https://www.healthprac.com/Welcome Experience.html')}&bgcolor=FAF7F1&color=0B2545&margin=8&qzone=1`;
+      const qr = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent('https://www.healthprac.com/welcome.html')}&bgcolor=FAF7F1&color=0B2545&margin=8&qzone=1`;
 
       return (
         <Screen>
