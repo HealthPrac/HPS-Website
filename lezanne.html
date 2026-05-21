@@ -1181,16 +1181,20 @@
         setSubmitting(true);
         setSubmitError('');
         try {
-          const res = await fetch('https://main.d2rogr2lbyrjz1.amplifyapp.com/api/request-callback', {
+          const noteLines = ['Via: Lezanne Hempel · COO — Digital Business Card'];
+          if (form.mobile.trim()) noteLines.push(`Mobile: ${form.mobile.trim()}`);
+          const res = await fetch('https://main.d2rogr2lbyrjz1.amplifyapp.com/api/book-call', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              name:       `${form.firstName} ${form.lastName}`.trim(),
-              email:      form.email.trim().toLowerCase(),
-              org:        form.organisation.trim(),
-              role:       form.role.trim() || undefined,
-              mobile:     form.mobile.trim() || undefined,
-              cardSource: 'lezanne-card',
+              name:     `${form.firstName} ${form.lastName}`.trim(),
+              email:    form.email.trim().toLowerCase(),
+              org:      form.organisation.trim(),
+              role:     form.role.trim() || 'Not specified',
+              segment:  'other',
+              sites:    '1',
+              focus:    'platform',
+              notes:    noteLines.join('\n'),
             }),
           });
           const json = await res.json();
