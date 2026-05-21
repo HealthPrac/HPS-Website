@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FAF7F1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="HealthPrac Solutions — Your next competitive advantage in care operations.">
+  <title>Welcome — HealthPrac Solutions</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: #FAF7F1;
+      font-family: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overscroll-behavior: none;
+    }
+
+    /* Prevent iOS zoom on input focus */
+    input, select, textarea { font-size: 16px; font-family: inherit; }
+    button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    a { -webkit-tap-highlight-color: transparent; }
+
+    @keyframes hps-fade-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes hps-slide-up {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes hps-fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes hps-scale-in {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .anim-screen  { animation: hps-fade-up  300ms cubic-bezier(.2,.7,.2,1) both; }
+    .anim-overlay { animation: hps-fade-in  220ms ease-out both; }
+    .anim-sheet   { animation: hps-slide-up 300ms cubic-bezier(.2,.7,.2,1) both; }
+    .anim-content { animation: hps-scale-in 380ms cubic-bezier(.2,.7,.2,1) both; }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
+
+    // ─── Brand tokens ─────────────────────────────────────────────────────────
+    const C = {
+      navy:     '#0B2545',
+      navy2:    '#13315C',
+      navy3:    '#1B4275',
+      gold:     '#C9A24A',
+      goldHi:   '#E4C268',
+      goldDeep: '#9C7A21',
+      cream:    '#FAF7F1',
+      paper:    '#FFFFFF',
+      ink:      '#091A33',
+      hair:     '#E8E2D3',
+      muted:    '#6B7A8F',
+    };
+
+    // ─── Source detection from URL (?src=qr|nfc|wallet|direct) ───────────────
+    function getSource() {
+      try {
+        const p = new URLSearchParams(window.location.search);
+        return p.get('src') || p.get('source') || 'qr';
+      } catch (_) { return 'qr'; }
+    }
+
+    // ─── HPS emblem — exact official SVG paths (726×758 viewBox, cropped) ─────
+    // light=false → left bracket navy #0B2D4B (use on cream/white backgrounds)
+    // light=true  → left bracket white #FFFFFF (use on dark/navy backgrounds)
+    function HPSMark({ size = 48, light = false }) {
+      const uid = React.useId().replace(/:/g, '_');
+      const leftFill = light ? '#FFFFFF' : '#0B2D4B';
+      // Crop viewBox to content bounds (paths span ~90–656 x, ~80–631 y)
+      const vb = '90 80 570 555';
+      const h  = Math.round(size * 555 / 570);
+      return (
+        <svg
+          width={size} height={h}
+          viewBox={vb}
+          aria-label="HealthPrac Solutions"
+          style={{ display: 'block', flexShrink: 0 }}
+        >
+          <defs>
+            <linearGradient id={`${uid}g0`} gradientUnits="userSpaceOnUse" x1="352.56055" y1="280.53613" x2="520.64105" y2="262.15018">
+              <stop offset="0" stopColor="#C8A461"/>
+              <stop offset="1" stopColor="#FFFCB7"/>
+            </linearGradient>
+            <linearGradient id={`${uid}g1`} gradientUnits="userSpaceOnUse" x1="271.25821" y1="143.87224" x2="339.36298" y2="141.58516">
+              <stop offset="0" stopColor="#975F27"/>
+              <stop offset="1" stopColor="#B8914E"/>
+            </linearGradient>
+            <linearGradient id={`${uid}g2`} gradientUnits="userSpaceOnUse" x1="656.34967" y1="358.80191" x2="528.4455" y2="356.02213">
+              <stop offset="0" stopColor="#986125"/>
+              <stop offset="1" stopColor="#DDC681"/>
+            </linearGradient>
+          </defs>
+
+          {/* Left bracket — navy on light bg, white on dark bg */}
+          <path fill={leftFill} d="M139.353 248.875C144.509 248.303 153.508 248.736 158.925 248.717C181.679 248.637 198.52 249.217 220.125 256.831C229.821 260.253 239.111 264.731 247.83 270.182C291.492 296.924 307.022 339.4 306.486 388.798C306.342 402.018 306.482 415.548 306.527 428.792L306.664 540.305L306.661 563.426C306.649 570.179 306.098 577.814 308.351 584.218C309.768 588.246 314.042 593.219 318.339 594.069C328.087 595.995 339.461 595.46 349.413 595.476L387.973 595.433L412.001 595.29C419.416 595.237 429.323 595.948 436.009 592.52C448.491 586.122 446.677 571.42 446.648 559.555L446.583 537.351C446.565 532.35 446.273 527.94 447.751 523.013C450.682 513.247 460.872 509.405 470.058 512.75C476.201 514.987 481.145 521.311 481.351 528.065C481.411 538.248 481.811 548.693 481.555 558.871C481.324 568.015 482.142 578.793 481.221 587.75C480.684 592.959 479.387 598.062 477.372 602.896C472.699 614.105 465.021 621.907 453.731 626.408C441.189 631.408 427.101 630.288 413.805 630.295L372.088 630.291L335.55 630.394C328.218 630.426 318.952 630.676 311.765 630.064C306.47 629.662 301.273 628.411 296.375 626.359C284.679 621.327 278.673 613.242 274.106 601.661C270.181 589.294 271.068 576.241 271.034 563.266L270.967 532.109L270.838 429.634L270.837 396.256C270.835 389.209 271.039 381.145 270.572 374.19C268.925 349.645 260.888 327.043 241.876 310.431C226.83 297.307 206.766 288.628 186.978 286.01C173.883 284.613 160.391 284.323 147.241 284.96C127.249 285.929 130.257 307.533 130.254 321.301L130.254 353.517L130.276 389.975C130.292 397.727 130.22 405.627 130.864 413.329C131.398 419.213 135.064 425.18 140.321 427.946C147.045 431.485 156.138 430.702 163.584 430.676L191.52 430.572C199.712 430.547 210.233 429.342 216.841 434.831C220.508 437.939 222.79 442.377 223.184 447.169C224.169 458.127 214.967 466.433 204.554 466.753C186.143 467.367 167.619 466.712 149.202 466.879C136.232 466.997 124.607 466.048 113.592 458.365C102.323 450.505 95.4675 435.658 94.7656 422.144C94.3065 413.305 94.4677 404.042 94.4507 395.192L94.655 341.032L94.638 309.923C94.6213 292.778 94.1713 277.212 106.522 263.337C115.3 253.477 126.425 249.71 139.353 248.875Z"/>
+
+          {/* Gold bracket — gradient #C8A461 → #FFFCB7 */}
+          <path fill={`url(#${uid}g0)`} d="M353.342 84.7022C362.303 84.0508 381.408 84.3867 390.571 84.4566C406.584 84.5788 434.028 83.3317 449.163 87.0888C455.547 88.6939 461.469 91.7685 466.455 96.0677C483.097 110.383 481.36 130.442 481.38 150.29L481.398 185.268L481.372 293.345L481.361 324.911C481.365 344.241 481.669 362.329 490.368 380.15C491.948 383.385 493.906 386.451 495.601 389.625C495.549 391.823 498.216 394.663 499.601 396.508C508.152 407.903 520.622 416.134 533.543 421.825C534.978 422.458 537.61 423.432 538.351 424.819C538.558 428.998 536.674 434.335 536.262 438.503C535.801 443.175 537.097 448.331 534.961 452.635C534.243 454.083 534.087 455.309 533.954 456.907C533.623 457.347 533.5 457.759 532.919 457.866C531.104 458.2 515.744 451.146 513.077 449.722C509.051 447.571 505.003 445.095 501.089 442.743C498.207 441.012 495.719 438.595 492.868 436.811C492.269 436.436 492.217 436.167 491.543 436.523C487.98 434.247 483.086 429.478 480.053 426.411C464.319 410.496 455.26 394.441 449.959 372.641C444.763 351.275 445.117 335.978 445.12 314.497L445.13 276.048L445.118 167.191C445.126 160.629 445.568 139.166 444.316 134.018C443.651 131.25 442.347 128.676 440.511 126.5C434.679 119.652 426.671 120.608 418.483 120.548C413.82 120.514 409.145 120.592 404.481 120.603L357.319 120.592C349.95 120.581 338.492 120.881 331.409 120.339C324.52 120.449 318.749 119.929 313.162 124.769C305.627 131.295 306.727 140.619 306.753 149.563L306.821 170.911C306.835 175.545 307.118 183.073 306.148 187.324C305.541 190.078 304.276 192.643 302.46 194.801C295.979 202.392 284.123 203.669 277.091 196.224C275.323 194.47 272.76 190.581 272.556 188.008C271.208 171.022 271.848 153.15 271.668 136.132C271.512 121.474 274.659 107.305 285.444 96.8771C298.128 84.6131 314.871 84.4575 331.382 84.6968C338.628 84.7574 346.035 84.5056 353.342 84.7022Z"/>
+
+          {/* Gold bracket inner shadow — gradient #975F27 → #B8914E */}
+          <path fill={`url(#${uid}g1)`} d="M331.409 120.339C324.52 120.449 318.749 119.929 313.162 124.769C305.627 131.295 306.727 140.619 306.753 149.563L306.821 170.911C306.835 175.545 307.118 183.073 306.148 187.324C305.541 190.078 304.276 192.643 302.46 194.801C295.979 202.392 284.123 203.669 277.091 196.224C275.323 194.47 272.76 190.581 272.556 188.008C271.208 171.022 271.848 153.15 271.668 136.132C271.512 121.474 274.659 107.305 285.444 96.8771C298.128 84.6131 314.871 84.4575 331.382 84.6968C338.628 84.7574 346.035 84.5056 353.342 84.7022L353.759 84.7431C363.758 85.6333 375.254 84.4717 385.413 84.9171C389.202 85.0832 392.995 84.853 396.853 85.0716C387.582 85.6835 340.606 84.2449 336.666 86.0138C335.276 87.9287 336.388 98.9925 336.826 102.114C337.341 105.783 335.143 117.512 335.674 119.725C338.417 120.13 344.134 119.952 347.085 119.945L368.521 119.908C372.1 119.905 376.982 119.745 380.421 120.047C369.367 120.156 358.312 120.179 347.257 120.116C343.949 120.115 334.295 119.92 331.409 120.339Z"/>
+
+          {/* Right bracket — gradient #986125 → #DDC681 */}
+          <path fill={`url(#${uid}g2)`} d="M541.869 249.78C546.333 248.083 606.038 248.554 613.764 249.445C619.062 250.023 624.239 251.421 629.11 253.588C644.797 260.602 654.501 277.211 655.587 294.116C656.156 302.974 655.935 312.301 655.944 321.203L655.969 365.16L655.986 402.261C655.986 409.367 656.166 416.536 655.699 423.56C654.497 441.627 644.821 456.919 627.391 463.021C616 467.009 606.231 466.559 594.427 466.44C567.53 466.982 542.92 464.707 518.262 452.921C510.256 449.094 498.367 442.437 491.543 436.523C492.217 436.167 492.269 436.436 492.868 436.811C495.719 438.595 498.207 441.012 501.089 442.743C505.003 445.095 509.051 447.571 513.077 449.722C515.744 451.146 531.104 458.2 532.919 457.866C533.5 457.759 533.623 457.347 533.954 456.907C534.087 455.309 534.243 454.083 534.961 452.635C537.097 448.331 535.801 443.175 536.262 438.503C536.674 434.335 538.558 428.998 538.351 424.819C537.61 423.432 534.978 422.458 533.543 421.825C520.622 416.134 508.152 407.903 499.601 396.508C498.216 394.663 495.549 391.823 495.601 389.625C516.074 421.02 553.293 432.29 588.905 431.15C596.136 430.802 605.873 431.693 612.291 427.948C623.174 421.596 620.857 402.613 620.891 391.918L620.994 355.737L621.063 321.799C621.062 316.607 621.299 302.294 620.155 298.003C615.699 281.284 596.363 283.762 582.709 283.795L555.338 283.871C549.623 283.893 541.915 284.289 536.912 281.175C524.675 277.406 525.773 253.089 541.869 249.78Z"/>
+
+          {/* Right bracket highlight — #DABC7A */}
+          <path fill="#DABC7A" d="M536.912 281.175C524.675 277.406 525.773 253.089 541.869 249.78C540.778 250.885 540.067 251.017 538.609 251.566L538.053 252.27C540.577 254.454 538.027 255.374 537.968 256.97C537.787 261.935 539.684 265.114 534.243 268.091C533.414 268.554 534.095 273.499 532.01 274.536C530.849 273.78 531.337 274.267 530.663 272.873L530.335 273.194C531.106 277.874 536.208 279.14 537.468 280.967L536.912 281.175Z"/>
+        </svg>
+      );
+    }
+
+    // ─── Horizontal lockup ────────────────────────────────────────────────────
+    function HPSLockup({ scale = 1, light = false }) {
+      const textColor = light ? '#fff' : C.navy;
+      return (
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10 * scale }}>
+          <HPSMark size={36 * scale} light={light} />
+          <div style={{ lineHeight: 1.05 }}>
+            <div style={{ fontSize: 14 * scale, fontWeight: 800, letterSpacing: '-0.01em', color: textColor }}>HealthPrac</div>
+            <div style={{ fontSize: 14 * scale, fontWeight: 800, letterSpacing: '-0.01em', color: C.gold, marginTop: 1 * scale }}>Solutions</div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Source attribution chip ──────────────────────────────────────────────
+    function SourceChip({ source }) {
+      const labels = {
+        qr:     ['QR',  'Scanned from print'],
+        nfc:    ['NFC', 'Tapped from card'],
+        wallet: ['WLT', 'From Apple Wallet'],
+        direct: ['URL', 'Direct link'],
+      };
+      const [code, label] = labels[source] || labels.qr;
+      return (
+        <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: 8,
+          padding: '6px 12px 6px 6px', borderRadius: 999,
+          background: C.paper, border: `1px solid ${C.hair}`,
+        }}>
+          <span style={{
+            fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+            fontSize: 10, fontWeight: 700,
+            background: C.navy, color: '#fff',
+            padding: '4px 8px', borderRadius: 999, letterSpacing: '0.06em',
+          }}>{code}</span>
+          <span style={{ fontSize: 11, color: C.muted, fontWeight: 600 }}>
+            {label} · attribution captured
+          </span>
+        </div>
+      );
+    }
+
+    // ─── Shared screen wrapper ────────────────────────────────────────────────
+    function Screen({ children, bg = C.cream }) {
+      return (
+        <div className="anim-screen" style={{
+          minHeight: '100dvh',
+          background: bg,
+          display: 'flex', flexDirection: 'column',
+          paddingTop: 'env(safe-area-inset-top)',
+        }}>
+          {children}
+        </div>
+      );
+    }
+
+    // ─── Top bar ──────────────────────────────────────────────────────────────
+    function TopBar({ onBack }) {
+      return (
+        <div style={{
+          padding: '20px 20px 0',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          minHeight: 60,
+        }}>
+          {onBack ? (
+            <button
+              onClick={onBack}
+              style={{
+                appearance: 'none', border: 0, background: 'transparent',
+                padding: '8px', margin: '-8px 0 -8px -8px',
+                display: 'flex', alignItems: 'center', gap: 5,
+                color: C.navy, fontWeight: 700, fontSize: 15,
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M11 4L6 9l5 5" stroke={C.navy} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Back
+            </button>
+          ) : <div style={{ width: 56 }} />}
+
+          <div style={{
+            fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase',
+            color: C.muted, fontWeight: 800,
+          }}>HPS · Welcome</div>
+
+          <div style={{ width: 56 }} />
+        </div>
+      );
+    }
+
+    // ─── Screen footer ────────────────────────────────────────────────────────
+    function ScreenFooter() {
+      return (
+        <div style={{
+          padding: '16px 20px',
+          paddingBottom: 'max(24px, env(safe-area-inset-bottom))',
+          borderTop: `1px solid ${C.hair}`,
+          textAlign: 'center', marginTop: 24,
+        }}>
+          <div style={{
+            fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase',
+            color: C.muted, fontWeight: 800, marginBottom: 8,
+          }}>Powered by</div>
+          <HPSLockup scale={0.78} />
+          <div style={{ fontSize: 10, color: C.muted, marginTop: 8, lineHeight: 1.6 }}>
+            <a href="https://www.healthprac.com/privacy" style={{ color: C.muted, textDecoration: 'none' }}>Privacy</a>
+            {' · '}
+            <a href="https://www.healthprac.com/terms" style={{ color: C.muted, textDecoration: 'none' }}>Terms</a>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── CTA row button ───────────────────────────────────────────────────────
+    function CTARow({ onClick, label, caption, primary }) {
+      return (
+        <button
+          onClick={onClick}
+          style={{
+            appearance: 'none', textAlign: 'left', width: '100%',
+            background: primary ? C.navy : C.paper,
+            color: primary ? '#fff' : C.navy,
+            border: primary ? 'none' : `1px solid ${C.hair}`,
+            borderRadius: 16, padding: '15px 18px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+            boxShadow: primary ? '0 6px 22px rgba(11,37,69,0.20)' : 'none',
+            minHeight: 58,
+          }}
+        >
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ display: 'block', fontWeight: 800, fontSize: 14, letterSpacing: '-0.005em' }}>{label}</span>
+            <span style={{
+              display: 'block', fontSize: 11, fontWeight: 600, marginTop: 2,
+              color: primary ? 'rgba(255,255,255,0.58)' : C.muted,
+            }}>{caption}</span>
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" style={{ flexShrink: 0 }}>
+            <path d="M4 2L9 7L4 12" stroke={primary ? '#fff' : C.navy} strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      );
+    }
+
+    // ─── 1. WELCOME SCREEN ────────────────────────────────────────────────────
+    function WelcomeScreen({ source, onWatch, onWebsite, onShare }) {
+      return (
+        <Screen>
+          <TopBar />
+
+          {/* Hero */}
+          <div style={{ padding: '16px 20px 0', textAlign: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 8 }}>
+              <HPSMark size={76} />
+            </div>
+
+            <div style={{
+              marginTop: 20, fontSize: 11, letterSpacing: '0.28em',
+              textTransform: 'uppercase', color: C.goldDeep, fontWeight: 800,
+            }}>Welcome</div>
+
+            <h1 style={{
+              fontFamily: '"Fraunces", Georgia, serif',
+              fontSize: 31, fontWeight: 500, lineHeight: 1.14,
+              letterSpacing: '-0.025em', color: C.navy,
+              margin: '12px 0 0', padding: '0 4px',
+            }}>
+              Your next competitive advantage in care operations
+              <span style={{ color: C.gold }}> starts here.</span>
+            </h1>
+
+            <p style={{
+              marginTop: 12, fontSize: 14, lineHeight: 1.58, color: C.muted,
+              maxWidth: 340, marginLeft: 'auto', marginRight: 'auto',
+            }}>
+              A quick introduction to how HealthPrac Solutions handles the
+              complexity behind modern practice operations — so you can handle
+              the care.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div style={{ padding: '26px 20px 0' }}>
+            {/* Primary: Watch */}
+            <button
+              onClick={onWatch}
+              style={{
+                width: '100%', appearance: 'none', border: 0,
+                background: `linear-gradient(180deg, ${C.navy2} 0%, ${C.navy} 100%)`,
+                color: '#fff', borderRadius: 18, padding: '18px 20px',
+                fontWeight: 800, fontSize: 16, letterSpacing: '-0.005em',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                boxShadow: '0 2px 0 rgba(255,255,255,0.08) inset, 0 12px 32px rgba(11,37,69,0.28)',
+                minHeight: 66,
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <span style={{
+                  width: 38, height: 38, borderRadius: 999,
+                  background: C.gold, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: '0 0 0 5px rgba(228,194,104,0.22)', flexShrink: 0,
+                }}>
+                  <svg width="12" height="14" viewBox="0 0 12 14">
+                    <path d="M0.5 0.5 L11.5 7 L0.5 13.5 Z" fill={C.navy}/>
+                  </svg>
+                </span>
+                <span style={{ textAlign: 'left' }}>
+                  <span style={{ display: 'block' }}>Watch the welcome</span>
+                  <span style={{ display: 'block', fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.58)', marginTop: 2 }}>
+                    0:55 · sound on
+                  </span>
+                </span>
+              </span>
+              <svg width="14" height="14" viewBox="0 0 14 14">
+                <path d="M4 2L9 7L4 12" stroke="#fff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+
+            {/* Share my card — full width secondary */}
+            <button
+              onClick={onShare}
+              style={{
+                marginTop: 10, width: '100%', appearance: 'none',
+                background: C.paper, color: C.navy,
+                border: `1px solid ${C.hair}`, borderRadius: 14,
+                padding: '15px 18px', fontWeight: 700, fontSize: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                minHeight: 52,
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M11 5.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM11 15.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM5 11a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke={C.navy} strokeWidth="1.4"/>
+                  <path d="M8 8.5l3-2M8 7.5l3 2.5" stroke={C.navy} strokeWidth="1.4" strokeLinecap="round"/>
+                </svg>
+                Share my card
+              </span>
+              <svg width="14" height="14" viewBox="0 0 14 14">
+                <path d="M4 2L9 7L4 12" stroke={C.navy} strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+
+            {/* Secondary row */}
+            <div style={{ marginTop: 10 }}>
+              <button
+                onClick={onWebsite}
+                style={{
+                  width: '100%', appearance: 'none', background: C.paper, color: C.navy,
+                  border: `1px solid ${C.hair}`, borderRadius: 14,
+                  padding: '14px 12px', fontWeight: 700, fontSize: 14,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  minHeight: 52,
+                }}
+              >
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <circle cx="7.5" cy="7.5" r="6" stroke={C.navy} strokeWidth="1.6"/>
+                  <path d="M1.5 7.5h12M7.5 1.5c2 2.5 2 8 0 12M7.5 1.5c-2 2.5-2 8 0 12" stroke={C.navy} strokeWidth="1.4" fill="none"/>
+                </svg>
+                Visit website
+              </button>
+            </div>
+          </div>
+
+
+          <div style={{ flex: 1 }} />
+          <ScreenFooter />
+        </Screen>
+      );
+    }
+
+    // ─── 2. VIDEO SCREEN ─────────────────────────────────────────────────────
+    function VideoScreen({ onBack, onWebsite, onContact }) {
+      return (
+        <Screen>
+          <TopBar onBack={onBack} />
+
+          <div style={{ padding: '6px 18px 0' }}>
+            {/* Embedded welcome reel — portrait 9:16, self-contained bundle */}
+            <div style={{
+              position: 'relative', borderRadius: 18, overflow: 'hidden',
+              aspectRatio: '9 / 16',
+              background: '#FCFAF6',
+              boxShadow: '0 24px 50px rgba(11,37,69,0.30)',
+            }}>
+              <iframe
+                src="video/Welcome Video.html"
+                title="HPS Welcome Reel"
+                allow="autoplay"
+                style={{
+                  position: 'absolute', inset: 0,
+                  width: '100%', height: '100%',
+                  border: 0, display: 'block',
+                }}
+              />
+            </div>
+
+            {/* CTAs */}
+            <div style={{ marginTop: 14, display: 'grid', gap: 9 }}>
+              <CTARow onClick={onWebsite} primary label="Visit the website" caption="www.healthprac.com"/>
+              <CTARow onClick={onContact} label="Request a call"       caption="Tell us how to help"/>
+            </div>
+          </div>
+
+          <div style={{ flex: 1 }} />
+          <ScreenFooter />
+        </Screen>
+      );
+    }
+
+    // ─── 3. SHARE CARD SCREEN ────────────────────────────────────────────────
+    const WELCOME_URL = 'https://www.healthprac.com/marisa.html';
+
+    function ShareCardScreen({ onBack }) {
+      const [shared, setShared] = useState(false);
+      const [vcardDone, setVcardDone] = useState(false);
+
+      const handleShare = async () => {
+        const data = {
+          title: 'Marisa von Brandis — HealthPrac Solutions',
+          text: 'Marisa von Brandis · CFO · HealthPrac Solutions',
+          url: 'https://www.healthprac.com/marisa.html',
+        };
+        try {
+          if (navigator.share) {
+            await navigator.share(data);
+          } else {
+            await navigator.clipboard.writeText(data.url);
+          }
+          setShared(true);
+          setTimeout(() => setShared(false), 2500);
+        } catch (e) {
+          if (e.name !== 'AbortError') {
+            try { await navigator.clipboard.writeText(data.url); setShared(true); setTimeout(() => setShared(false), 2500); } catch {}
+          }
+        }
+      };
+
+      const handleSaveContact = () => {
+        const vcf = [
+          'BEGIN:VCARD',
+          'VERSION:3.0',
+          'FN:Marisa von Brandis',
+          'N:von Brandis;Marisa;',
+          'ORG:HealthPrac Solutions',
+          'TITLE:Chief Financial Officer',
+          'EMAIL;type=WORK:marisa@healthprac.com',
+          'URL:https://www.healthprac.com/marisa.html',
+          'NOTE:HealthPrac Solutions — Operational Excellence for Healthcare Practices',
+          'END:VCARD',
+        ].join('\r\n');
+        const blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+        const a = Object.assign(document.createElement('a'), {
+          href: URL.createObjectURL(blob),
+          download: 'Marisa von Brandis - HealthPrac Solutions.vcf',
+        });
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setVcardDone(true);
+        setTimeout(() => setVcardDone(false), 2500);
+      };
+
+      const qr = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent('https://www.healthprac.com/marisa.html')}&bgcolor=FAF7F1&color=0B2545&margin=8&qzone=1`;
+
+      return (
+        <Screen>
+          <TopBar onBack={onBack} />
+          <div style={{ padding: '8px 20px 0' }}>
+
+            {/* ── Card visual ─────────────────────────────────── */}
+            <div style={{
+              borderRadius: 20, overflow: 'hidden',
+              background: `linear-gradient(145deg, ${C.navy2} 0%, ${C.navy} 65%, #061425 100%)`,
+              padding: '26px 22px 22px',
+              boxShadow: '0 20px 52px rgba(11,37,69,0.32)',
+              position: 'relative',
+            }}>
+              {/* Hairline grid */}
+              <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none' }}>
+                <svg width="100%" height="100%">
+                  <defs><pattern id="scgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0 H0 V40" stroke={C.gold} strokeWidth="0.5" fill="none"/></pattern></defs>
+                  <rect width="100%" height="100%" fill="url(#scgrid)"/>
+                </svg>
+              </div>
+              {/* Gold top edge */}
+              <div style={{
+                position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+                background: `linear-gradient(90deg, transparent, ${C.gold}, ${C.goldHi}, ${C.gold}, transparent)`,
+              }}/>
+
+              {/* Top row: mark + QR */}
+              <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <HPSMark size={48} light />
+                <div style={{
+                  borderRadius: 10, background: C.cream, padding: 5,
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.24)',
+                }}>
+                  <img src={qr} width={68} height={68} alt="Scan to open welcome experience" style={{ display: 'block' }}/>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div style={{ margin: '18px 0 14px', height: 1, background: 'rgba(255,255,255,0.10)' }}/>
+
+              {/* Name + title */}
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                  fontFamily: '"Fraunces", Georgia, serif',
+                  fontSize: 23, fontWeight: 500, color: '#fff',
+                  letterSpacing: '-0.02em', lineHeight: 1.1,
+                }}>Marisa von Brandis</div>
+                <div style={{
+                  marginTop: 5, fontSize: 10.5, fontWeight: 800,
+                  color: C.goldHi, letterSpacing: '0.12em', textTransform: 'uppercase',
+                }}>Chief Financial Officer</div>
+                <div style={{
+                  marginTop: 2, fontSize: 12, fontWeight: 600,
+                  color: 'rgba(255,255,255,0.50)',
+                }}>HealthPrac Solutions</div>
+              </div>
+
+              {/* Contact details */}
+              <div style={{ marginTop: 16, position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: 9 }}>
+                {[
+                  {
+                    icon: <path d="M1.5 3h12v9a1 1 0 01-1 1h-10a1 1 0 01-1-1V3zm0 0l6 5.5 6-5.5" stroke={C.gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>,
+                    vb: '0 0 15 15',
+                    label: 'marisa@healthprac.com',
+                  },
+                  {
+                    icon: <><circle cx="7.5" cy="7.5" r="6" stroke={C.gold} strokeWidth="1.3"/><path d="M1.5 7.5h12M7.5 1.5c2 2.5 2 8 0 12M7.5 1.5c-2 2.5-2 8 0 12" stroke={C.gold} strokeWidth="1.2" fill="none"/></>,
+                    vb: '0 0 15 15',
+                    label: 'www.healthprac.com',
+                  },
+                ].map(({ icon, vb, label }) => (
+                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <svg width="13" height="13" viewBox={vb} fill="none">{icon}</svg>
+                    <span style={{ fontSize: 11.5, fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.72)', letterSpacing: '0.01em' }}>{label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Tagline */}
+              <div style={{
+                marginTop: 18, paddingTop: 13,
+                borderTop: '1px solid rgba(255,255,255,0.09)',
+                position: 'relative', zIndex: 1,
+                fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.32)', fontWeight: 700,
+              }}>Operational Excellence for Healthcare Practices</div>
+            </div>
+
+            {/* Scan hint */}
+            <p style={{
+              margin: '9px 0 0', textAlign: 'center',
+              fontSize: 11, color: C.muted, fontWeight: 600,
+            }}>Scan QR · opens the welcome experience</p>
+
+            {/* ── Action buttons ───────────────────────────────── */}
+            <div style={{ marginTop: 14, display: 'grid', gap: 10 }}>
+
+              {/* Share */}
+              <button onClick={handleShare} style={{
+                appearance: 'none', border: 0,
+                background: shared ? '#1a9e4e' : C.navy,
+                color: '#fff', borderRadius: 14, padding: '16px 18px',
+                fontFamily: 'inherit', fontWeight: 800, fontSize: 15,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                boxShadow: '0 8px 24px rgba(11,37,69,0.22)',
+                transition: 'background 200ms ease',
+              }}>
+                {shared
+                  ? <><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M3 9l4 4 7-8" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Copied!</>
+                  : <><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M8.5 1.5v9M5 5l3.5-3.5L12 5M3 12.5v3h11v-3" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg> Share my card</>
+                }
+              </button>
+
+              {/* Save contact */}
+              <button onClick={handleSaveContact} style={{
+                appearance: 'none',
+                background: vcardDone ? '#1a9e4e' : C.paper,
+                color: vcardDone ? '#fff' : C.navy,
+                border: `1.5px solid ${vcardDone ? '#1a9e4e' : C.hair}`,
+                borderRadius: 14, padding: '16px 18px',
+                fontFamily: 'inherit', fontWeight: 700, fontSize: 15,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                transition: 'all 200ms ease',
+              }}>
+                {vcardDone
+                  ? <><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M3 9l4 4 7-8" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Contact saved!</>
+                  : <><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><rect x="2" y="2" width="13" height="13" rx="3" stroke={C.navy} strokeWidth="1.4"/><circle cx="8.5" cy="7" r="2.2" stroke={C.navy} strokeWidth="1.3"/><path d="M4 14c0-2.2 2-3.5 4.5-3.5S13 11.8 13 14" stroke={C.navy} strokeWidth="1.3" strokeLinecap="round"/></svg> Save contact (.vcf)</>
+                }
+              </button>
+            </div>
+          </div>
+          <div style={{ flex: 1 }}/>
+          <ScreenFooter/>
+        </Screen>
+      );
+    }
+
+    // ─── 4. WALLET SHEET (bottom overlay) ────────────────────────────────────
+    function WalletSheet({ onClose, onSave, saved }) {
+      return (
+        <div
+          className="anim-overlay"
+          style={{
+            position: 'fixed', inset: 0, zIndex: 50,
+            background: 'rgba(9,26,51,0.46)',
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
+            display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+          }}
+          onClick={onClose}
+        >
+          <div
+            className="anim-sheet"
+            style={{
+              background: C.cream, borderRadius: '28px 28px 0 0',
+              padding: '18px 20px',
+              paddingBottom: 'max(32px, env(safe-area-inset-bottom))',
+              boxShadow: '0 -12px 52px rgba(0,0,0,0.22)',
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Drag handle */}
+            <div style={{ width: 42, height: 4, background: C.hair, borderRadius: 999, margin: '0 auto 22px' }}/>
+
+            {/* Sheet header */}
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                fontSize: 10.5, letterSpacing: '0.22em', textTransform: 'uppercase',
+                color: C.goldDeep, fontWeight: 800,
+              }}>Digital Welcome Card</div>
+              <h2 style={{
+                margin: '8px 0 0', fontSize: 26, fontWeight: 400,
+                fontFamily: '"Fraunces", Georgia, serif',
+                color: C.navy, letterSpacing: '-0.02em',
+              }}>Keep HPS close.</h2>
+              <p style={{ margin: '8px 0 0', fontSize: 13, lineHeight: 1.55, color: C.muted }}>
+                Save the card to your wallet — the welcome film, website, and contact route stay one tap away.
+              </p>
+            </div>
+
+            {/* Mini pass preview */}
+            <div style={{ marginTop: 20, transform: 'scale(0.92)', transformOrigin: 'top center' }}>
+              <WalletPassCard saved={saved} />
+            </div>
+
+            {/* Wallet buttons */}
+            <div style={{ marginTop: 8, display: 'grid', gap: 10 }}>
+              <button
+                onClick={onSave}
+                style={{
+                  appearance: 'none', border: 0,
+                  background: '#000', color: '#fff',
+                  borderRadius: 16, padding: '16px 18px',
+                  fontWeight: 700, fontSize: 15,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                  minHeight: 54,
+                }}
+              >
+                {/* Apple logo */}
+                <svg width="18" height="22" viewBox="0 0 18 22" fill="white">
+                  <path d="M14.3 11.5c0-2.4 2-3.6 2.1-3.6-1.2-1.7-3-2-3.6-2-1.5-.15-3 .9-3.7.9s-2-.9-3.3-.85C4 6 2.5 7 1.8 8.5c-1.4 2.5-.35 6.2.95 8.2.65 1 1.4 2.1 2.4 2 1 0 1.35-.6 2.5-.6 1.2 0 1.5.6 2.5.6 1.05-.05 1.7-1 2.35-2 .75-1.15 1-2.25 1.05-2.3-.05 0-2.05-.8-2.05-3.1Z"/>
+                  <path d="M12 5.3c.55-.7.9-1.6.8-2.6-.8.05-1.8.55-2.4 1.2-.5.55-.95 1.5-.85 2.4.9.05 1.85-.45 2.45-1Z"/>
+                </svg>
+                {saved ? '✓ Added to Apple Wallet' : 'Add to Apple Wallet'}
+              </button>
+
+              <button
+                onClick={onSave}
+                style={{
+                  appearance: 'none', background: C.paper, color: C.navy,
+                  border: `1px solid ${C.hair}`, borderRadius: 16,
+                  padding: '16px 18px', fontWeight: 700, fontSize: 15,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                  minHeight: 54,
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <rect x="2" y="3" width="14" height="11" rx="2" stroke={C.navy} strokeWidth="1.5"/>
+                  <path d="M2 7h14" stroke={C.navy} strokeWidth="1.5"/>
+                  <circle cx="13" cy="10.5" r="1" fill={C.navy}/>
+                </svg>
+                Add to Google Wallet
+              </button>
+            </div>
+
+            <button
+              onClick={onClose}
+              style={{
+                marginTop: 14, width: '100%', appearance: 'none', border: 0,
+                background: 'transparent', padding: '10px',
+                color: C.muted, fontWeight: 700, fontSize: 13,
+              }}
+            >Not now</button>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Wallet pass card ─────────────────────────────────────────────────────
+    const QR_PAT = [
+      '111111101','100000101','101110100',
+      '101110111','101110100','100000110',
+      '111111101','000000010','110110111',
+    ];
+
+    function WalletPassCard({ saved = false }) {
+      const qrSize = 84;
+      const c = qrSize / 9;
+
+      return (
+        <div style={{
+          borderRadius: 18, overflow: 'hidden',
+          background: `linear-gradient(180deg, ${C.navy2} 0%, ${C.navy} 58%, #061425 100%)`,
+          color: '#fff',
+          boxShadow: '0 22px 52px rgba(11,37,69,0.32), 0 2px 0 rgba(255,255,255,0.06) inset',
+          position: 'relative',
+        }}>
+          {/* Radial gold accent */}
+          <div aria-hidden="true" style={{
+            position: 'absolute', top: -40, right: -40, width: 160, height: 160,
+            background: `radial-gradient(circle, rgba(201,162,74,0.22) 0%, transparent 65%)`,
+            pointerEvents: 'none',
+          }}/>
+
+          {/* Header */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px 0' }}>
+            <HPSMark size={28} light />
+            <div style={{
+              fontSize: 9, letterSpacing: '0.18em', fontWeight: 700,
+              color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase',
+            }}>HPS · Welcome</div>
+          </div>
+
+          {/* Headline */}
+          <div style={{ padding: '12px 18px 6px' }}>
+            <div style={{
+              fontSize: 10, letterSpacing: '0.16em', color: C.goldHi,
+              textTransform: 'uppercase', fontWeight: 700, marginBottom: 6,
+            }}>Welcome Experience</div>
+            <div style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.25, letterSpacing: '-0.01em', color: '#fff' }}>
+              Your next competitive advantage in care operations.
+            </div>
+          </div>
+
+          {/* Fields */}
+          <div style={{ padding: '8px 18px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            {[['From', 'HPS'], ['Watch', 'Introduction']].map(([lbl, val]) => (
+              <div key={lbl}>
+                <div style={{ fontSize: 8.5, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.50)', textTransform: 'uppercase', fontWeight: 700, marginBottom: 3 }}>{lbl}</div>
+                <div style={{ fontSize: 12.5, fontWeight: 700, color: '#fff' }}>{val}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ padding: '10px 18px 0' }}>
+            <div style={{ fontSize: 8.5, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.50)', textTransform: 'uppercase', fontWeight: 700, marginBottom: 3 }}>Email</div>
+            <div style={{ fontSize: 11, fontFamily: '"JetBrains Mono", monospace', color: '#fff', letterSpacing: '0.01em' }}>marisa@healthprac.com</div>
+          </div>
+
+          {/* CTA link */}
+          <div style={{ padding: '10px 18px 0' }}>
+            <a
+              href="https://www.healthprac.com"
+              target="_blank" rel="noreferrer"
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                textDecoration: 'none',
+                background: 'rgba(228,194,104,0.10)',
+                border: '1px solid rgba(228,194,104,0.30)',
+                borderRadius: 10, padding: '10px 14px',
+              }}
+            >
+              <span>
+                <span style={{ display: 'block', fontSize: 8.5, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.50)', textTransform: 'uppercase', fontWeight: 700 }}>Next step</span>
+                <span style={{ display: 'block', fontSize: 13, fontWeight: 800, color: C.goldHi, letterSpacing: '-0.01em', marginTop: 2 }}>Book a call to explore</span>
+              </span>
+              <svg width="13" height="13" viewBox="0 0 13 13">
+                <path d="M1.5 11.5L11.5 1.5M5 1.5H11.5V8" stroke={C.goldHi} strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          {/* QR */}
+          <div style={{
+            background: '#fff', margin: '10px 18px 14px', borderRadius: 12,
+            padding: '14px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+          }}>
+            <svg width={qrSize} height={qrSize} viewBox={`0 0 ${qrSize} ${qrSize}`} aria-hidden="true">
+              <rect width={qrSize} height={qrSize} fill="#fff" rx="4"/>
+              {QR_PAT.map((row, y) =>
+                [...row].map((v, x) => v === '1' ? (
+                  <rect
+                    key={`${x}-${y}`}
+                    x={x * c + 0.8} y={y * c + 0.8}
+                    width={c - 1.4} height={c - 1.4}
+                    fill={C.navy} rx="0.8"
+                  />
+                ) : null)
+              )}
+            </svg>
+            <a
+              href="https://www.healthprac.com"
+              target="_blank" rel="noreferrer"
+              style={{
+                fontSize: 12, fontWeight: 800, color: C.navy, letterSpacing: '-0.01em',
+                textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5,
+                borderBottom: `1.5px solid ${C.gold}`, paddingBottom: 1,
+              }}
+            >
+              HealthPrac Solutions
+              <svg width="9" height="9" viewBox="0 0 9 9">
+                <path d="M1 8L8 1M4 1H8V5" stroke={C.gold} strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+              </svg>
+            </a>
+          </div>
+
+          {/* Pass footer */}
+          <div style={{
+            borderTop: '1px solid rgba(255,255,255,0.08)',
+            padding: '10px 18px 14px',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          }}>
+            <div style={{ fontSize: 9, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', fontWeight: 700 }}>
+              Powered by HPS
+            </div>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 5,
+              fontSize: 9, fontWeight: 700, letterSpacing: '0.04em',
+              color: saved ? C.goldHi : 'rgba(255,255,255,0.52)',
+            }}>
+              <span style={{
+                width: 6, height: 6, borderRadius: 999,
+                background: saved ? C.goldHi : 'rgba(255,255,255,0.30)',
+                boxShadow: saved ? '0 0 0 3px rgba(228,194,104,0.16)' : 'none',
+              }}/>
+              {saved ? 'SAVED TO WALLET' : 'READY TO ADD'}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Form field ────────────────────────────────────────────────────────────
+    function FormField({ label, name, placeholder, type = 'text', value, onChange }) {
+      return (
+        <label style={{ display: 'block' }}>
+          <div style={{
+            fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase',
+            color: C.muted, fontWeight: 800, marginBottom: 5,
+          }}>{label}</div>
+          <input
+            type={type}
+            value={value}
+            placeholder={placeholder}
+            onChange={e => onChange(name, e.target.value)}
+            autoComplete={type === 'email' ? 'email' : type === 'tel' ? 'tel' : 'on'}
+            style={{
+              width: '100%', boxSizing: 'border-box',
+              appearance: 'none', WebkitAppearance: 'none',
+              background: C.paper, color: C.navy,
+              border: `1px solid ${C.hair}`, borderRadius: 12,
+              padding: '13px 14px', fontSize: 16,
+              fontFamily: 'inherit', fontWeight: 600,
+              outline: 'none',
+              transition: 'border-color 120ms',
+            }}
+            onFocus={e => { e.target.style.borderColor = C.gold; }}
+            onBlur={e => { e.target.style.borderColor = C.hair; }}
+          />
+        </label>
+      );
+    }
+
+    // ─── 4. LEAD CAPTURE SCREEN ───────────────────────────────────────────────
+    function LeadCaptureScreen({ onBack, form, setForm, onSubmit }) {
+      const handleChange = useCallback((name, value) => {
+        setForm(prev => ({ ...prev, [name]: value }));
+      }, [setForm]);
+
+      const valid = form.firstName && form.email && form.organisation && form.consent;
+
+      return (
+        <Screen>
+          <TopBar onBack={onBack} />
+
+          <div style={{ padding: '6px 20px 0' }}>
+            <div style={{
+              fontSize: 10.5, letterSpacing: '0.22em', textTransform: 'uppercase',
+              color: C.goldDeep, fontWeight: 800,
+            }}>Stay in touch</div>
+
+            <h2 style={{
+              margin: '8px 0 8px', fontSize: 28, fontWeight: 400,
+              fontFamily: '"Fraunces", Georgia, serif',
+              color: C.navy, letterSpacing: '-0.022em', lineHeight: 1.12,
+            }}>Let us tailor what comes next.</h2>
+
+            <p style={{ fontSize: 13.5, color: C.muted, lineHeight: 1.55 }}>
+              We'll send a short follow-up matched to your role — no newsletter, no noise.
+            </p>
+
+            <div style={{ display: 'grid', gap: 10, marginTop: 18 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <FormField label="First name"   name="firstName"    placeholder="Jordan"   value={form.firstName}    onChange={handleChange}/>
+                <FormField label="Last name"    name="lastName"     placeholder="Mokoena"  value={form.lastName}     onChange={handleChange}/>
+              </div>
+              <FormField label="Work email"     name="email"        placeholder="jordan@practice.co.za" type="email" value={form.email}     onChange={handleChange}/>
+              <FormField label="Organisation"   name="organisation" placeholder="Bayside Family Practice"            value={form.organisation} onChange={handleChange}/>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <FormField label="Role"   name="role"   placeholder="Practice Manager"  value={form.role}   onChange={handleChange}/>
+                <FormField label="Mobile" name="mobile" placeholder="+27 …" type="tel"  value={form.mobile} onChange={handleChange}/>
+              </div>
+            </div>
+
+            {/* Consent */}
+            <label style={{
+              display: 'flex', gap: 10, alignItems: 'flex-start', marginTop: 14,
+              padding: '12px 14px', background: C.paper, border: `1px solid ${C.hair}`,
+              borderRadius: 12, cursor: 'pointer',
+            }}>
+              <span style={{
+                width: 20, height: 20, borderRadius: 6, flexShrink: 0, marginTop: 1,
+                border: `1.5px solid ${form.consent ? C.gold : C.hair}`,
+                background: form.consent ? C.gold : C.paper,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'background 120ms, border-color 120ms',
+              }}>
+                {form.consent && (
+                  <svg width="12" height="12" viewBox="0 0 12 12">
+                    <path d="M2 6L5 9.5L10 3" stroke={C.navy} strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </span>
+              <input
+                type="checkbox"
+                checked={!!form.consent}
+                onChange={e => handleChange('consent', e.target.checked)}
+                style={{ display: 'none' }}
+              />
+              <span style={{ fontSize: 12, lineHeight: 1.55, color: C.muted }}>
+                I agree HPS may contact me about this enquiry. We never share your details and you can opt out at any time.
+              </span>
+            </label>
+
+            <button
+              disabled={!valid}
+              onClick={valid ? onSubmit : undefined}
+              style={{
+                marginTop: 14, width: '100%', appearance: 'none',
+                background: valid ? C.navy : '#BFC5CC', color: '#fff',
+                border: 0, borderRadius: 16, padding: '17px 18px',
+                fontWeight: 800, fontSize: 15, letterSpacing: '-0.005em',
+                boxShadow: valid ? '0 10px 30px rgba(11,37,69,0.24)' : 'none',
+                transition: 'background 200ms, box-shadow 200ms',
+                minHeight: 56,
+              }}
+            >Submit &amp; receive welcome kit</button>
+
+          </div>
+
+          <div style={{ flex: 1 }} />
+          <ScreenFooter />
+        </Screen>
+      );
+    }
+
+    // ─── 5. CONFIRMED SCREEN ──────────────────────────────────────────────────
+    function ConfirmedScreen({ onRestart, onWebsite }) {
+      return (
+        <Screen>
+          <TopBar />
+
+          <div style={{ padding: '12px 20px 0', textAlign: 'center' }}>
+            {/* Checkmark */}
+            <div style={{
+              width: 104, height: 104, borderRadius: 999,
+              background: C.paper, border: `1px solid ${C.hair}`,
+              margin: '12px auto 0', position: 'relative',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              boxShadow: '0 4px 18px rgba(11,37,69,0.08)',
+            }}>
+              <span style={{
+                position: 'absolute', inset: 0, borderRadius: 999,
+                border: `2.5px solid ${C.gold}`, transform: 'scale(0.85)',
+              }}/>
+              <svg width="46" height="46" viewBox="0 0 46 46">
+                <path d="M11 23L20 32L35 15" stroke={C.gold} strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+
+            <div style={{
+              marginTop: 22, fontSize: 11, letterSpacing: '0.22em',
+              textTransform: 'uppercase', color: C.goldDeep, fontWeight: 800,
+            }}>Welcome aboard</div>
+
+            <h1 style={{
+              fontFamily: '"Fraunces", Georgia, serif',
+              fontSize: 30, fontWeight: 400, lineHeight: 1.12,
+              letterSpacing: '-0.025em', color: C.navy,
+              margin: '10px 0 0',
+            }}>
+              We'll take it from{' '}
+              <em style={{ color: C.gold, fontStyle: 'italic' }}>here.</em>
+            </h1>
+
+            <p style={{
+              marginTop: 12, fontSize: 13.5, lineHeight: 1.57, color: C.muted,
+              maxWidth: 300, marginLeft: 'auto', marginRight: 'auto',
+            }}>
+              A short follow-up note is on its way. In the meantime, your card
+              is saved and ready whenever you are.
+            </p>
+          </div>
+
+          {/* Status grid */}
+          <div style={{
+            margin: '22px 20px 0',
+            padding: '4px 18px',
+            background: C.paper, border: `1px solid ${C.hair}`, borderRadius: 18,
+          }}>
+            {[
+              ['Video',    'Completed',                true],
+              ['Contact',  'Captured · qualified HOT', true],
+              ['Pipeline', 'Handoff sent · stage NEW', true],
+            ].map(([key, val, ok], i, arr) => (
+              <div
+                key={key}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  padding: '14px 0',
+                  borderBottom: i < arr.length - 1 ? `1px solid ${C.hair}` : 'none',
+                }}
+              >
+                <span style={{ color: C.muted, fontWeight: 600, fontSize: 14 }}>{key}</span>
+                <span style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 7,
+                  color: ok ? C.navy : C.muted, fontWeight: 700, fontSize: 13,
+                }}>
+                  {ok && <span style={{ width: 7, height: 7, borderRadius: 999, background: C.gold }}/>}
+                  {val}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTAs */}
+          <div style={{ padding: '14px 20px 0', display: 'grid', gap: 9 }}>
+            <CTARow onClick={onWebsite} primary label="Explore the platform" caption="healthprac.com"/>
+            <CTARow onClick={onRestart}        label="Replay the welcome"    caption="Return to start"/>
+          </div>
+
+          <div style={{ flex: 1 }} />
+          <ScreenFooter />
+        </Screen>
+      );
+    }
+
+    // ─── App root ─────────────────────────────────────────────────────────────
+    function App() {
+      const source = getSource();
+      const [step, setStep]               = useState('welcome');
+      const [form, setForm] = useState({
+        firstName: '', lastName: '', email: '',
+        organisation: '', role: '', mobile: '', consent: false,
+      });
+
+      const onWatch   = () => setStep('video');
+      const onWebsite = () => window.open('https://www.healthprac.com', '_blank');
+      const onContact = () => setStep('capture');
+      const onSubmit  = () => setStep('confirmed');
+      const onRestart = () => {
+        setStep('welcome');
+        setForm({ firstName: '', lastName: '', email: '', organisation: '', role: '', mobile: '', consent: false });
+      };
+      const onShare = () => setStep('share');
+
+      const screen = (() => {
+        switch (step) {
+          case 'welcome':
+            return <WelcomeScreen source={source} onWatch={onWatch} onWebsite={onWebsite} onShare={onShare}/>;
+          case 'share':
+            return <ShareCardScreen onBack={() => setStep('welcome')}/>;
+          case 'video':
+            return <VideoScreen onBack={() => setStep('welcome')} onWebsite={onWebsite} onContact={onContact}/>;
+          case 'capture':
+            return <LeadCaptureScreen onBack={() => setStep('video')} form={form} setForm={setForm} onSubmit={onSubmit}/>;
+          case 'confirmed':
+            return <ConfirmedScreen onRestart={onRestart} onWebsite={onWebsite}/>;
+          default:
+            return null;
+        }
+      })();
+
+      return (
+        <div style={{ minHeight: '100dvh', background: C.cream, position: 'relative' }}>
+          {screen}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+  </script>
+</body>
+</html>
