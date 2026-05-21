@@ -280,7 +280,7 @@
     }
 
     // ─── 1. WELCOME SCREEN ────────────────────────────────────────────────────
-    function WelcomeScreen({ source, onWatch, onWebsite, onWallet }) {
+    function WelcomeScreen({ source, onWatch, onWebsite, onShare }) {
       return (
         <Screen>
           <TopBar />
@@ -353,12 +353,36 @@
               </svg>
             </button>
 
+            {/* Share my card — full width secondary */}
+            <button
+              onClick={onShare}
+              style={{
+                marginTop: 10, width: '100%', appearance: 'none',
+                background: C.paper, color: C.navy,
+                border: `1px solid ${C.hair}`, borderRadius: 14,
+                padding: '15px 18px', fontWeight: 700, fontSize: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                minHeight: 52,
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M11 5.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM11 15.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM5 11a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke={C.navy} strokeWidth="1.4"/>
+                  <path d="M8 8.5l3-2M8 7.5l3 2.5" stroke={C.navy} strokeWidth="1.4" strokeLinecap="round"/>
+                </svg>
+                Share my card
+              </span>
+              <svg width="14" height="14" viewBox="0 0 14 14">
+                <path d="M4 2L9 7L4 12" stroke={C.navy} strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+
             {/* Secondary row */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 10 }}>
+            <div style={{ marginTop: 10 }}>
               <button
                 onClick={onWebsite}
                 style={{
-                  appearance: 'none', background: C.paper, color: C.navy,
+                  width: '100%', appearance: 'none', background: C.paper, color: C.navy,
                   border: `1px solid ${C.hair}`, borderRadius: 14,
                   padding: '14px 12px', fontWeight: 700, fontSize: 14,
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -370,24 +394,6 @@
                   <path d="M1.5 7.5h12M7.5 1.5c2 2.5 2 8 0 12M7.5 1.5c-2 2.5-2 8 0 12" stroke={C.navy} strokeWidth="1.4" fill="none"/>
                 </svg>
                 Visit website
-              </button>
-
-              <button
-                onClick={onWallet}
-                style={{
-                  appearance: 'none', background: C.paper, color: C.navy,
-                  border: `1px solid ${C.hair}`, borderRadius: 14,
-                  padding: '14px 12px', fontWeight: 700, fontSize: 14,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                  minHeight: 52,
-                }}
-              >
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                  <rect x="1.5" y="3.5" width="12" height="8" rx="2" stroke={C.navy} strokeWidth="1.5"/>
-                  <path d="M1.5 6.5h12" stroke={C.navy} strokeWidth="1.5"/>
-                  <circle cx="10.5" cy="9" r="0.9" fill={C.navy}/>
-                </svg>
-                Add to Wallet
               </button>
             </div>
           </div>
@@ -404,7 +410,7 @@
     }
 
     // ─── 2. VIDEO SCREEN ─────────────────────────────────────────────────────
-    function VideoScreen({ onBack, onWebsite, onWallet, onContact }) {
+    function VideoScreen({ onBack, onWebsite, onContact }) {
       return (
         <Screen>
           <TopBar onBack={onBack} />
@@ -432,7 +438,6 @@
             {/* CTAs */}
             <div style={{ marginTop: 14, display: 'grid', gap: 9 }}>
               <CTARow onClick={onWebsite} primary label="Visit the website" caption="www.healthprac.com"/>
-              <CTARow onClick={onWallet}  label="Add to Apple Wallet"  caption="Quick relaunch anytime"/>
               <CTARow onClick={onContact} label="Request a call"       caption="Tell us how to help"/>
             </div>
           </div>
@@ -443,7 +448,199 @@
       );
     }
 
-    // ─── 3. WALLET SHEET (bottom overlay) ────────────────────────────────────
+    // ─── 3. SHARE CARD SCREEN ────────────────────────────────────────────────
+    const WELCOME_URL = 'https://www.healthprac.com/Welcome%20Experience.html';
+
+    function ShareCardScreen({ onBack }) {
+      const [shared, setShared] = useState(false);
+      const [vcardDone, setVcardDone] = useState(false);
+
+      const handleShare = async () => {
+        const data = {
+          title: 'Liezl Joubert — HealthPrac Solutions',
+          text: 'Liezl Joubert · CEO · HealthPrac Solutions',
+          url: 'https://www.healthprac.com/Welcome Experience.html',
+        };
+        try {
+          if (navigator.share) {
+            await navigator.share(data);
+          } else {
+            await navigator.clipboard.writeText(data.url);
+          }
+          setShared(true);
+          setTimeout(() => setShared(false), 2500);
+        } catch (e) {
+          if (e.name !== 'AbortError') {
+            try { await navigator.clipboard.writeText(data.url); setShared(true); setTimeout(() => setShared(false), 2500); } catch {}
+          }
+        }
+      };
+
+      const handleSaveContact = () => {
+        const vcf = [
+          'BEGIN:VCARD',
+          'VERSION:3.0',
+          'FN:Liezl Joubert',
+          'N:Joubert;Liezl;;;',
+          'ORG:HealthPrac Solutions',
+          'TITLE:Chief Executive Officer',
+          'EMAIL;type=WORK:liezl@healthprac.com',
+          'URL:https://www.healthprac.com/Welcome Experience.html',
+          'NOTE:HealthPrac Solutions — Operational Excellence for Healthcare Practices',
+          'END:VCARD',
+        ].join('\r\n');
+        const blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+        const a = Object.assign(document.createElement('a'), {
+          href: URL.createObjectURL(blob),
+          download: 'Liezl Joubert - HealthPrac Solutions.vcf',
+        });
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setVcardDone(true);
+        setTimeout(() => setVcardDone(false), 2500);
+      };
+
+      const qr = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent('https://www.healthprac.com/Welcome Experience.html')}&bgcolor=FAF7F1&color=0B2545&margin=8&qzone=1`;
+
+      return (
+        <Screen>
+          <TopBar onBack={onBack} />
+          <div style={{ padding: '8px 20px 0' }}>
+
+            {/* ── Card visual ─────────────────────────────────── */}
+            <div style={{
+              borderRadius: 20, overflow: 'hidden',
+              background: `linear-gradient(145deg, ${C.navy2} 0%, ${C.navy} 65%, #061425 100%)`,
+              padding: '26px 22px 22px',
+              boxShadow: '0 20px 52px rgba(11,37,69,0.32)',
+              position: 'relative',
+            }}>
+              {/* Hairline grid */}
+              <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none' }}>
+                <svg width="100%" height="100%">
+                  <defs><pattern id="scgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0 H0 V40" stroke={C.gold} strokeWidth="0.5" fill="none"/></pattern></defs>
+                  <rect width="100%" height="100%" fill="url(#scgrid)"/>
+                </svg>
+              </div>
+              {/* Gold top edge */}
+              <div style={{
+                position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+                background: `linear-gradient(90deg, transparent, ${C.gold}, ${C.goldHi}, ${C.gold}, transparent)`,
+              }}/>
+
+              {/* Top row: mark + QR */}
+              <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <HPSMark size={48} light />
+                <div style={{
+                  borderRadius: 10, background: C.cream, padding: 5,
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.24)',
+                }}>
+                  <img src={qr} width={68} height={68} alt="Scan to open welcome experience" style={{ display: 'block' }}/>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div style={{ margin: '18px 0 14px', height: 1, background: 'rgba(255,255,255,0.10)' }}/>
+
+              {/* Name + title */}
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                  fontFamily: '"Fraunces", Georgia, serif',
+                  fontSize: 23, fontWeight: 500, color: '#fff',
+                  letterSpacing: '-0.02em', lineHeight: 1.1,
+                }}>Liezl Joubert</div>
+                <div style={{
+                  marginTop: 5, fontSize: 10.5, fontWeight: 800,
+                  color: C.goldHi, letterSpacing: '0.12em', textTransform: 'uppercase',
+                }}>Chief Executive Officer</div>
+                <div style={{
+                  marginTop: 2, fontSize: 12, fontWeight: 600,
+                  color: 'rgba(255,255,255,0.50)',
+                }}>HealthPrac Solutions</div>
+              </div>
+
+              {/* Contact details */}
+              <div style={{ marginTop: 16, position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: 9 }}>
+                {[
+                  {
+                    icon: <path d="M1.5 3h12v9a1 1 0 01-1 1h-10a1 1 0 01-1-1V3zm0 0l6 5.5 6-5.5" stroke={C.gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>,
+                    vb: '0 0 15 15',
+                    label: 'liezl@healthprac.com',
+                  },
+                  {
+                    icon: <><circle cx="7.5" cy="7.5" r="6" stroke={C.gold} strokeWidth="1.3"/><path d="M1.5 7.5h12M7.5 1.5c2 2.5 2 8 0 12M7.5 1.5c-2 2.5-2 8 0 12" stroke={C.gold} strokeWidth="1.2" fill="none"/></>,
+                    vb: '0 0 15 15',
+                    label: 'www.healthprac.com',
+                  },
+                ].map(({ icon, vb, label }) => (
+                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <svg width="13" height="13" viewBox={vb} fill="none">{icon}</svg>
+                    <span style={{ fontSize: 11.5, fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.72)', letterSpacing: '0.01em' }}>{label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Tagline */}
+              <div style={{
+                marginTop: 18, paddingTop: 13,
+                borderTop: '1px solid rgba(255,255,255,0.09)',
+                position: 'relative', zIndex: 1,
+                fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.32)', fontWeight: 700,
+              }}>Operational Excellence for Healthcare Practices</div>
+            </div>
+
+            {/* Scan hint */}
+            <p style={{
+              margin: '9px 0 0', textAlign: 'center',
+              fontSize: 11, color: C.muted, fontWeight: 600,
+            }}>Scan QR · opens the welcome experience</p>
+
+            {/* ── Action buttons ───────────────────────────────── */}
+            <div style={{ marginTop: 14, display: 'grid', gap: 10 }}>
+
+              {/* Share */}
+              <button onClick={handleShare} style={{
+                appearance: 'none', border: 0,
+                background: shared ? '#1a9e4e' : C.navy,
+                color: '#fff', borderRadius: 14, padding: '16px 18px',
+                fontFamily: 'inherit', fontWeight: 800, fontSize: 15,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                boxShadow: '0 8px 24px rgba(11,37,69,0.22)',
+                transition: 'background 200ms ease',
+              }}>
+                {shared
+                  ? <><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M3 9l4 4 7-8" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Copied!</>
+                  : <><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M8.5 1.5v9M5 5l3.5-3.5L12 5M3 12.5v3h11v-3" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg> Share my card</>
+                }
+              </button>
+
+              {/* Save contact */}
+              <button onClick={handleSaveContact} style={{
+                appearance: 'none',
+                background: vcardDone ? '#1a9e4e' : C.paper,
+                color: vcardDone ? '#fff' : C.navy,
+                border: `1.5px solid ${vcardDone ? '#1a9e4e' : C.hair}`,
+                borderRadius: 14, padding: '16px 18px',
+                fontFamily: 'inherit', fontWeight: 700, fontSize: 15,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                transition: 'all 200ms ease',
+              }}>
+                {vcardDone
+                  ? <><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M3 9l4 4 7-8" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Contact saved!</>
+                  : <><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><rect x="2" y="2" width="13" height="13" rx="3" stroke={C.navy} strokeWidth="1.4"/><circle cx="8.5" cy="7" r="2.2" stroke={C.navy} strokeWidth="1.3"/><path d="M4 14c0-2.2 2-3.5 4.5-3.5S13 11.8 13 14" stroke={C.navy} strokeWidth="1.3" strokeLinecap="round"/></svg> Save contact (.vcf)</>
+                }
+              </button>
+            </div>
+          </div>
+          <div style={{ flex: 1 }}/>
+          <ScreenFooter/>
+        </Screen>
+      );
+    }
+
+    // ─── 4. WALLET SHEET (bottom overlay) ────────────────────────────────────
     function WalletSheet({ onClose, onSave, saved }) {
       return (
         <div
@@ -813,7 +1010,7 @@
     }
 
     // ─── 5. CONFIRMED SCREEN ──────────────────────────────────────────────────
-    function ConfirmedScreen({ onRestart, onWebsite, savedWallet }) {
+    function ConfirmedScreen({ onRestart, onWebsite }) {
       return (
         <Screen>
           <TopBar />
@@ -867,10 +1064,9 @@
             background: C.paper, border: `1px solid ${C.hair}`, borderRadius: 18,
           }}>
             {[
-              ['Video',       'Completed',                         true],
-              ['Wallet card', savedWallet ? 'Saved to Apple Wallet' : 'Available to save', savedWallet],
-              ['Contact',     'Captured · qualified HOT',          true],
-              ['Pipeline',    'Handoff sent · stage NEW',          true],
+              ['Video',    'Completed',                true],
+              ['Contact',  'Captured · qualified HOT', true],
+              ['Pipeline', 'Handoff sent · stage NEW', true],
             ].map(([key, val, ok], i, arr) => (
               <div
                 key={key}
@@ -908,37 +1104,33 @@
     function App() {
       const source = getSource();
       const [step, setStep]               = useState('welcome');
-      const [walletSheet, setWalletSheet] = useState(false);
-      const [savedWallet, setSavedWallet] = useState(false);
-      const [form, setForm]               = useState({
+      const [form, setForm] = useState({
         firstName: '', lastName: '', email: '',
         organisation: '', role: '', mobile: '', consent: false,
       });
 
       const onWatch   = () => setStep('video');
       const onWebsite = () => window.open('https://www.healthprac.com', '_blank');
-      const onWallet  = () => setWalletSheet(true);
       const onContact = () => setStep('capture');
       const onSubmit  = () => setStep('confirmed');
       const onRestart = () => {
         setStep('welcome');
         setForm({ firstName: '', lastName: '', email: '', organisation: '', role: '', mobile: '', consent: false });
       };
-      const onSaveWallet = () => {
-        setSavedWallet(true);
-        setTimeout(() => setWalletSheet(false), 700);
-      };
+      const onShare = () => setStep('share');
 
       const screen = (() => {
         switch (step) {
           case 'welcome':
-            return <WelcomeScreen source={source} onWatch={onWatch} onWebsite={onWebsite} onWallet={onWallet}/>;
+            return <WelcomeScreen source={source} onWatch={onWatch} onWebsite={onWebsite} onShare={onShare}/>;
+          case 'share':
+            return <ShareCardScreen onBack={() => setStep('welcome')}/>;
           case 'video':
-            return <VideoScreen onBack={() => setStep('welcome')} onWebsite={onWebsite} onWallet={onWallet} onContact={onContact}/>;
+            return <VideoScreen onBack={() => setStep('welcome')} onWebsite={onWebsite} onContact={onContact}/>;
           case 'capture':
             return <LeadCaptureScreen onBack={() => setStep('video')} form={form} setForm={setForm} onSubmit={onSubmit}/>;
           case 'confirmed':
-            return <ConfirmedScreen onRestart={onRestart} onWebsite={onWebsite} savedWallet={savedWallet}/>;
+            return <ConfirmedScreen onRestart={onRestart} onWebsite={onWebsite}/>;
           default:
             return null;
         }
@@ -947,9 +1139,6 @@
       return (
         <div style={{ minHeight: '100dvh', background: C.cream, position: 'relative' }}>
           {screen}
-          {walletSheet && (
-            <WalletSheet onClose={() => setWalletSheet(false)} onSave={onSaveWallet} saved={savedWallet}/>
-          )}
         </div>
       );
     }
