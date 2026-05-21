@@ -913,7 +913,7 @@
     }
 
     // ─── 4. LEAD CAPTURE SCREEN ───────────────────────────────────────────────
-    function LeadCaptureScreen({ onBack, form, setForm, onSubmit }) {
+    function LeadCaptureScreen({ onBack, form, setForm, onSubmit, submitting, submitError }) {
       const handleChange = useCallback((name, value) => {
         setForm(prev => ({ ...prev, [name]: value }));
       }, [setForm]);
@@ -945,7 +945,7 @@
                 <FormField label="First name"   name="firstName"    placeholder="Jordan"   value={form.firstName}    onChange={handleChange}/>
                 <FormField label="Last name"    name="lastName"     placeholder="Mokoena"  value={form.lastName}     onChange={handleChange}/>
               </div>
-              <FormField label="Work email"     name="email"        placeholder="jordan@practice.co.za" type="email" value={form.email}     onChange={handleChange}/>
+              <FormField label="Work email"     name="email"        placeholder="jordan@practice.com" type="email" value={form.email}     onChange={handleChange}/>
               <FormField label="Organisation"   name="organisation" placeholder="Bayside Family Practice"            value={form.organisation} onChange={handleChange}/>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                 <FormField label="Role"   name="role"   placeholder="Practice Manager"  value={form.role}   onChange={handleChange}/>
@@ -983,19 +983,24 @@
               </span>
             </label>
 
+            {submitError && (
+              <p style={{ margin: '10px 0 0', fontSize: 12, color: '#dc2626', textAlign: 'center' }}>
+                {submitError}
+              </p>
+            )}
             <button
-              disabled={!valid}
-              onClick={valid ? onSubmit : undefined}
+              disabled={!valid || submitting}
+              onClick={valid && !submitting ? onSubmit : undefined}
               style={{
-                marginTop: 14, width: '100%', appearance: 'none',
-                background: valid ? C.navy : '#BFC5CC', color: '#fff',
+                marginTop: 10, width: '100%', appearance: 'none',
+                background: valid && !submitting ? C.navy : '#BFC5CC', color: '#fff',
                 border: 0, borderRadius: 16, padding: '17px 18px',
                 fontWeight: 800, fontSize: 15, letterSpacing: '-0.005em',
-                boxShadow: valid ? '0 10px 30px rgba(11,37,69,0.24)' : 'none',
+                boxShadow: valid && !submitting ? '0 10px 30px rgba(11,37,69,0.24)' : 'none',
                 transition: 'background 200ms, box-shadow 200ms',
                 minHeight: 56,
               }}
-            >Submit &amp; receive welcome kit</button>
+            >{submitting ? 'Sending…' : 'Request a call'}</button>
 
           </div>
 
@@ -1105,12 +1110,40 @@
         organisation: '', role: '', mobile: '', consent: false,
       });
 
+      const [submitting, setSubmitting] = useState(false);
+      const [submitError, setSubmitError] = useState('');
+
       const onWatch   = () => setStep('video');
       const onWebsite = () => window.open('https://www.healthprac.com', '_blank');
       const onContact = () => setStep('capture');
-      const onSubmit  = () => setStep('confirmed');
+      const onSubmit  = async () => {
+        setSubmitting(true);
+        setSubmitError('');
+        try {
+          const res = await fetch('https://main.d2rogr2lbyrjz1.amplifyapp.com/api/request-callback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name:       `${form.firstName} ${form.lastName}`.trim(),
+              email:      form.email.trim().toLowerCase(),
+              org:        form.organisation.trim(),
+              role:       form.role.trim() || undefined,
+              mobile:     form.mobile.trim() || undefined,
+              cardSource: 'lezanne-card',
+            }),
+          });
+          const json = await res.json();
+          if (!res.ok) throw new Error(json.error || 'Something went wrong. Please try again.');
+          setStep('confirmed');
+        } catch (err) {
+          setSubmitError(err.message || 'Failed to send. Please try again.');
+        } finally {
+          setSubmitting(false);
+        }
+      };
       const onRestart = () => {
         setStep('welcome');
+        setSubmitError('');
         setForm({ firstName: '', lastName: '', email: '', organisation: '', role: '', mobile: '', consent: false });
       };
       const onShare = () => setStep('share');
@@ -1124,7 +1157,7 @@
           case 'video':
             return <VideoScreen onBack={() => setStep('welcome')} onWebsite={onWebsite} onContact={onContact}/>;
           case 'capture':
-            return <LeadCaptureScreen onBack={() => setStep('video')} form={form} setForm={setForm} onSubmit={onSubmit}/>;
+            return <LeadCaptureScreen onBack={() => setStep('video')} form={form} setForm={setForm} onSubmit={onSubmit} submitting={submitting} submitError={submitError}/>;
           case 'confirmed':
             return <ConfirmedScreen onRestart={onRestart} onWebsite={onWebsite}/>;
           default:
