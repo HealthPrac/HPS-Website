@@ -534,6 +534,7 @@
           'ORG:HealthPrac Solutions',
           'TITLE:Chief Executive Officer',
           'EMAIL;type=WORK:liezl@healthprac.com',
+          'TEL;type=CELL,WORK:+27723567663',
           'URL:https://www.healthprac.com/welcome.html',
           'NOTE:HealthPrac Solutions — Operational Excellence for Healthcare Practices',
           'END:VCARD',
@@ -618,14 +619,23 @@
                     label: 'liezl@healthprac.com',
                   },
                   {
+                    icon: <path d="M10 8.5c-.5-.1-1-.3-1.4-.3-.4 0-.6.1-.8.3l-.5.5C6.4 8.6 5.7 7.9 5.4 7l.5-.5c.2-.2.3-.5.3-.8 0-.4-.2-1-.4-1.4C5.6 4 5.2 3.5 4.8 3.5H3.8C3.3 3.5 3 3.8 3 4.3 3 8.2 5.8 11 9.7 11c.5 0 .8-.3.8-.8V9.2c0-.4-.3-.6-.5-.7z" stroke={C.gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>,
+                    vb: '0 0 15 15',
+                    label: '+27 72 356 7663',
+                    href: 'tel:+27723567663',
+                  },
+                  {
                     icon: <><circle cx="7.5" cy="7.5" r="6" stroke={C.gold} strokeWidth="1.3"/><path d="M1.5 7.5h12M7.5 1.5c2 2.5 2 8 0 12M7.5 1.5c-2 2.5-2 8 0 12" stroke={C.gold} strokeWidth="1.2" fill="none"/></>,
                     vb: '0 0 15 15',
                     label: 'www.healthprac.com',
                   },
-                ].map(({ icon, vb, label }) => (
+                ].map(({ icon, vb, label, href }) => (
                   <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <svg width="13" height="13" viewBox={vb} fill="none">{icon}</svg>
-                    <span style={{ fontSize: 11.5, fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.72)', letterSpacing: '0.01em' }}>{label}</span>
+                    {href
+                      ? <a href={href} style={{ fontSize: 11.5, fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.72)', letterSpacing: '0.01em', textDecoration: 'none' }}>{label}</a>
+                      : <span style={{ fontSize: 11.5, fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.72)', letterSpacing: '0.01em' }}>{label}</span>
+                    }
                   </div>
                 ))}
               </div>
@@ -849,6 +859,10 @@
           <div style={{ padding: '10px 18px 0' }}>
             <div style={{ fontSize: 8.5, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.50)', textTransform: 'uppercase', fontWeight: 700, marginBottom: 3 }}>Email</div>
             <div style={{ fontSize: 11, fontFamily: '"JetBrains Mono", monospace', color: '#fff', letterSpacing: '0.01em' }}>liezl@healthprac.com</div>
+          </div>
+          <div style={{ padding: '6px 18px 0' }}>
+            <div style={{ fontSize: 8.5, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.50)', textTransform: 'uppercase', fontWeight: 700, marginBottom: 3 }}>Mobile</div>
+            <a href="tel:+27723567663" style={{ fontSize: 11, fontFamily: '"JetBrains Mono", monospace', color: '#fff', letterSpacing: '0.01em', textDecoration: 'none' }}>+27 72 356 7663</a>
           </div>
 
           {/* CTA link */}
