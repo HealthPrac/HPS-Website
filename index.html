@@ -1151,6 +1151,11 @@
     font-weight: 500;
     color: #D8A833;
   }
+  /* Mobile: right half is only ~50vw wide — shrink text and tighten padding */
+  @media (max-width: 600px) {
+    .pt-right-eyebrow { font-size: 8px; letter-spacing: 0.16em; }
+    .pt-right-headline { font-size: 14px; line-height: 1.2; padding: 0 8%; letter-spacing: -0.01em; }
+  }
 
   /*
    * The turning leaf — covers the right half initially.
