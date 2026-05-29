@@ -1170,16 +1170,20 @@
     perspective: 1400px;
   }
   .pt-leaf.pt-go {
-    animation: ptLeafTurn 1050ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* linear lets the keyframe positions control all the pacing */
+    animation: ptLeafTurn 1500ms linear forwards;
   }
 
   @keyframes ptLeafTurn {
+    /* Page rests — finger catches the edge, slight hesitation */
     0%   { transform: rotateY(0deg); }
-    /* Slow into the turn — heavy magazine paper */
-    18%  { transform: rotateY(-22deg); }
-    /* Midpoint: leaf is at 90deg — viewer sees left (old) + right (new) simultaneously */
-    50%  { transform: rotateY(-90deg); }
-    /* Lands cleanly */
+    /* Slow lift off: 10% of time covers only 12deg */
+    10%  { transform: rotateY(-12deg); }
+    /* Accelerates into the arc — sweeps quickly through the spread crossover */
+    44%  { transform: rotateY(-90deg); }
+    /* Past 90 it starts to resist gravity, decelerates */
+    72%  { transform: rotateY(-156deg); }
+    /* Paper floats the last few degrees and settles */
     100% { transform: rotateY(-180deg); }
   }
 
@@ -2052,8 +2056,8 @@ function triggerPageTurn(url) {
     });
   });
 
-  // Navigate once the leaf has fully landed (~1050ms + small buffer)
-  setTimeout(function() { window.location.href = url; }, 1150);
+  // Navigate once the leaf has fully landed (~1500ms + small buffer)
+  setTimeout(function() { window.location.href = url; }, 1600);
 }
 </script>
 
