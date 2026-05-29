@@ -1196,6 +1196,19 @@ function Footer({ navigate }) {
       {showSecurity      && <SecurityModal      onClose={() => setShowSecurity(false)} />}
       {showDpp           && <DppModal           onClose={() => setShowDpp(false)} />}
       {showSubProcessors && <SubProcessorsModal onClose={() => setShowSubProcessors(false)} />}
+      <div className="page-turn">
+        <div className="wrap page-turn-inner">
+          <div className="page-turn-text">
+            <p className="page-turn-eyebrow">Also in this catalogue</p>
+            <h2 className="page-turn-heading">Running a <em>healthcare practice?</em></h2>
+          </div>
+          <div className="page-turn-divider" />
+          <a className="btn-page-turn" href="healthprac-solutions.html">
+            Turn the page <span className="pt-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
       <footer className="footer">
         <div className="wrap">
           <div className="footer-grid">
