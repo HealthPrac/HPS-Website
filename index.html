@@ -87,6 +87,45 @@
   }
   .logo-glyph { width: 26px; height: 26px; display: block; }
 
+  /* logo dropdown */
+  .logo-wrap { position: relative; }
+  .logo-dropdown {
+    position: absolute; top: calc(100% + 10px); left: 0;
+    background: #fff;
+    border: 1px solid var(--rule-2, #E8E0D2);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(15,37,71,0.14), 0 2px 8px rgba(15,37,71,0.08);
+    min-width: 230px;
+    overflow: hidden;
+    z-index: 200;
+    animation: logoDropIn 140ms cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes logoDropIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .logo-drop-item {
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; padding: 13px 16px;
+    background: transparent; border: 0; text-align: left;
+    font-family: "Geist", sans-serif; font-size: 14px; font-weight: 500;
+    color: var(--ink); cursor: pointer;
+    transition: background 140ms;
+    text-decoration: none;
+  }
+  .logo-drop-item:hover { background: var(--linen, #FAF8F3); }
+  .logo-drop-item + .logo-drop-item { border-top: 1px solid var(--rule-2, #E8E0D2); }
+  .logo-drop-icon {
+    width: 30px; height: 30px; border-radius: 6px;
+    display: grid; place-items: center; flex-shrink: 0;
+    background: var(--champagne-bg, #F0E6CC);
+    color: var(--champagne, #B89B6E);
+  }
+  .logo-drop-icon svg { width: 15px; height: 15px; }
+  .logo-drop-label { display: flex; flex-direction: column; gap: 1px; }
+  .logo-drop-label b { font-size: 13.5px; color: var(--forest, #0F2547); font-weight: 600; }
+  .logo-drop-label span { font-size: 11px; color: var(--ink-3, #888); font-weight: 400; }
+
   .nav-items { display: flex; gap: 4px; justify-content: center; align-items: center; }
   .nav-item {
     position: relative;

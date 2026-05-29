@@ -182,9 +182,10 @@ function Reveal({ children, delay = 0, as: As = "div", className = "" }) {
 // NAV
 // ===========================================================
 function Nav({ route, navigate }) {
-  const [open, setOpen] = useState(null); // "serve" | null
+  const [open, setOpen] = useState(null); // "serve" | "logo" | null
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef(null);
+  const logoRef = useRef(null);
 
   const enter = (key) => {
     clearTimeout(closeTimer.current);
@@ -197,13 +198,58 @@ function Nav({ route, navigate }) {
 
   const go = (r, payload) => { setOpen(null); setMobileOpen(false); navigate(r, payload); };
 
+  // close logo dropdown on outside click
+  useEffect(() => {
+    if (open !== "logo") return;
+    const handler = (e) => {
+      if (logoRef.current && !logoRef.current.contains(e.target)) setOpen(null);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
   return (
     <header className="nav" onMouseLeave={leave}>
       <div className="nav-inner">
-        <button className="logo" onClick={() => go("home")} aria-label="HealthPrac home">
-          <HPSEmblem height={28} />
-          <span>HealthPrac<span style={{marginLeft:"0.18em",color:"var(--champagne)"}}>Solutions</span></span>
-        </button>
+        <div className="logo-wrap" ref={logoRef}>
+          <button
+            className="logo"
+            onClick={() => setOpen(open === "logo" ? null : "logo")}
+            aria-label="HealthPrac menu"
+            aria-expanded={open === "logo"}
+          >
+            <HPSEmblem height={28} />
+            <span>HealthPrac<span style={{marginLeft:"0.18em",color:"var(--champagne)"}}>Solutions</span></span>
+          </button>
+          {open === "logo" && (
+            <div className="logo-dropdown">
+              <button className="logo-drop-item" onClick={() => go("home")}>
+                <span className="logo-drop-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+                    <path d="M9 21V12h6v9"/>
+                  </svg>
+                </span>
+                <span className="logo-drop-label">
+                  <b>Home</b>
+                  <span>Senior living &amp; care</span>
+                </span>
+              </button>
+              <a className="logo-drop-item" href="healthprac-solutions.html">
+                <span className="logo-drop-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 3l7 3v5c0 5-3.2 8.3-7 10-3.8-1.7-7-5-7-10V6z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                  </svg>
+                </span>
+                <span className="logo-drop-label">
+                  <b>Healthcare practices</b>
+                  <span>Running a medical practice?</span>
+                </span>
+              </a>
+            </div>
+          )}
+        </div>
 
         <nav className="nav-items">
           <button
