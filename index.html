@@ -1067,10 +1067,12 @@
     will-change: transform;
   }
   .pt-leaf.pt-go {
-    animation: ptFold 900ms cubic-bezier(.4, 0, .25, 1) forwards;
+    animation: ptFold 1800ms cubic-bezier(.25, 0, .15, 1) forwards;
   }
   @keyframes ptFold {
     0%   { transform: rotateY(0deg); }
+    30%  { transform: rotateY(-54deg); }
+    70%  { transform: rotateY(-126deg); }
     100% { transform: rotateY(-180deg); }
   }
 
@@ -1900,7 +1902,7 @@ function triggerPageTurn(url) {
   });
 
   // Navigate after animation completes
-  setTimeout(function() { window.location.href = url; }, 960);
+  setTimeout(function() { window.location.href = url; }, 1850);
 }
 </script>
 
