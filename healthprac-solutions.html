@@ -393,6 +393,130 @@ footer.footer { background: var(--navy-950); color: var(--on-navy); padding: 72p
 .footer-brand .mark i {
   color: #D8A833;
 }
+
+/* =========================================================================
+   MODALS — legal + book-a-call
+   ========================================================================= */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(7,20,43,0.88);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 20px; overflow-y: auto;
+}
+.modal-box {
+  background: var(--navy-850); border: 1px solid var(--rule-navy);
+  border-radius: 8px; width: 100%; max-width: 720px;
+  box-shadow: 0 32px 80px -20px rgba(0,0,0,0.7); position: relative;
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 28px 32px 22px; border-bottom: 1px solid var(--rule-navy);
+}
+.modal-header h3 {
+  font-family: "Poppins", system-ui, sans-serif; font-weight: 500;
+  font-size: 20px; color: var(--on-navy); margin: 0 0 10px;
+}
+.modal-tag {
+  font-family: "Geist Mono", monospace; font-size: 9.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--gold-bg); color: var(--gold-2);
+  padding: 4px 10px; border-radius: 3px; display: inline-block;
+}
+.modal-close {
+  background: transparent; border: 0; color: var(--on-navy-3);
+  font-size: 18px; padding: 4px 8px; border-radius: 4px;
+  transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  flex-shrink: 0; margin-left: 16px; cursor: pointer;
+}
+.modal-close:hover { color: var(--gold-2); background: rgba(185,135,41,0.1); }
+.modal-body {
+  padding: 28px 32px; max-height: 62vh; overflow-y: auto;
+  color: var(--on-navy-2); font-size: 14px; line-height: 1.72;
+}
+.modal-body h4 {
+  font-family: "Geist Mono", monospace; font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold-2); margin: 22px 0 8px;
+}
+.modal-body h4:first-child { margin-top: 0; }
+.modal-body p { margin: 0 0 12px; }
+.modal-body ul { padding-left: 20px; margin: 0 0 12px; }
+.modal-body ul li { margin-bottom: 6px; }
+.modal-body a { color: var(--gold-2); text-decoration: underline; text-underline-offset: 2px; }
+.modal-footer {
+  padding: 16px 32px; border-top: 1px solid var(--rule-navy);
+  font-family: "Geist Mono", monospace; font-size: 10.5px;
+  color: var(--on-navy-3); letter-spacing: 0.04em;
+  background: var(--navy-900); border-radius: 0 0 8px 8px;
+}
+.modal-footer a { color: var(--gold-2); }
+
+/* Book-a-call specific */
+.book-modal { max-width: 800px; }
+.book-modal .modal-body { max-height: none; padding: 0; overflow-y: visible; }
+.book-form { display: grid; grid-template-columns: 240px 1fr; }
+@media (max-width: 680px) { .book-form { grid-template-columns: 1fr; } }
+.book-side {
+  background: var(--navy-900); padding: 30px 26px;
+  border-right: 1px solid var(--rule-navy); border-radius: 0 0 0 8px;
+}
+@media (max-width: 680px) { .book-side { border-right: 0; border-bottom: 1px solid var(--rule-navy); border-radius: 0; } }
+.book-side h2 {
+  font-family: "Poppins", system-ui, sans-serif; font-weight: 300;
+  font-size: 22px; line-height: 1.22; color: var(--on-navy); margin: 0 0 14px;
+}
+.book-side h2 em { font-style: normal; color: var(--gold-2); font-weight: 500; }
+.book-side p { font-size: 13px; color: var(--on-navy-2); line-height: 1.6; margin: 0 0 14px; }
+.book-side ul { padding-left: 16px; margin: 0; }
+.book-side ul li { font-size: 12.5px; color: var(--on-navy-2); line-height: 1.55; margin-bottom: 6px; }
+.book-main { padding: 28px 26px; }
+.book-step-indicators { display: flex; gap: 0; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--rule-navy); }
+.bsi { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+.bsi .n { font-family: "Geist Mono", monospace; font-size: 9px; color: var(--on-navy-3); letter-spacing: 0.12em; }
+.bsi .lbl { font-size: 11px; color: var(--on-navy-3); }
+.bsi.active .n { color: var(--gold-2); }
+.bsi.active .lbl { color: var(--on-navy); font-weight: 500; }
+.bsi.done .n { color: var(--glow); }
+.bsi.done .lbl { color: var(--on-navy-2); }
+.book-step-title { font-family: "Poppins", system-ui, sans-serif; font-weight: 500; font-size: 21px; color: var(--on-navy); margin: 0 0 18px; }
+.bfield { margin-bottom: 16px; }
+.bfield label { display: block; font-family: "Geist Mono", monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-navy-3); margin-bottom: 7px; }
+.bfield .req { color: var(--gold-2); }
+.bfield input, .bfield textarea {
+  width: 100%; background: rgba(7,20,43,0.6); border: 1px solid rgba(233,238,246,0.14);
+  color: var(--on-navy); font-family: "Geist", sans-serif; font-size: 14px;
+  padding: 10px 13px; border-radius: 4px; outline: none;
+  transition: border-color var(--t-fast) var(--ease);
+}
+.bfield input:focus, .bfield textarea:focus { border-color: var(--gold); }
+.bfield input.invalid, .bfield textarea.invalid { border-color: #e74c3c; }
+.bfield textarea { min-height: 88px; resize: vertical; }
+.bfield .berr { font-size: 11.5px; color: #e74c3c; margin-top: 4px; display: block; }
+.brad-group { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.brad-card {
+  background: rgba(7,20,43,0.6); border: 1px solid rgba(233,238,246,0.12);
+  color: var(--on-navy-2); font-family: "Geist", sans-serif; font-size: 12.5px;
+  padding: 9px 13px; border-radius: 4px; text-align: left; cursor: pointer;
+  transition: all var(--t-fast) var(--ease);
+}
+.brad-card:hover { border-color: var(--gold-2); color: var(--on-navy); }
+.brad-card.selected { border-color: var(--gold-2); color: var(--gold-2); background: var(--gold-bg); }
+.book-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 12px; }
+.book-back { background: transparent; border: 0; color: var(--on-navy-3); font-size: 13px; font-family: "Geist", sans-serif; padding: 4px 0; transition: color var(--t-fast) var(--ease); cursor: pointer; }
+.book-back:hover:not(:disabled) { color: var(--on-navy); }
+.book-back:disabled { opacity: 0.3; cursor: not-allowed; }
+.book-success { padding: 44px 28px; text-align: center; border-radius: 0 0 8px 8px; }
+.book-success .bmark { width: 48px; height: 48px; border-radius: 50%; background: rgba(78,143,214,0.16); border: 1px solid var(--glow-soft); color: var(--glow); font-size: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; }
+.book-success h2 { font-family: "Poppins", system-ui, sans-serif; font-weight: 300; font-size: 26px; color: var(--on-navy); margin: 0 0 12px; }
+.book-success h2 em { font-style: normal; color: var(--gold-2); font-weight: 500; }
+.book-success p { font-size: 14px; color: var(--on-navy-2); line-height: 1.6; max-width: 44ch; margin: 0 auto 24px; }
+.book-review { background: var(--navy-900); border: 1px solid var(--rule-navy); border-radius: 4px; padding: 18px 20px; margin-top: 16px; text-align: left; }
+.book-review .rl { font-family: "Geist Mono", monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-navy-3); margin-bottom: 12px; }
+.brev-row { display: grid; grid-template-columns: 100px 1fr; gap: 10px; font-size: 12.5px; padding: 7px 0; border-bottom: 1px solid var(--rule-navy); }
+.brev-row:last-child { border-bottom: 0; }
+.brev-row .k { color: var(--on-navy-3); font-family: "Geist Mono", monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+.brev-row .v { color: var(--on-navy); }
 </style>
 </head>
 <body>
@@ -453,6 +577,436 @@ const OUTCOMES = [
   { v: "1 login", k: "For the whole practice" }
 ];
 
+/* ── Practice segments for book-a-call ── */
+const SEGMENTS_HP = [
+  { id: "solo",      name: "Solo Practice" },
+  { id: "group",     name: "Group Practice" },
+  { id: "specialist",name: "Specialist Rooms" },
+  { id: "allied",    name: "Multi-site / Allied" },
+];
+
+const FOCUS_OPTIONS = [
+  { id: "compliance", label: "Compliance & Audit" },
+  { id: "quality",    label: "Quality & SOPs" },
+  { id: "hr",         label: "HR & Workforce" },
+  { id: "payroll",    label: "Payroll" },
+  { id: "training",   label: "Staff Training" },
+  { id: "finance",    label: "Finance & Reporting" },
+  { id: "patient",    label: "Patient Experience" },
+  { id: "platform",   label: "The whole platform" },
+];
+
+const SECURITY_SECTIONS = [
+  { h: "Purpose", b: "This Security Policy defines the baseline security principles, controls, and responsibilities that govern the HPS platform and all connected modules. It exists to ensure that sensitive operational, workforce, finance-linked, health-linked, and evidence-based records are protected through consistent platform-level controls rather than ad hoc module-specific security behaviour." },
+  { h: "Scope", b: "This policy applies to the HPS platform core, all HPS modules, tenant environments, platform administration functions, support access workflows, connected integrations, stored evidence and files, analytics outputs, and user access across platform, organisation, facility, and department levels. It applies to all HPS personnel, authorised client administrators, authorised end users, implementation teams, support personnel, and approved third parties who interact with HPS systems or HPS-managed customer data." },
+  { h: "Security Principles", b: "HPS applies security as a foundational architectural requirement, not as a later add-on. Core platform services centralise identity, access control, auditability, evidence governance, workflow control, and analytics publication so that security remains consistent across the full product estate. HPS follows least privilege access, strong tenant segregation, scope-based and role-based authorisation, minimum-necessary disclosure, immutable auditability, governed evidence and file handling, controlled support elevation, and metadata-driven configuration." },
+  { h: "Identity and Access Control", b: "Access to the HPS platform must be authenticated through governed identity controls. The platform separates workforce identity from application authorisation, with authentication, token issuance, MFA posture, and app-level claims managed centrally. Authorisation is governed through functional role, organisational scope, record category, and sensitivity level — not solely by job title or screen visibility. Additional controls for privileged users and sensitive actions include MFA, approval requirements, masking, time-bounded access, and explicit justification logging." },
+  { h: "Tenant Segregation and Data Isolation", b: "HPS is operated as a true multi-tenant SaaS platform. Tenant boundaries are enforced so that one tenant cannot view another's data, documents, analytics, metadata, users, or identifiers. Records carry scope metadata enabling policy enforcement and secure analytics rollups. Tenant isolation is enforced at both application and database levels. Where pooled data models are used, row-level security and equivalent platform mechanisms ensure isolation does not depend on frontend filtering alone." },
+  { h: "Data Classification and Sensitive Information", b: "The platform may process confidential operational information, finance-linked information, workforce records, health-linked information, investigation records, legal material, and other restricted data types. Access to sensitive records may be restricted through field masking, explicit grants, record-level controls, workflow restrictions, export governance, and minimum-necessary disclosure rules. Sensitive data must not be exposed to unauthorised users, including internal support personnel without governed elevation." },
+  { h: "Audit, Monitoring, and Traceability", b: "HPS maintains auditability as a core platform control. Sensitive actions, approvals, access elevation, exports, record changes, support sessions, and other compliance-relevant activities are captured in immutable audit trails at the application level, in addition to infrastructure-level logging. Monitoring controls include system logs, failed access attempts, workflow failures, elevated support sessions, unusual export activity, and connector exceptions." },
+  { h: "Evidence, Files, and Document Security", b: "Files, evidence attachments, generated documents, certificates, exports, and related records are handled through governed platform services rather than unmanaged file storage. The evidence registry links files to owning records, versions, classifications, retention rules, upload history, and access history. Evidence remains subject to the same security, classification, and access rules that apply to the business records it supports." },
+  { h: "Support Access and Administrative Control", b: "HPS platform administrators and support personnel do not receive broad default access to customer data. Support access is treated as an exceptional, governed workflow requiring operator identity, business justification, target context, approval where required, time-bounded elevation, and enhanced audit capture. Elevated access sessions are clearly distinguished from normal user activity and subject to automatic expiry and logging." },
+  { h: "Data Retention, Export, and Deletion", b: "HPS applies governed retention, archival, export, and deletion controls according to record type, sensitivity, and legal or operational basis. Export activity for sensitive data is subject to the same scope, policy, and logging controls that apply inside the application. Data deletion and archival processes are controlled, reviewable, and aligned to retention rules, legal hold requirements, and platform evidence obligations." },
+  { h: "Incident Response", b: "HPS treats security events, unauthorised access attempts, policy breaches, suspicious platform behaviour, and material control failures as reportable security matters. Such events are investigated through governed incident management and audit processes, with remediation actions, evidence capture, and escalation handled according to severity and business impact. Where an incident affects customer data or platform security, HPS may initiate containment, access restriction, credential resets, forensic review, or additional monitoring as appropriate." },
+  { h: "User Responsibilities", b: "All users are expected to protect their credentials, use the platform only within their authorised scope, and avoid sharing, exporting, or disclosing information beyond approved business need. Users must not attempt to bypass platform controls, access restricted data, or use HPS services in a manner that compromises security, privacy, or compliance obligations. Client administrators are responsible for assigning access appropriately and promptly notifying HPS of suspected misuse, compromised credentials, or security concerns." },
+  { h: "Policy Review and Updates", b: "This Security Policy is reviewed and updated periodically to reflect platform evolution, regulatory requirements, architecture changes, threat conditions, and operational improvements. The current published version available through the HPS website or platform policy link is the authoritative version." },
+  { h: "Contact", b: "Security concerns, suspected vulnerabilities, or policy-related enquiries should be directed through the official HPS support or security contact channel published on the website or platform." },
+];
+
+/* ── Modal shell ── */
+function ModalShell({ title, tag, onClose, children, footerNote }) {
+  useEffect(() => {
+    const esc = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", esc);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", esc);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <div>
+            <h3 dangerouslySetInnerHTML={{ __html: title }} />
+            <div className="modal-tag">{tag}</div>
+          </div>
+          <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
+        </div>
+        <div className="modal-body">{children}</div>
+        {footerNote && <div className="modal-footer">{footerNote}</div>}
+      </div>
+    </div>
+  );
+}
+
+/* ── Legal modals ── */
+function TermsModal({ onClose }) {
+  return (
+    <ModalShell title="SaaS Provider &amp; Client Conduct Disclaimer" tag="HealthPrac Solutions · Platform Terms" onClose={onClose}
+      footerNote={<span>Read together with the platform terms of use, customer agreement, and data processing/operator agreement. · <a href="mailto:admin@healthprac.com">admin@healthprac.com</a></span>}>
+      <h4>Platform Status</h4>
+      <p>HealthPrac Solutions ("HPS") is a software-as-a-service provider. HPS supplies hosted software, system functionality, related technical services, and may from time to time provide limited consultation services requested by a client, including assistance with matters such as incident investigations, workflow reviews, platform configuration guidance, and related operational support. Such consultation is advisory in nature only and does not make HPS the employer, practice owner, healthcare provider, records custodian, compliance officer, information officer, operator of the client's business, or decision-maker in respect of the client's operational, legal, regulatory, clinical, HR, financial, or data-processing activities, unless expressly agreed otherwise in writing.</p>
+      <h4>Consultation Scope</h4>
+      <p>Any consultation, guidance, support, recommendation, review, comment, participation, or assistance provided by HPS is provided strictly in an advisory and support capacity. Final responsibility for investigating, assessing, escalating, reporting, documenting, deciding, implementing, and responding to any incident, complaint, dispute, breach, governance issue, disciplinary matter, legal matter, operational issue, or compliance issue remains solely with the client at all times.</p>
+      <h4>Client Responsibility</h4>
+      <p>Each client is solely responsible for how it configures, administers, accesses, uses, and relies on the platform, including all data entered into the platform and all actions taken or omitted by its authorised users, administrators, employees, contractors, agents, and representatives. The client is also solely responsible for how it interprets, adopts, rejects, or acts on any consultation or support provided by HPS. The client's use of the platform, and any conduct carried out through or in connection with the platform, is undertaken entirely at the client's own risk and for the client's own account.</p>
+      <h4>No Endorsement or Attribution</h4>
+      <p>Any act, omission, misconduct, non-compliance, misrepresentation, unlawful processing, unauthorised disclosure, employment dispute, regulatory breach, content upload, instruction, communication, or business practice of a client or user is solely that client's or user's responsibility and shall not be interpreted as reflecting the views, conduct, standards, endorsement, approval, or responsibility of HPS. The fact that HPS may have provided consultation or support to the client on a related matter does not create responsibility, control, assumption of duty, or legal attribution to HPS for the client's decisions, failures, or outcomes.</p>
+      <h4>Exclusion of Liability</h4>
+      <p>To the maximum extent permitted by applicable law, HPS shall not be liable for any direct, indirect, incidental, consequential, special, punitive, or exemplary loss, damage, penalty, fine, claim, demand, cost, expense, business interruption, reputational harm, or legal exposure arising from or related to:</p>
+      <ul>
+        <li>any client's or user's acts or omissions;</li>
+        <li>any client's non-compliance with applicable laws, regulations, professional obligations, or contractual duties;</li>
+        <li>any instructions given by a client to its staff, patients, customers, contractors, or third parties;</li>
+        <li>any data, content, records, messages, files, documents, or information uploaded, transmitted, stored, generated, or shared by a client or user; or</li>
+        <li>any reliance placed by a client or third party on outputs, workflows, reminders, automations, records, consultations, suggestions, or support generated through or in connection with the platform, where the client remains responsible for independent review, verification, lawful use, and final decision-making.</li>
+      </ul>
+      <h4>Indemnity</h4>
+      <p>Each client indemnifies, defends, and holds harmless HPS, its affiliates, officers, employees, contractors, and agents from and against any and all claims, complaints, investigations, proceedings, damages, losses, liabilities, penalties, fines, costs, and expenses, including reasonable legal costs, arising from or connected with that client's use of the platform, reliance on consultation, breach of law, breach of contract, infringement of rights, or misuse of personal or confidential information.</p>
+      <h4>Enforceability</h4>
+      <p>If any part of this disclaimer is found to be unenforceable, the remaining provisions shall continue in full force to the maximum extent permitted by law.</p>
+    </ModalShell>
+  );
+}
+
+function PopiaModal({ onClose }) {
+  return (
+    <ModalShell title="POPIA &amp; Website Data Disclaimer" tag="Protection of Personal Information Act 4 of 2013 · HealthPrac Solutions" onClose={onClose}
+      footerNote={<span>Read together with the website privacy notice, platform terms of use, customer agreement, and data processing/operator agreement. · <a href="mailto:admin@healthprac.com">admin@healthprac.com</a></span>}>
+      <h4>Important Notice</h4>
+      <p>This website and the software services made available through it may involve the collection, storage, use, transmission, and other processing of personal information. Any such processing must be conducted in accordance with the Protection of Personal Information Act, 4 of 2013 ("POPIA"), and any other applicable South African data protection, privacy, confidentiality, employment, health, consumer, or sector-specific laws and regulations.</p>
+      <h4>Role of HealthPrac Solutions</h4>
+      <p>HealthPrac Solutions ("HPS") provides a software-as-a-service platform and related digital infrastructure to its clients. Unless expressly stated otherwise in a written agreement, HPS does not determine the lawful basis, purpose, scope, retention period, disclosure practices, or accuracy of personal information captured, uploaded, stored, or processed by any client, user, practice, business, administrator, employee, contractor, or third party using the platform.</p>
+      <p>Each client remains solely and fully responsible for ensuring that:</p>
+      <ul>
+        <li>it has a lawful basis and any required permissions, notices, authorisations, or consents for the collection and processing of personal information;</li>
+        <li>all data entered into or processed through the platform is collected, used, stored, shared, and retained lawfully;</li>
+        <li>appropriate internal policies, access controls, safeguards, operator agreements, training, and governance measures are in place;</li>
+        <li>data subjects are provided with all notices and information required by POPIA and any other applicable laws; and</li>
+        <li>any cross-border transfers, special personal information processing, direct marketing, security incident handling, and records management activities are compliant with applicable law.</li>
+      </ul>
+      <h4>No Legal Advice</h4>
+      <p>Nothing on this website or within the platform constitutes legal advice, regulatory advice, compliance certification, or a representation that any client's use of the platform is automatically POPIA-compliant. Clients must obtain their own independent legal, compliance, and regulatory advice appropriate to their operations and industry.</p>
+      <h4>Limitation of Responsibility</h4>
+      <p>HPS does not accept responsibility for, and shall not be liable for, any unlawful, negligent, unauthorised, excessive, inaccurate, misleading, or non-compliant collection, capture, storage, use, disclosure, transfer, retention, deletion, or other processing of personal information by any client or user of the platform. HPS shall not be responsible for any fines, penalties, enforcement action, complaints, damages, losses, claims, costs, or liabilities arising from or relating to a client's or user's failure to comply with POPIA or any other applicable law.</p>
+      <h4>Reservation of Rights</h4>
+      <p>HPS reserves the right to suspend, restrict, investigate, or terminate access where it reasonably believes that the platform is being used in a manner that may be unlawful, abusive, insecure, or inconsistent with applicable law, contractual terms, or platform policies.</p>
+      <h4>Recommended Use</h4>
+      <p>This disclaimer should be read together with the website privacy notice, platform terms of use, customer agreement, data processing/operator agreement, and any information security documentation made available by HPS.</p>
+    </ModalShell>
+  );
+}
+
+function SubProcessorsModal({ onClose }) {
+  return (
+    <ModalShell title="Sub-processors, Hosting &amp; Infrastructure" tag="HealthPrac Solutions · Effective 19 May 2026" onClose={onClose}
+      footerNote={<span>Questions about HPS hosting or sub-processors: <a href="mailto:admin@healthprac.com">admin@healthprac.com</a> · Read together with the DPP, platform terms, and customer agreement.</span>}>
+      <p>This policy explains which third-party service providers HealthPrac Solutions ("HPS") uses to support the delivery of the HPS platform, what functions they perform, and how HPS approaches privacy, security, tenant segregation, and compliance in relation to those providers.</p>
+      <h4>Purpose</h4>
+      <p>This policy provides transparency regarding:</p>
+      <ul>
+        <li>the third-party providers used to support the HPS platform;</li>
+        <li>the role each provider performs;</li>
+        <li>the types of information each provider may process;</li>
+        <li>the hosting and infrastructure approach used by HPS; and</li>
+        <li>the controls HPS applies when appointing and managing such providers.</li>
+      </ul>
+      <h4>HPS Approach to Sub-processors</h4>
+      <p>Where HPS acts as a processor for customer data, HPS may engage carefully selected third-party providers to support hosting, infrastructure, backend operations, or communications necessary to deliver the platform. HPS requires that such providers operate under contractual, confidentiality, security, and data protection obligations appropriate to the services they provide.</p>
+      <h4>AWS Amplify / Amazon Web Services</h4>
+      <p><strong>Role:</strong> Application hosting and deployment infrastructure.<br/><strong>Data involved:</strong> Website and application hosting data, infrastructure logs, deployment artefacts, and related service metadata.<br/><strong>Notes:</strong> AWS customers can choose AWS regions for the services they use, subject to service-specific availability.</p>
+      <h4>Supabase</h4>
+      <p><strong>Role:</strong> Backend platform and supporting data services.<br/><strong>Data involved:</strong> Application data, authentication-related data, database records, backups, and service metadata.<br/><strong>Notes:</strong> Supabase encrypts customer data in transit and at rest, and customers can select project regions.</p>
+      <h4>Resend</h4>
+      <p><strong>Role:</strong> Transactional email and notification delivery.<br/><strong>Data involved:</strong> Recipient email addresses, email metadata, delivery data, and message content necessary to send platform notifications or service communications.<br/><strong>Notes:</strong> Resend provides a Data Processing Addendum describing the processing of customer and recipient data for email delivery.</p>
+      <h4>Internal AI Processing</h4>
+      <p>HPS may provide internal AI-supported functionality within the HPS platform. This internal AI capability is operated as an HPS-controlled platform function and is not presented as an external third-party sub-processor. Tenant data remains logically segregated and is not shared across tenants.</p>
+      <h4>Contact</h4>
+      <p>For questions about HPS hosting, infrastructure, or sub-processors, contact HealthPrac Solutions at <a href="mailto:admin@healthprac.com">admin@healthprac.com</a>.</p>
+    </ModalShell>
+  );
+}
+
+function DppModal({ onClose }) {
+  return (
+    <ModalShell title="Data Privacy Policy" tag="HealthPrac Solutions · DPP · Effective 19 May 2026" onClose={onClose}
+      footerNote={<span>Privacy questions or rights requests: <a href="mailto:admin@healthprac.com">admin@healthprac.com</a> · Read together with the platform terms of use, POPIA disclaimer, and customer agreement.</span>}>
+      <p>This Data Privacy Policy explains how HealthPrac Solutions ("HPS") collects, uses, stores, shares, transfers, retains, protects, and otherwise processes personal information. HPS is a healthcare-oriented, multi-tenant SaaS platform that may process workforce, resident, patient, medication-related, finance-linked, quality, governance, and operational data in high-trust environments. HPS adheres to applicable privacy obligations including POPIA (South Africa) and GDPR where applicable.</p>
+      <h4>Privacy Roles</h4>
+      <p>HPS may act as a <strong>data controller</strong> where HPS determines the purposes and means of processing for its own business activities — website management, account administration, service communications, billing, and internal governance.</p>
+      <p>HPS may act as a <strong>data processor</strong> where customer organisations use the platform to manage personal information relating to their own residents, patients, staff, contractors, or similar data sets. In these situations the customer organisation typically acts as controller and HPS processes on that customer's behalf.</p>
+      <h4>Privacy Principles</h4>
+      <ul>
+        <li>Lawfulness, fairness, and transparency.</li>
+        <li>Purpose limitation.</li>
+        <li>Data minimisation.</li>
+        <li>Accuracy.</li>
+        <li>Storage limitation, subject to lawful retention duties.</li>
+        <li>Integrity and confidentiality.</li>
+        <li>Accountability.</li>
+        <li>Privacy by design and by default.</li>
+        <li>Minimum-necessary access.</li>
+        <li>Governed disclosure, export control, and retention restriction.</li>
+      </ul>
+      <h4>Special-Category and High-Risk Data</h4>
+      <p>Because HPS serves healthcare environments, the platform may be used to process special-category, health-related, or otherwise highly sensitive information where lawful and contractually authorised. Where such information is processed through HPS, enhanced privacy and security expectations apply, including stricter access controls, classification rules, masking, auditability, support restrictions, export controls, and record-level governance.</p>
+      <h4>Retention, Soft Deletion, and Archival</h4>
+      <p>HPS applies retention and deletion controls in line with POPIA, GDPR, contractual obligations, and sector-specific record-keeping requirements. If a customer requests deletion from the live platform, HPS may perform a soft delete or operational deletion from the active environment so that the data is no longer available in normal platform views. However, where medical, medication, financial, audit, legal, evidentiary, or regulated records are subject to mandatory or defensible retention obligations, HPS may retain a restricted backend archival copy.</p>
+      <p>For HPS policy purposes, deleted data may be retained in restricted backend archival storage for up to <strong>15 years</strong> where HPS or the relevant customer reasonably determines that long-term retention is necessary to comply with legal, regulatory, contractual, evidentiary, medical, or financial record-keeping obligations.</p>
+      <h4>Contact</h4>
+      <p>For privacy-related questions, rights requests, or concerns about this Data Privacy Policy, contact HealthPrac Solutions at <a href="mailto:admin@healthprac.com">admin@healthprac.com</a>.</p>
+    </ModalShell>
+  );
+}
+
+function SecurityModal({ onClose }) {
+  return (
+    <ModalShell title="Security Policy" tag="HealthPrac Solutions · Platform Security" onClose={onClose}
+      footerNote={<span>Security concerns or suspected vulnerabilities should be directed to <a href="mailto:admin@healthprac.com">admin@healthprac.com</a></span>}>
+      {SECURITY_SECTIONS.map((s, i) => (
+        <React.Fragment key={i}>
+          <h4>{s.h}</h4>
+          <p>{s.b}</p>
+        </React.Fragment>
+      ))}
+    </ModalShell>
+  );
+}
+
+/* ── Book-a-call field ── */
+function BField({ label, k, type = "text", placeholder, data, errs, set, optional }) {
+  return (
+    <div className="bfield">
+      <label>{label} {!optional && <span className="req">*</span>}</label>
+      <input type={type} value={data[k]} onChange={set(k)} placeholder={placeholder || ""}
+        className={errs[k] ? "invalid" : ""} />
+      {errs[k] && <span className="berr">{errs[k]}</span>}
+    </div>
+  );
+}
+
+/* ── Book-a-call modal ── */
+function BookCallModal({ onClose }) {
+  const [step, setStep] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
+  const [data, setData] = useState({ name: "", email: "", role: "", org: "", segment: "", sites: "", currentSystems: "", focus: [], notes: "" });
+  const [errs, setErrs] = useState({});
+  const [sending, setSending] = useState(false);
+  const [sendErr, setSendErr] = useState("");
+
+  useEffect(() => {
+    const esc = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", esc);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", esc); document.body.style.overflow = ""; };
+  }, [onClose]);
+
+  const set = (k) => (e) => {
+    const val = e && e.target ? e.target.value : e;
+    setData((d) => ({ ...d, [k]: val }));
+    if (errs[k]) setErrs((s) => ({ ...s, [k]: null }));
+  };
+
+  function toggleFocus(id) {
+    setData((d) => {
+      const next = d.focus.includes(id) ? d.focus.filter((x) => x !== id) : [...d.focus, id];
+      return { ...d, focus: next };
+    });
+    if (errs.focus) setErrs((s) => ({ ...s, focus: null }));
+  }
+
+  function validate(s) {
+    const e = {};
+    if (s === 0) {
+      if (!data.name.trim()) e.name = "Required.";
+      if (!data.email.trim()) e.email = "Required.";
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) e.email = "Use a valid work email.";
+      if (!data.role.trim()) e.role = "Required.";
+    }
+    if (s === 1) {
+      if (!data.org.trim()) e.org = "Required.";
+      if (!data.segment) e.segment = "Pick the closest match.";
+      if (!data.sites) e.sites = "Required.";
+    }
+    if (s === 2) {
+      if (!data.focus.length) e.focus = "Select at least one area.";
+    }
+    setErrs(e);
+    return Object.keys(e).length === 0;
+  }
+
+  function next() { if (validate(step)) setStep((s) => Math.min(s + 1, 3)); }
+  function back() { setStep((s) => Math.max(s - 1, 0)); }
+
+  async function submit() {
+    if (!validate(2)) return;
+    setSending(true); setSendErr("");
+    try {
+      const res = await fetch("https://main.d2rogr2lbyrjz1.amplifyapp.com/api/book-call", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name.trim(), email: data.email.trim().toLowerCase(),
+          role: data.role.trim(), org: data.org.trim(),
+          segment: data.segment, sites: data.sites,
+          focus: data.focus.map((id) => FOCUS_OPTIONS.find((o) => o.id === id)?.label || id).join(", "),
+          currentSystems: data.currentSystems.trim() || undefined,
+          notes: data.notes.trim() || undefined,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Something went wrong. Please try again.");
+      setSubmitted(true); setStep(3);
+    } catch (err) {
+      setSendErr(err.message || "Failed to send. Please try again.");
+    } finally {
+      setSending(false);
+    }
+  }
+
+  const stepNames = ["About you", "Your practice", "Focus areas"];
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-box book-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <div>
+            <h3>Book a call to explore</h3>
+            <div className="modal-tag">HealthPrac Solutions · Healthcare Practices</div>
+          </div>
+          <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
+        </div>
+
+        {!submitted ? (
+          <div className="modal-body">
+            <div className="book-form">
+              <div className="book-side">
+                <h2>A 45-minute conversation.<br/><em>Then we both decide.</em></h2>
+                <p>You will speak to one of our partners. We listen to the operating model, the pressure points, and the practice context. We show the platform against your actual workflows.</p>
+                <ul>
+                  <li>One conversation, one decision — no follow-up sequences.</li>
+                  <li>If we're not the right partner, we say so on the call.</li>
+                  <li>Confidential under POPIA-compliant terms.</li>
+                </ul>
+              </div>
+              <div className="book-main">
+                <div className="book-step-indicators">
+                  {stepNames.map((n, i) => (
+                    <div key={n} className={`bsi ${i === step ? "active" : ""} ${i < step ? "done" : ""}`}>
+                      <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="lbl">{n}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {step === 0 && (
+                  <>
+                    <div className="book-step-title">About you.</div>
+                    <BField label="Your name" k="name" data={data} errs={errs} set={set} />
+                    <BField label="Work email" k="email" type="email" data={data} errs={errs} set={set} />
+                    <BField label="Your role" k="role" placeholder="Practice owner, COO, Operations manager…" data={data} errs={errs} set={set} />
+                    <div className="book-actions">
+                      <button className="book-back" disabled>← Back</button>
+                      <button className="btn gold" onClick={next}>Continue <span className="arrow">→</span></button>
+                    </div>
+                  </>
+                )}
+
+                {step === 1 && (
+                  <>
+                    <div className="book-step-title">Your practice.</div>
+                    <BField label="Practice name" k="org" placeholder="e.g. Riverside Family Practice" data={data} errs={errs} set={set} />
+                    <div className="bfield">
+                      <label>Practice type <span className="req">*</span></label>
+                      <div className="brad-group">
+                        {SEGMENTS_HP.map((s) => (
+                          <button type="button" key={s.id}
+                            className={`brad-card ${data.segment === s.id ? "selected" : ""}`}
+                            onClick={() => set("segment")(s.id)}>{s.name}</button>
+                        ))}
+                      </div>
+                      {errs.segment && <span className="berr">{errs.segment}</span>}
+                    </div>
+                    <div className="bfield">
+                      <label>Number of sites <span className="req">*</span></label>
+                      <div className="brad-group" style={{ gridTemplateColumns: "repeat(4,1fr)" }}>
+                        {["1", "2–4", "5–10", "10+"].map((opt) => (
+                          <button type="button" key={opt}
+                            className={`brad-card ${data.sites === opt ? "selected" : ""}`}
+                            onClick={() => set("sites")(opt)}
+                            style={{ textAlign: "center", fontFamily: "Poppins, sans-serif", fontSize: 18 }}>{opt}</button>
+                        ))}
+                      </div>
+                      {errs.sites && <span className="berr">{errs.sites}</span>}
+                    </div>
+                    <BField label="Current systems (optional)" k="currentSystems" placeholder="e.g. GoodX, in-house spreadsheets…" data={data} errs={errs} set={set} optional />
+                    <div className="book-actions">
+                      <button className="book-back" onClick={back}>← Back</button>
+                      <button className="btn gold" onClick={next}>Continue <span className="arrow">→</span></button>
+                    </div>
+                  </>
+                )}
+
+                {step === 2 && (
+                  <>
+                    <div className="book-step-title">Focus areas.</div>
+                    <div className="bfield">
+                      <label>What to cover <span className="req">*</span> <span style={{ color: "var(--on-navy-3)", textTransform: "none", letterSpacing: 0 }}>— select all that apply</span></label>
+                      <div className="brad-group">
+                        {FOCUS_OPTIONS.map((opt) => (
+                          <button type="button" key={opt.id}
+                            className={`brad-card ${data.focus.includes(opt.id) ? "selected" : ""}`}
+                            onClick={() => toggleFocus(opt.id)}>{opt.label}</button>
+                        ))}
+                      </div>
+                      {errs.focus && <span className="berr">{errs.focus}</span>}
+                    </div>
+                    <div className="bfield">
+                      <label>Anything else we should know (optional)</label>
+                      <textarea value={data.notes} onChange={set("notes")}
+                        placeholder="A regulator visit on the horizon? A site opening? Tell us in your own words." />
+                    </div>
+                    <div className="book-actions">
+                      <button className="book-back" onClick={back} disabled={sending}>← Back</button>
+                      <button className="btn gold" onClick={submit} disabled={sending}>
+                        {sending ? "Sending…" : <><span>Send request</span><span className="arrow">→</span></>}
+                      </button>
+                    </div>
+                    {sendErr && <p style={{ marginTop: 10, color: "#e74c3c", fontSize: 12.5, lineHeight: 1.5 }}>{sendErr}</p>}
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="book-success">
+            <div className="bmark">✓</div>
+            <h2><em>Thank you,</em> {data.name.split(" ")[0]}.</h2>
+            <p>We have your details. One of our partners will be in touch within one working day to confirm a time — usually the same week. The conversation is 45 minutes, by video or in person.</p>
+            <div className="book-review">
+              <div className="rl">What you sent</div>
+              <div className="brev-row"><span className="k">Name</span><span className="v">{data.name}</span></div>
+              <div className="brev-row"><span className="k">Email</span><span className="v">{data.email}</span></div>
+              <div className="brev-row"><span className="k">Role</span><span className="v">{data.role}</span></div>
+              <div className="brev-row"><span className="k">Practice</span><span className="v">{data.org}</span></div>
+              <div className="brev-row"><span className="k">Type</span><span className="v">{SEGMENTS_HP.find((s) => s.id === data.segment)?.name || "—"}</span></div>
+              <div className="brev-row"><span className="k">Sites</span><span className="v">{data.sites}</span></div>
+              <div className="brev-row"><span className="k">Focus</span><span className="v">{data.focus.map((id) => FOCUS_OPTIONS.find((o) => o.id === id)?.label || id).join(", ")}</span></div>
+              {data.currentSystems && <div className="brev-row"><span className="k">Systems</span><span className="v">{data.currentSystems}</span></div>}
+              {data.notes && <div className="brev-row"><span className="k">Notes</span><span className="v">{data.notes}</span></div>}
+            </div>
+            <div style={{ marginTop: 24 }}>
+              <button className="btn outline-light" onClick={onClose}>Close</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /* ── Reveal ── */
 function Reveal({ children, delay = 0, as: As = "div", className = "", style = {} }) {
   const ref = useRef(null);
@@ -507,7 +1061,7 @@ function Circuit() {
 }
 
 /* ── Nav ── */
-function Nav() {
+function Nav({ onBook }) {
   const items = ["Platform", "Modules", "How it works", "Why HPS"];
   const ids = ["#platform", "#modules", "#how", "#why"];
   return (
@@ -522,7 +1076,7 @@ function Nav() {
           <a className="nav-item" href="index.html">Senior Care</a>
         </nav>
         <div className="nav-cta">
-          <a className="btn gold" href="#cta">Book a call to explore <span className="arrow">→</span></a>
+          <button className="btn gold" onClick={onBook}>Book a call to explore <span className="arrow">→</span></button>
         </div>
       </div>
     </header>
@@ -564,13 +1118,20 @@ function HeroConsole() {
 function App() {
   const heroHeadline = "Operational excellence for health practices.";
   const ctaHeadline = "Let us handle the complexity. You handle the care.";
+  const [activeModal, setActiveModal] = useState(null);
 
   const hw = heroHeadline.trim().split(" ");
   const heroLast = hw.pop();
 
   return (
     <div id="top">
-      <Nav />
+      {activeModal === "book"          && <BookCallModal      onClose={() => setActiveModal(null)} />}
+      {activeModal === "popia"         && <PopiaModal         onClose={() => setActiveModal(null)} />}
+      {activeModal === "terms"         && <TermsModal         onClose={() => setActiveModal(null)} />}
+      {activeModal === "security"      && <SecurityModal      onClose={() => setActiveModal(null)} />}
+      {activeModal === "dpp"           && <DppModal           onClose={() => setActiveModal(null)} />}
+      {activeModal === "subprocessors" && <SubProcessorsModal onClose={() => setActiveModal(null)} />
+      <Nav onBook={() => setActiveModal("book")} />
 
       {/* HERO */}
       <section className="hero">
@@ -584,7 +1145,7 @@ function App() {
             </Reveal>
             <Reveal delay={180}>
               <div className="hero-ctas">
-                <a className="btn gold" href="#cta">Book a call to explore <span className="arrow">→</span></a>
+                <button className="btn gold" onClick={() => setActiveModal("book")}>Book a call to explore <span className="arrow">→</span></button>
                 <a className="btn outline-light" href="#modules">See the modules</a>
               </div>
             </Reveal>
@@ -743,7 +1304,7 @@ function App() {
           <Reveal delay={80}><p>Book a 30-minute call. We&rsquo;ll map your practice, show you the platform on your own workflows, and tell you honestly whether it&rsquo;s a fit.</p></Reveal>
           <Reveal delay={140}>
             <div className="ctas">
-              <a className="btn gold" href="mailto:liezl@healthpracsolutions.com">Book a call to explore <span className="arrow">→</span></a>
+              <button className="btn gold" onClick={() => setActiveModal("book")}>Book a call to explore <span className="arrow">→</span></button>
               <a className="btn outline-light" href="#modules">Explore the modules</a>
             </div>
           </Reveal>
@@ -788,7 +1349,7 @@ function App() {
           </div>
           <div className="footer-legal">
             <span>© 2026 HealthPrac Solutions. All Rights Reserved. · Reg No. 2026/147357/07</span>
-            <span>Powered by <span className="hps">HPS</span> · <a href="hps-data-privacy-policy-dpp.md">POPIA</a> · <a>Terms</a> · <a href="hps-security-policy.md">Security</a> · <a>DPP</a> · <a href="hps-sub-processors-policy.md">Sub-processors</a></span>
+            <span>Powered by <span className="hps">HPS</span> · <a onClick={() => setActiveModal("popia")}>POPIA</a> · <a onClick={() => setActiveModal("terms")}>Terms</a> · <a onClick={() => setActiveModal("security")}>Security</a> · <a onClick={() => setActiveModal("dpp")}>DPP</a> · <a onClick={() => setActiveModal("subprocessors")}>Sub-processors</a></span>
           </div>
         </div>
       </footer>
