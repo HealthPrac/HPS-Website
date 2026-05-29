@@ -1249,9 +1249,9 @@ function Footer({ navigate }) {
             <h2 className="page-turn-heading">Running a <em>healthcare practice?</em></h2>
           </div>
           <div className="page-turn-divider" />
-          <a className="btn-page-turn" href="healthprac-solutions.html">
+          <button className="btn-page-turn" onClick={() => window.triggerPageTurn('healthprac-solutions.html')}>
             Turn the page <span className="pt-arrow">→</span>
-          </a>
+          </button>
         </div>
       </div>
 
