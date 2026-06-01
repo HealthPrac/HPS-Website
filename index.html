@@ -644,6 +644,56 @@
     font-family: "Geist Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
     color: rgba(239,230,210,0.45);
   }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 600px) {
+    :root { --block-pad: 72px; }
+
+    .nav-inner { padding: 14px 20px; }
+    .wordmark { font-size: 20px; }
+    .logo-mark { height: 24px; }
+
+    .hero { padding: 64px 0 0; }
+    .hero-eyebrow { font-size: 9px; letter-spacing: 0.14em; }
+    .hero-brandline { font-size: 18px; }
+    .hero-sub { font-size: 16px; margin: 24px 0 28px; }
+    .hero-ctas { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .hero-meta-row { grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 20px; }
+    .hero-meta-item .v { font-size: 22px; }
+
+    .section-head { margin-bottom: 32px; }
+
+    .ledger-row { grid-template-columns: 36px 1fr; gap: 10px 12px; padding: 18px 0; }
+
+    .bridge-grid { gap: 12px; }
+    .bridge-card { padding: 22px 20px 18px; }
+
+    .serve-card { padding: 24px 20px 20px; }
+    .serve-list li { font-size: 10px; }
+
+    .values-row { margin-bottom: 56px; }
+    .value { padding: 22px 20px; }
+
+    .page-turn { padding: 40px 0; }
+    .page-turn-heading { font-size: 22px; }
+    .btn-page-turn { padding: 12px 18px; font-size: 13px; }
+
+    .footer { padding: 52px 0 32px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .footer-base { flex-direction: column; gap: 8px; }
+
+    .closer .display { font-size: 36px; }
+    .closer-sub { font-size: 16px; }
+    .closer-ctas { flex-direction: column; align-items: center; }
+
+    .serve-cta-sub { font-size: 15px; }
+    .serve-cta > div { flex-direction: column; align-items: stretch; }
+    .serve-cta .btn { justify-content: center; }
+  }
+
+  @media (max-width: 400px) {
+    .wordmark { display: none; }
+  }
 </style>
 </head>
 <body>
