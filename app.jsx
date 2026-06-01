@@ -223,6 +223,17 @@ function Nav({ route, navigate }) {
           </button>
           {open === "logo" && (
             <div className="logo-dropdown">
+              <a className="logo-drop-item" href="index.html">
+                <span className="logo-drop-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M19 12H5M12 5l-7 7 7 7"/>
+                  </svg>
+                </span>
+                <span className="logo-drop-label">
+                  <b>Return home</b>
+                  <span>HealthPrac cover page</span>
+                </span>
+              </a>
               <button className="logo-drop-item" onClick={() => go("home")}>
                 <span className="logo-drop-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
