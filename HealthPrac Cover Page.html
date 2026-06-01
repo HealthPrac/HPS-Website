@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HealthPrac Solutions — A clearer view of the health of your business</title>
+<link rel="icon" href="images/emblem-light.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root {
+    --parchment:   #EFE6D2;
+    --linen:       #F7F0DD;
+    --paper:       #FBF6E7;
+    --stone:       #C5B8A0;
+    --stone-2:     #DDD2B8;
+    --forest:      #0F2547;
+    --forest-2:    #1A3361;
+    --forest-3:    #2A4978;
+    --navy-deep:   #0B1A33;
+    --champagne:   #A8823E;
+    --champagne-2: #C99A4E;
+    --champagne-3: #E8D6B0;
+    --champagne-bg:#F0E6CC;
+    --charcoal:    #1A1A18;
+    --ink:         #2A2925;
+    --ink-2:       #4A4842;
+    --ink-3:       #7A776E;
+    --rule:        #D9CFB5;
+    --rule-2:      #E5DCC1;
+
+    --hero-bg:     var(--forest);
+
+    --bg:          var(--parchment);
+    --fg:          var(--ink);
+    --max:         1280px;
+
+    --t-fast: 180ms;
+    --t-mid:  320ms;
+    --t-slow: 560ms;
+    --ease:   cubic-bezier(.2,.7,.2,1);
+
+    --block-pad: 120px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Geist", system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  body.density-comfortable { --block-pad: 96px; }
+  .serif { font-family: "Cormorant Garamond", Georgia, serif; }
+  .mono  { font-family: "Geist Mono", ui-monospace, monospace; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 64px; }
+  @media (max-width: 800px) { .wrap { padding: 0 28px; } }
+
+  /* ===== NAV ===== */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11, 26, 51, 0.72);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid rgba(184,155,110,0.18);
+    transition: background var(--t-mid) var(--ease);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto;
+    padding: 18px 64px;
+    display: flex; justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+  @media (max-width: 1000px) { .nav-inner { padding: 14px 28px; } }
+
+  /* Logo */
+  .logo-wrap { position: relative; }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    font-family: "Cormorant Garamond", serif; font-weight: 500;
+    font-size: 24px; color: var(--linen); letter-spacing: 0.005em;
+    background: transparent; border: 0; padding: 0;
+  }
+  .logo-mark { height: 30px; width: auto; display: block; flex: none; }
+  .wordmark { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 25px; letter-spacing: 0.01em; line-height: 1; white-space: nowrap; }
+  .wordmark .wm-a { color: var(--linen); }
+  .wordmark .wm-b { color: var(--champagne-2); }
+
+  /* Logo dropdown */
+  .logo-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px); left: 0;
+    min-width: 220px;
+    background: var(--paper);
+    border: 1px solid var(--rule-2);
+    border-radius: 4px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    overflow: hidden;
+    animation: logoDropIn 140ms cubic-bezier(.2,.7,.2,1) both;
+    z-index: 200;
+  }
+  .logo-wrap.open .logo-dropdown { display: block; }
+  @keyframes logoDropIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .logo-drop-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px; width: 100%; background: none; border: 0; text-align: left;
+    cursor: pointer; transition: background var(--t-fast) var(--ease);
+    font-family: "Geist", sans-serif;
+  }
+  .logo-drop-item:hover { background: var(--linen); }
+  .logo-drop-item + .logo-drop-item { border-top: 1px solid var(--rule-2); }
+  .logo-drop-icon {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: var(--forest); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-drop-icon svg { width: 15px; height: 15px; stroke: var(--champagne-2); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .logo-drop-label { display: flex; flex-direction: column; gap: 1px; }
+  .logo-drop-label b { font-size: 13.5px; color: var(--forest); font-weight: 600; }
+  .logo-drop-label span { font-size: 11px; color: var(--ink-3); font-weight: 400; }
+
+  .nav-items { display: flex; gap: 4px; justify-content: center; align-items: center; }
+  .nav-item {
+    position: relative;
+    font-family: "Geist", sans-serif; font-weight: 500; font-size: 14px;
+    color: rgba(239,230,210,0.78); padding: 10px 14px; background: transparent; border: 0;
+    letter-spacing: 0.005em;
+    transition: color var(--t-fast) var(--ease);
+  }
+  .nav-item:hover { color: var(--champagne-2); }
+
+  @media (max-width: 1000px) { .nav-items { display: none; } }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: "Geist", sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 0.005em;
+    padding: 13px 22px; border-radius: 2px;
+    border: 1px solid transparent;
+    transition: all var(--t-fast) var(--ease);
+    cursor: pointer;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.primary { background: var(--forest); color: var(--linen); border-color: var(--forest); }
+  .btn.primary:hover { background: var(--forest-2); }
+  .btn.secondary { background: transparent; color: var(--forest); border-color: var(--forest); }
+  .btn.secondary:hover { background: var(--forest); color: var(--linen); }
+  .btn.gold { background: var(--champagne); color: var(--forest); border-color: var(--champagne); }
+  .btn.gold:hover { background: var(--champagne-2); }
+  .btn.ghost-light { background: transparent; color: var(--champagne-2); border-color: rgba(212,185,138,0.55); }
+  .btn.ghost-light:hover { background: var(--champagne-2); color: var(--forest); border-color: var(--champagne-2); }
+  .btn .arrow { font-family: "Geist Mono", monospace; transition: transform var(--t-fast) var(--ease); }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* ===== SHARED TYPE ===== */
+  .eyebrow {
+    font-family: "Geist Mono", monospace; font-size: 11px;
+    color: var(--champagne); letter-spacing: 0.16em; text-transform: uppercase;
+    margin: 0 0 22px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--champagne); }
+
+  .display {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: var(--forest);
+    margin: 0;
+  }
+  .display em { font-style: italic; font-weight: 400; color: var(--champagne); }
+  .lede {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic; font-weight: 400;
+    font-size: 24px; line-height: 1.45;
+    color: var(--forest);
+    margin: 0;
+  }
+  .body-l { font-size: 17px; line-height: 1.7; color: var(--ink-2); margin: 0; }
+  .mono-label {
+    font-family: "Geist Mono", monospace; font-size: 11px;
+    color: var(--ink-3); letter-spacing: 0.14em; text-transform: uppercase;
+  }
+
+  /* ===== REVEAL ===== */
+  .reveal { opacity: 1; transform: none; }
+  html.js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 700ms var(--ease), transform 700ms var(--ease); }
+  html.js .reveal.in { opacity: 1; transform: translateY(0); }
+  html.js .reveal.locked { transition: none !important; opacity: 1 !important; transform: none !important; }
+  @media (prefers-reduced-motion: reduce) { html.js .reveal { opacity: 1; transform: none; transition: none; } }
+
+  /* ===== SECTION RHYTHM ===== */
+  section.block { padding: var(--block-pad) 0; position: relative; }
+  section.block.dark { background: var(--forest); color: var(--linen); }
+  section.block.deep { background: var(--navy-deep); color: var(--linen); }
+  section.block.linen { background: var(--linen); }
+  section.dark .display, section.deep .display { color: var(--linen); }
+  section.dark .display em, section.deep .display em { color: var(--champagne-2); }
+  section.dark .body-l, section.deep .body-l { color: rgba(239,230,210,0.78); }
+  section.dark .eyebrow, section.deep .eyebrow { color: var(--champagne-2); }
+  section.dark .eyebrow::before, section.deep .eyebrow::before { background: var(--champagne-2); }
+  section.dark .mono-label, section.deep .mono-label { color: rgba(239,230,210,0.55); }
+
+  .section-head { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: end; margin-bottom: 64px; }
+  @media (max-width: 900px) { .section-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 44px; } }
+  .section-head h2 { font-family: "Cormorant Garamond", serif; font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; letter-spacing: -0.02em; margin: 0; color: var(--forest); }
+  .section-head h2 em { font-style: italic; font-weight: 400; color: var(--champagne); }
+  section.dark .section-head h2, section.deep .section-head h2 { color: var(--linen); }
+  section.dark .section-head h2 em, section.deep .section-head h2 em { color: var(--champagne-2); }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero {
+    background: var(--hero-bg);
+    color: var(--linen);
+    position: relative;
+    overflow: hidden;
+    padding: 96px 0 0;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 600px; height: 600px;
+    background: url("images/emblem-light.svg") no-repeat center / contain;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 980px; }
+  .hero-brandline {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic; font-weight: 400;
+    font-size: clamp(22px, 2.3vw, 30px);
+    color: var(--champagne-2);
+    line-height: 1.25;
+    margin: 0 0 26px;
+    letter-spacing: 0.002em;
+  }
+  .hero-eyebrow {
+    font-family: "Geist Mono", monospace; font-size: 11px;
+    color: rgba(212,185,138,0.85); letter-spacing: 0.2em; text-transform: uppercase;
+    margin: 0 0 30px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--champagne); }
+  .hero-h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-size: clamp(46px, 6vw, 92px);
+    line-height: 1.0;
+    letter-spacing: -0.027em;
+    color: var(--linen);
+    margin: 0;
+    max-width: 16ch;
+  }
+  .hero-h1 em { font-style: italic; font-weight: 400; color: var(--champagne-2); }
+  .hero-sub {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic; font-weight: 400;
+    font-size: clamp(19px, 1.9vw, 24px); line-height: 1.5;
+    color: rgba(239,230,210,0.82);
+    margin: 34px 0 38px;
+    max-width: 56ch;
+  }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .hero-meta {
+    border-top: 1px solid rgba(184,155,110,0.18);
+    margin-top: 64px;
+  }
+  .hero-meta-row {
+    max-width: var(--max); margin: 0 auto;
+    padding: 30px 64px 40px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+  }
+  @media (max-width: 800px) { .hero-meta-row { padding: 28px; grid-template-columns: repeat(2,1fr); gap: 24px; } }
+  .hero-meta-item .v { font-family: "Cormorant Garamond", serif; font-size: 30px; color: var(--champagne-2); font-weight: 500; line-height: 1; display: block; margin-bottom: 8px; font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+  .hero-meta-item .k { font-family: "Geist Mono", monospace; font-size: 10px; color: rgba(239,230,210,0.6); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.5; }
+
+  /* ============================================================
+     BRAND INTRO
+     ============================================================ */
+  .intro-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: start; }
+  @media (max-width: 900px) { .intro-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .intro-statement {
+    font-family: "Cormorant Garamond", serif; font-weight: 300;
+    font-size: clamp(28px, 3.2vw, 42px); line-height: 1.18; letter-spacing: -0.018em;
+    color: var(--forest); margin: 0;
+  }
+  .intro-statement em { font-style: italic; font-weight: 400; color: var(--champagne); }
+  .intro-body p { margin: 0 0 18px; }
+  .intro-body p:last-child { margin-bottom: 0; }
+
+  /* ============================================================
+     ORIGIN / 72 YEARS
+     ============================================================ */
+  .origin-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 72px; align-items: center; }
+  @media (max-width: 950px) { .origin-grid { grid-template-columns: 1fr; gap: 44px; } }
+  .origin-stat .big {
+    font-family: "Cormorant Garamond", serif; font-weight: 300;
+    font-size: clamp(120px, 15vw, 200px); line-height: 0.82; letter-spacing: -0.04em;
+    font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1;
+    color: var(--champagne-2); margin: 0;
+  }
+  .origin-stat .label {
+    font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(239,230,210,0.7); margin-top: 12px;
+  }
+  .origin-quote {
+    font-family: "Cormorant Garamond", serif; font-weight: 300;
+    font-size: clamp(26px, 2.9vw, 38px); line-height: 1.22; letter-spacing: -0.015em;
+    color: var(--linen); margin: 0 0 32px;
+  }
+  .origin-quote em { font-style: italic; color: var(--champagne-2); }
+  .origin-disciplines {
+    display: flex; flex-wrap: wrap; gap: 0;
+    border-top: 1px solid rgba(184,155,110,0.22);
+    margin-top: 36px;
+  }
+  .origin-disciplines span {
+    font-family: "Geist Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(239,230,210,0.62);
+    padding: 14px 20px 14px 0;
+  }
+  .origin-disciplines span::before { content: "·"; color: var(--champagne); margin-right: 14px; }
+  .origin-disciplines span:first-child::before { display: none; }
+
+  /* ============================================================
+     PILLARS LEDGER
+     ============================================================ */
+  .ledger { border-top: 1px solid var(--rule); margin-top: 8px; }
+  .ledger-row {
+    display: grid; grid-template-columns: 64px 1fr 1.4fr 44px;
+    gap: 24px; align-items: center;
+    padding: 26px 8px; border-bottom: 1px solid var(--rule);
+    transition: background var(--t-fast) var(--ease), padding-left var(--t-fast) var(--ease);
+  }
+  @media (max-width: 800px) { .ledger-row { grid-template-columns: 40px 1fr; gap: 12px 16px; padding: 22px 4px; } }
+  .ledger-row:hover { background: rgba(184,155,110,0.06); }
+  .ledger-row .num { font-family: "Geist Mono", monospace; font-size: 12px; color: var(--champagne); letter-spacing: 0.08em; }
+  .ledger-row .name { font-family: "Cormorant Garamond", serif; font-size: clamp(22px, 2.4vw, 30px); font-weight: 500; color: var(--forest); line-height: 1.1; }
+  .ledger-row .desc { font-size: 15px; color: var(--ink-2); line-height: 1.55; }
+  @media (max-width: 800px) { .ledger-row .desc { grid-column: 2; } }
+  .ledger-row .ico { color: var(--champagne); justify-self: end; }
+  @media (max-width: 800px) { .ledger-row .ico { display: none; } }
+  .ledger-row .ico svg { width: 26px; height: 26px; display: block; stroke: currentColor; stroke-width: 1.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ============================================================
+     WHY WE BUILT THIS
+     ============================================================ */
+  .built { position: relative; overflow: hidden; }
+  .built::before {
+    content: "";
+    position: absolute; bottom: -160px; left: -120px;
+    width: 500px; height: 500px;
+    background: url("images/hps-emblem.svg") no-repeat center / contain;
+    opacity: 0.06; pointer-events: none;
+  }
+  .built-inner { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; text-align: center; }
+  .built-quote {
+    font-family: "Cormorant Garamond", serif; font-weight: 300;
+    font-size: clamp(28px, 3.6vw, 48px); line-height: 1.18; letter-spacing: -0.018em;
+    color: var(--forest); margin: 36px 0 0;
+  }
+  .built-quote em { font-style: italic; font-weight: 400; color: var(--champagne); }
+  .built-coda {
+    font-size: 17px; line-height: 1.75; color: var(--ink-2);
+    max-width: 60ch; margin: 40px auto 0;
+  }
+  .built-coda strong { color: var(--forest); font-weight: 500; }
+
+  /* ============================================================
+     CATALOGUE BRIDGE
+     ============================================================ */
+  .bridge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+  @media (max-width: 850px) { .bridge-grid { grid-template-columns: 1fr; } }
+  .bridge-card {
+    border: 1px solid rgba(184,155,110,0.28);
+    border-radius: 4px;
+    padding: 30px 28px 26px;
+    background: rgba(255,255,255,0.02);
+    display: flex; flex-direction: column; gap: 12px;
+    transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+    cursor: pointer;
+  }
+  .bridge-card:hover { border-color: var(--champagne); background: rgba(184,155,110,0.08); transform: translateY(-2px); }
+  .bridge-card .bc-num { font-family: "Geist Mono", monospace; font-size: 11px; color: var(--champagne-2); letter-spacing: 0.12em; }
+  .bridge-card .bc-name { font-family: "Cormorant Garamond", serif; font-size: 26px; font-weight: 500; color: var(--linen); line-height: 1.12; }
+  .bridge-card .bc-desc { font-size: 14px; color: rgba(239,230,210,0.72); line-height: 1.55; }
+  .bridge-card .bc-go { margin-top: auto; padding-top: 14px; font-family: "Geist Mono", monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--champagne-2); display: inline-flex; align-items: center; gap: 8px; }
+  .bridge-card .bc-go .arrow { transition: transform var(--t-fast) var(--ease); }
+  .bridge-card:hover .bc-go .arrow { transform: translateX(4px); }
+
+  /* ============================================================
+     VALUES + FINAL CTA
+     ============================================================ */
+  .values-row {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    margin-bottom: 88px;
+  }
+  @media (max-width: 850px) { .values-row { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 480px) { .values-row { grid-template-columns: 1fr; } }
+  .value {
+    padding: 30px 28px 30px 0;
+    border-left: 1px solid var(--rule);
+    padding-left: 28px;
+  }
+  .values-row .value:first-child { border-left: 0; padding-left: 0; }
+  @media (max-width: 850px) { .value:nth-child(odd) { border-left: 0; padding-left: 0; } }
+  .value .v-name { font-family: "Cormorant Garamond", serif; font-size: 22px; font-weight: 500; color: var(--forest); margin-bottom: 8px; }
+  .value .v-name em { color: var(--champagne); font-style: italic; }
+  .value .v-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+
+  .closer { text-align: center; max-width: 880px; margin: 0 auto; }
+  .closer .display { font-size: clamp(44px, 5.6vw, 80px); }
+  .closer-sub { font-size: 18px; line-height: 1.7; color: var(--ink-2); max-width: 56ch; margin: 30px auto 40px; }
+  .closer-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ============================================================
+     MAGAZINE SPREAD PAGE-TURN
+     ============================================================ */
+  .pt-scene {
+    position: fixed; inset: 0; z-index: 10000;
+    pointer-events: none; opacity: 0;
+    transition: opacity 80ms ease;
+  }
+  .pt-scene.pt-ready { opacity: 1; pointer-events: all; }
+
+  /* Spine line */
+  .pt-scene::after {
+    content: ""; position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 20%, rgba(0,0,0,0.28) 50%, rgba(0,0,0,0.18) 80%, transparent 100%);
+    z-index: 2; pointer-events: none;
+  }
+
+  .pt-left {
+    position: absolute; top: 0; left: 0; width: 50%; height: 100%;
+    background: #FDFCF8; overflow: hidden;
+  }
+  .pt-left::after {
+    content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 80px;
+    background: linear-gradient(to left, rgba(0,0,0,0.12) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .pt-right {
+    position: absolute; top: 0; left: 50%; width: 50%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 20px; overflow: hidden;
+  }
+  .pt-right::before {
+    content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 80px;
+    background: linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 100%);
+    pointer-events: none; z-index: 1;
+  }
+  .pt-right-emblem { width: clamp(64px, 12vw, 110px); height: auto; opacity: 0.92; z-index: 2; }
+  .pt-right-eyebrow {
+    font-family: "Geist Mono", monospace; font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; z-index: 2;
+  }
+  .pt-right-headline {
+    font-family: "Cormorant Garamond", serif; font-weight: 300;
+    font-size: clamp(22px, 3vw, 42px); line-height: 1.1; letter-spacing: -0.02em;
+    text-align: center; padding: 0 10%; z-index: 2; margin: 0;
+  }
+  @media (max-width: 600px) {
+    .pt-right-eyebrow { font-size: 8px; letter-spacing: 0.16em; }
+    .pt-right-headline { font-size: 14px; line-height: 1.2; padding: 0 8%; letter-spacing: -0.01em; }
+  }
+
+  .pt-leaf {
+    position: absolute; top: 0; left: 50%; width: 50%; height: 100%;
+    transform-origin: left center; transform-style: preserve-3d;
+    will-change: transform; perspective: 1400px;
+  }
+  .pt-leaf.pt-go { animation: ptLeafTurn 1500ms linear forwards; }
+
+  @keyframes ptLeafTurn {
+    0%   { transform: rotateY(0deg); }
+    10%  { transform: rotateY(-12deg); }
+    44%  { transform: rotateY(-90deg); }
+    72%  { transform: rotateY(-156deg); }
+    100% { transform: rotateY(-180deg); }
+  }
+
+  .pt-face-front {
+    position: absolute; inset: 0; background: #FDFCF8;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden;
+  }
+  .pt-face-front::before {
+    content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 60px;
+    background: linear-gradient(to right, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 60%, transparent 100%);
+    pointer-events: none; z-index: 1;
+  }
+  .pt-face-front::after {
+    content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 40px;
+    background: linear-gradient(to left, rgba(0,0,0,0.14) 0%, transparent 100%);
+    pointer-events: none; z-index: 1;
+  }
+
+  .pt-face-back {
+    position: absolute; inset: 0; background: #F0EBE1;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    transform: rotateY(180deg); overflow: hidden;
+  }
+  .pt-face-back::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.06) 0%, transparent 30%),
+                linear-gradient(to bottom, rgba(0,0,0,0.04) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.04) 100%);
+    pointer-events: none;
+  }
+  .pt-face-back::after {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.012) 3px, rgba(0,0,0,0.012) 4px);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pt-scene { transition: opacity 200ms ease; }
+    .pt-leaf.pt-go { animation: ptLeafFade 320ms ease forwards; }
+    @keyframes ptLeafFade {
+      0%   { opacity: 1; transform: translateX(0); }
+      100% { opacity: 0; transform: translateX(12px); }
+    }
+  }
+
+  /* ============================================================
+     CATALOGUE PAGE-TURN BAND
+     ============================================================ */
+  .page-turn {
+    background: #07142B;
+    border-top: 1px solid rgba(233,238,246,0.08);
+    border-bottom: 1px solid rgba(233,238,246,0.08);
+    padding: 56px 0;
+    display: flex; align-items: center;
+  }
+  .page-turn-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 40px; flex-wrap: wrap;
+  }
+  .page-turn-eyebrow {
+    font-family: "Geist Mono", monospace; font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(233,238,246,0.4);
+    margin: 0 0 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .page-turn-eyebrow::before { content: ""; width: 18px; height: 1px; background: rgba(185,135,41,0.6); }
+  .page-turn-heading {
+    font-family: "Cormorant Garamond", serif; font-weight: 300;
+    font-size: clamp(26px, 3.2vw, 40px); line-height: 1.12;
+    color: #E9EEF6; margin: 0; letter-spacing: -0.018em;
+  }
+  .page-turn-heading em { font-style: italic; color: #D8A833; }
+  .page-turn-divider { width: 1px; height: 56px; background: rgba(233,238,246,0.12); flex-shrink: 0; }
+  @media (max-width: 760px) { .page-turn-divider { display: none; } }
+  .btn-page-turn {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: "Geist", sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 0.02em;
+    padding: 14px 24px; border-radius: 3px;
+    border: 1px solid rgba(185,135,41,0.45);
+    color: #D8A833; background: rgba(185,135,41,0.08);
+    white-space: nowrap;
+    transition: all 180ms cubic-bezier(.2,.7,.2,1);
+    flex-shrink: 0; cursor: pointer;
+  }
+  .btn-page-turn:hover { background: rgba(185,135,41,0.16); border-color: rgba(185,135,41,0.7); transform: translateX(3px); }
+  .btn-page-turn .pt-arrow { font-family: "Geist Mono", monospace; font-size: 16px; transition: transform 180ms cubic-bezier(.2,.7,.2,1); }
+  .btn-page-turn:hover .pt-arrow { transform: translateX(4px); }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  .footer { background: var(--navy-deep); color: rgba(239,230,210,0.7); padding: 72px 0 40px; border-top: 1px solid rgba(184,155,110,0.16); }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px; }
+  @media (max-width: 850px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+  .footer-brand .logo { color: var(--linen); margin-bottom: 18px; cursor: default; }
+  .footer-brand .logo-mark { height: 34px; }
+  .footer-brand .wordmark { font-size: 28px; }
+  .footer-brand p { font-size: 14px; line-height: 1.65; color: rgba(239,230,210,0.6); max-width: 34ch; }
+  .footer-col h5 { font-family: "Geist Mono", monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--champagne-2); margin: 0 0 18px; font-weight: 500; }
+  .footer-col a { display: block; font-size: 14px; color: rgba(239,230,210,0.7); padding: 6px 0; transition: color var(--t-fast) var(--ease); }
+  .footer-col a:hover { color: var(--linen); }
+  .footer-base {
+    margin-top: 56px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    font-family: "Geist Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(239,230,210,0.45);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="nav-inner">
+    <!-- Logo with product dropdown -->
+    <div class="logo-wrap" id="logoWrap">
+      <button class="logo" onclick="toggleLogoMenu(event)" aria-haspopup="true" aria-expanded="false" id="logoBtn">
+        <img class="logo-mark" src="images/emblem-light.svg" alt="HPS emblem" />
+        <span class="wordmark"><span class="wm-a">HealthPrac</span> <span class="wm-b">Solutions</span></span>
+      </button>
+      <div class="logo-dropdown" id="logoMenu" role="menu">
+        <button class="logo-drop-item" onclick="triggerPageTurn('index.html')" role="menuitem">
+          <span class="logo-drop-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          <span class="logo-drop-label">
+            <b>Senior Care</b>
+            <span>Retirement &amp; senior living</span>
+          </span>
+        </button>
+        <button class="logo-drop-item" onclick="triggerPageTurn('healthprac-solutions.html')" role="menuitem">
+          <span class="logo-drop-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </span>
+          <span class="logo-drop-label">
+            <b>Healthcare Practices</b>
+            <span>Clinical &amp; specialist practices</span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="nav-items">
+      <a class="nav-item" href="#platform">Platform</a>
+      <a class="nav-item" href="#solutions">Solutions</a>
+      <a class="nav-item" href="#serve">Who We Serve</a>
+      <a class="nav-item" href="#why">Why HPS</a>
+      <a class="nav-item" href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner reveal">
+        <p class="hero-eyebrow">HealthPrac Solutions — The business of care, seen clearly</p>
+        <p class="hero-brandline">We handle the complexity.<br>You handle the care.</p>
+        <h1 class="hero-h1">A clearer view of the health of your business, <em>in the palm of your hand.</em></h1>
+        <p class="hero-sub">HealthPrac Solutions brings visibility, composure, and control to the business of healthcare — helping leaders strengthen operational health, governance, and performance with confidence.</p>
+        <div class="hero-ctas">
+          <button class="btn gold" onclick="triggerPageTurn('index.html')">Explore Our Products <span class="arrow">→</span></button>
+          <a class="btn ghost-light" href="#about">About HealthPrac <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-meta">
+      <div class="hero-meta-row">
+        <div class="hero-meta-item"><span class="v">72</span><span class="k">Years combined<br>leadership</span></div>
+        <div class="hero-meta-item"><span class="v">One page</span><span class="k">Every site,<br>visible at a glance</span></div>
+        <div class="hero-meta-item"><span class="v">End&nbsp;to&nbsp;end</span><span class="k">Operations to<br>executive oversight</span></div>
+        <div class="hero-meta-item"><span class="v">Built&nbsp;in</span><span class="k">Real regulated<br>care environments</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BRAND INTRO ===================== -->
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="intro-grid">
+        <div class="reveal">
+          <p class="eyebrow">Who we are</p>
+          <p class="intro-statement">Built from inside the work — where <em>care</em> and <em>business discipline</em> meet.</p>
+        </div>
+        <div class="intro-body body-l reveal">
+          <p>HealthPrac Solutions was built from real experience in healthcare operations, compliance, regulation, business performance, and implementation. We understand both the realities of care and the discipline required to sustain it.</p>
+          <p>That understanding holds whether you lead an independent practice, a growing practice, or a multi-site care organisation — and whether the question in front of you is a regulator, a roster, a board paper, or the long arc of sustainable growth.</p>
+          <p>We help healthcare leaders gain a clearer view of the health of their business — without compromising care, compliance, or operational integrity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ORIGIN / 72 YEARS ===================== -->
+  <section class="block deep" id="why">
+    <div class="wrap">
+      <div class="origin-grid">
+        <div class="origin-stat reveal">
+          <p class="eyebrow">Origin &amp; leadership</p>
+          <p class="big">72</p>
+          <p class="label">Years of combined leadership</p>
+        </div>
+        <div class="reveal">
+          <p class="origin-quote">Founded by people who have managed multi-site healthcare environments — from quality management to staffing — and who spent their careers needing <em>one page where every site was visible.</em></p>
+          <p class="body-l">Our team brings over seventy-two years of combined leadership across quality management, regulatory compliance, finance, operational performance, audit readiness, and multi-site governance. We bridge strategic oversight and frontline execution — so every solution we deliver is grounded in real-world implementation. The result is outcomes that are measurable and sustainable; outcomes that work day to day, not just on paper.</p>
+          <div class="origin-disciplines">
+            <span>Quality Management</span>
+            <span>Regulatory Compliance</span>
+            <span>Finance</span>
+            <span>Operational Performance</span>
+            <span>Audit Readiness</span>
+            <span>Multi-site Governance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HEALTH OF BUSINESS + PILLARS ===================== -->
+  <section class="block" id="platform">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="reveal">
+          <p class="eyebrow">The health of your business</p>
+        </div>
+        <h2 class="reveal">A clearer line of sight — from frontline operations to <em>executive oversight.</em></h2>
+      </div>
+      <p class="body-l reveal" style="max-width: 70ch; margin-bottom: 56px;">Before the modules and the detail, there is the picture as a whole: visibility, operational health, organisational clarity, governance confidence, measured performance, and the capacity for care preserved. These are the areas HealthPrac helps you strengthen — each supported, deeper in the catalogue, by the platform itself.</p>
+
+      <div class="ledger reveal">
+        <div class="ledger-row">
+          <span class="num">01</span>
+          <span class="name">Operational efficiency</span>
+          <span class="desc">The everyday running of the organisation made visible, measurable, and calm under pressure.</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        </div>
+        <div class="ledger-row">
+          <span class="num">02</span>
+          <span class="name">Governance &amp; compliance</span>
+          <span class="desc">Regulatory accountability held with discipline — defensible, audit-ready, and never left to the binder.</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        </div>
+        <div class="ledger-row">
+          <span class="num">03</span>
+          <span class="name">Workforce &amp; onboarding</span>
+          <span class="desc">People, rosters, and credentialing — brought into order so capacity meets the demands of care.</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M17 8h4M19 6v4"/></svg></span>
+        </div>
+        <div class="ledger-row">
+          <span class="num">04</span>
+          <span class="name">Quality &amp; incident control</span>
+          <span class="desc">Standards measured and incidents managed — so quality is a system, not an aspiration.</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9.5l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-1z"/></svg></span>
+        </div>
+        <div class="ledger-row">
+          <span class="num">05</span>
+          <span class="name">Financial discipline</span>
+          <span class="desc">The numbers that sustain the organisation, kept clear, current, and connected to the work.</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 15l5-5 4 3 7-7"/></svg></span>
+        </div>
+        <div class="ledger-row">
+          <span class="num">06</span>
+          <span class="name">Organisational performance</span>
+          <span class="desc">How the whole organisation is performing — across sites, teams, and time — in one coherent view.</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="4" height="9"/><rect x="10" y="6" width="4" height="14"/><rect x="17" y="3" width="4" height="17"/></svg></span>
+        </div>
+        <div class="ledger-row">
+          <span class="num">07</span>
+          <span class="name">Business intelligence &amp; oversight</span>
+          <span class="desc">Executive clarity — the questions a board asks, answered before they are asked.</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY WE BUILT THIS ===================== -->
+  <section class="block linen built">
+    <div class="wrap">
+      <div class="built-inner">
+        <p class="eyebrow" style="justify-content: center;">Why we built this</p>
+        <p class="built-quote">The platform exists because we kept rebuilding the same systems for organisation after organisation. After the third or fourth time, we wrote it as software — <em>then assembled the partnership team that puts it to work</em> in the kind of environment we came from.</p>
+        <p class="built-coda">We are <strong>deliberately small, deliberately senior,</strong> and deliberately patient about the operators we work with. HealthPrac is what we wish we had had — on the days the binder was empty and the regulator was already on the road.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CATALOGUE BRIDGE ===================== -->
+  <section class="block deep" id="solutions">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="reveal">
+          <p class="eyebrow">Explore the catalogue</p>
+        </div>
+        <h2 class="reveal">A broader suite of products and solutions — <em>ready when you are.</em></h2>
+      </div>
+      <p class="body-l reveal" style="max-width: 64ch; margin-bottom: 44px;">This is the front door. Beyond it, our website holds the full catalogue of products and services — the modules, the detail, and the platform itself. Choose where to begin.</p>
+      <div class="bridge-grid reveal">
+        <button class="bridge-card" onclick="triggerPageTurn('index.html')">
+          <span class="bc-num">01</span>
+          <span class="bc-name">Senior Care</span>
+          <span class="bc-desc">Our senior living platform — rostering, care governance, resident management, and the whole family experience, in one place.</span>
+          <span class="bc-go">Explore senior care <span class="arrow">→</span></span>
+        </button>
+        <button class="bridge-card" onclick="triggerPageTurn('healthprac-solutions.html')">
+          <span class="bc-num">02</span>
+          <span class="bc-name">Healthcare Practices</span>
+          <span class="bc-desc">The full operating environment for clinical and specialist practices — finance, HR, QMS, compliance, and executive oversight.</span>
+          <span class="bc-go">Explore practices <span class="arrow">→</span></span>
+        </button>
+        <a class="bridge-card" href="#platform" id="serve">
+          <span class="bc-num">03</span>
+          <span class="bc-name">Who We Serve</span>
+          <span class="bc-desc">From an independent practitioner to a multi-site care group and its executive team — find your starting point.</span>
+          <span class="bc-go">See who we serve <span class="arrow">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VALUES + FINAL CTA ===================== -->
+  <section class="block" id="call">
+    <div class="wrap">
+      <div class="values-row reveal">
+        <div class="value"><div class="v-name">People-centred</div><div class="v-desc">Systems that protect the capacity for care.</div></div>
+        <div class="value"><div class="v-name">Respect</div><div class="v-desc">For practitioners, teams, operators, and regulation alike.</div></div>
+        <div class="value"><div class="v-name">Integrity</div><div class="v-desc">Implementation over appearance — always.</div></div>
+        <div class="value"><div class="v-name">Measurement</div><div class="v-desc">Defensible, real-world, and current.</div></div>
+        <div class="value"><div class="v-name">Excellence</div><div class="v-desc">Measured, sustainable, and earned day to day.</div></div>
+      </div>
+
+      <div class="closer reveal">
+        <p class="eyebrow" style="justify-content: center;">A clearer view begins here</p>
+        <h2 class="display">Lead with <em>composure,</em> govern with confidence.</h2>
+        <p class="closer-sub">For healthcare leaders who want more clarity, stronger control, and healthier operations — whether you lead an independent practice, a care facility, or a larger healthcare group.</p>
+        <div class="closer-ctas">
+          <button class="btn primary" onclick="triggerPageTurn('index.html')">Senior Care Platform <span class="arrow">→</span></button>
+          <button class="btn secondary" onclick="triggerPageTurn('healthprac-solutions.html')">Healthcare Practices <span class="arrow">→</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== PAGE-TURN BAND ===================== -->
+<div class="page-turn">
+  <div class="wrap" style="width:100%">
+    <div class="page-turn-inner">
+      <div class="page-turn-text">
+        <p class="page-turn-eyebrow">Our product catalogue</p>
+        <p class="page-turn-heading">Turn the page — <em>explore our solutions.</em></p>
+      </div>
+      <div class="page-turn-divider"></div>
+      <button class="btn-page-turn" onclick="triggerPageTurn('index.html')">
+        Turn the page <span class="pt-arrow">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <img class="logo-mark" src="images/emblem-light.svg" alt="" />
+          <span class="wordmark"><span class="wm-a">HealthPrac</span> <span class="wm-b">Solutions</span></span>
+        </div>
+        <p>The operating environment for healthcare operations, governance, and business health. We handle the complexity. You handle the care.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Products</h5>
+        <a onclick="triggerPageTurn('index.html')" style="cursor:pointer">Senior Care</a>
+        <a onclick="triggerPageTurn('healthprac-solutions.html')" style="cursor:pointer">Healthcare Practices</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#about">About</a>
+        <a href="#why">Leadership</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#serve">Who we serve</a>
+      </div>
+      <div class="footer-col">
+        <h5>Get in touch</h5>
+        <a href="#call">Book a strategic call</a>
+        <a href="#call">Request a walk-through</a>
+        <a href="#call">Contact</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 HealthPrac Solutions. All Rights Reserved.</span>
+      <span>Healthcare operations · Governance · Business health</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ===== Scroll reveal ===== */
+  (function () {
+    var els = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+    function shown(el) {
+      el.classList.add("in");
+      setTimeout(function () { el.classList.add("locked"); }, 760);
+    }
+    function check() {
+      var h = window.innerHeight || document.documentElement.clientHeight;
+      for (var i = els.length - 1; i >= 0; i--) {
+        var r = els[i].getBoundingClientRect();
+        if (r.top < h * 0.92 && r.bottom > 0) { shown(els[i]); els.splice(i, 1); }
+      }
+    }
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check);
+    window.addEventListener("load", check);
+    setTimeout(check, 300);
+    setTimeout(function () {
+      document.querySelectorAll(".reveal").forEach(function (e) { e.classList.add("in"); e.classList.add("locked"); });
+    }, 1400);
+  })();
+
+  /* ===== Logo dropdown ===== */
+  function toggleLogoMenu(e) {
+    e.stopPropagation();
+    var wrap = document.getElementById("logoWrap");
+    var btn  = document.getElementById("logoBtn");
+    var open = wrap.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  document.addEventListener("click", function (e) {
+    var wrap = document.getElementById("logoWrap");
+    if (wrap && !wrap.contains(e.target)) {
+      wrap.classList.remove("open");
+      document.getElementById("logoBtn").setAttribute("aria-expanded", "false");
+    }
+  });
+
+  /* ===== Magazine spread page-turn ===== */
+  function triggerPageTurn(url) {
+    var isSenior   = url.indexOf("index.html") !== -1;
+    var bg         = isSenior ? "#0F2547" : "#0A1A33";
+    var eyebrow    = isSenior ? "Senior Living Solutions" : "HealthPrac for Practices";
+    var headline   = isSenior
+      ? "Senior care,<br><em>beautifully managed.</em>"
+      : "Operational excellence<br>for <em>health practices.</em>";
+    var eyebrowCol = isSenior ? "rgba(185,155,90,0.7)" : "rgba(185,135,41,0.7)";
+    var headlineCol= isSenior ? "#FDFCF8" : "#E9EEF6";
+    var emCol      = isSenior ? "#C99A4E" : "#D8A833";
+
+    var scene = document.createElement("div");
+    scene.className = "pt-scene";
+    scene.innerHTML =
+      '<div class="pt-left"></div>' +
+      '<div class="pt-right" style="background:' + bg + '">' +
+        '<img class="pt-right-emblem" src="images/emblem-light.svg" alt="" aria-hidden="true">' +
+        '<p class="pt-right-eyebrow" style="color:' + eyebrowCol + '">' + eyebrow + '</p>' +
+        '<h2 class="pt-right-headline" style="color:' + headlineCol + '">' + headline + '</h2>' +
+      '</div>' +
+      '<div class="pt-leaf">' +
+        '<div class="pt-face-front"></div>' +
+        '<div class="pt-face-back"></div>' +
+      '</div>';
+
+    /* inject em colour into the headline em tag after insertion */
+    document.body.appendChild(scene);
+    var em = scene.querySelector(".pt-right-headline em");
+    if (em) em.style.color = emCol;
+
+    requestAnimationFrame(function () {
+      scene.classList.add("pt-ready");
+      requestAnimationFrame(function () {
+        scene.querySelector(".pt-leaf").classList.add("pt-go");
+      });
+    });
+
+    setTimeout(function () { window.location.href = url; }, 1600);
+  }
+</script>
+
+</body>
+</html>
