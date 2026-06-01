@@ -1127,6 +1127,12 @@
     pointer-events: none;
     z-index: 1;
   }
+  .pt-right-emblem {
+    width: clamp(64px, 12vw, 110px);
+    height: auto;
+    opacity: 0.92;
+    z-index: 2;
+  }
   .pt-right-eyebrow {
     font-family: "Geist Mono", monospace;
     font-size: 10px;
@@ -2040,6 +2046,7 @@ function triggerPageTurn(url) {
 
     // Right half — new page (revealed as leaf turns away)
     '<div class="pt-right">' +
+      '<img class="pt-right-emblem" src="images/emblem-light.svg" alt="" aria-hidden="true">' +
       '<p class="pt-right-eyebrow">HealthPrac Solutions</p>' +
       '<h2 class="pt-right-headline">Operational excellence<br>for <em>health practices.</em></h2>' +
     '</div>' +
